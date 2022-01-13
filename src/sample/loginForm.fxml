@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.loginForm">
+    <children>
+        <Label fx:id="mainScreenTitleLabel" layoutX="17.0" layoutY="14.0" text="Meeting Scheduling System">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+        <Button fx:id="ExitButton" layoutX="890.0" layoutY="535.0" mnemonicParsing="false" onAction="#onExitButtonAction" prefHeight="27.0" prefWidth="60.0" text="Exit" />
+        <TextArea fx:id="errorMessageBox" editable="false" layoutX="14.0" layoutY="416.0" prefHeight="113.0" prefWidth="220.0" visible="false" wrapText="true">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font></TextArea>
+        <Button fx:id="confirmButton" layoutX="26.0" layoutY="548.0" mnemonicParsing="false" onAction="#onConfirmButtonAction" text="Yes" visible="false" />
+        <Button fx:id="denyButton" layoutX="69.0" layoutY="548.0" mnemonicParsing="false" onAction="#onDenyButtonAction" text="No" visible="false" />
+    </children>
+</AnchorPane>
