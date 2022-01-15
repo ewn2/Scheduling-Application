@@ -17,8 +17,8 @@ public class loginForm {
     public TextField passwordTextbox;
     public Label usernameLabel;
     public Label passwordLabel;
-    public Label locationLabel;
     public Button loginButton;
+    public Label ZoneIDLabel;
 
     public void onExitButtonAction(ActionEvent actionEvent) {
         Platform.exit();
