@@ -54,12 +54,13 @@
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
-            <RadioButton fx:id="appointmentsWeeklyRadio" layoutX="178.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentsWeeklyRadioAction" text="Weekly">
+            <RadioButton fx:id="appointmentsWeeklyRadio" layoutX="178.0" layoutY="26.0" mnemonicParsing="false" onAction="#onAppointmentsWeeklyRadioAction" text="Week">
                <toggleGroup>
                   <ToggleGroup fx:id="WeekOrMonth" />
                </toggleGroup></RadioButton>
-            <RadioButton fx:id="appointmentsMonthlyRadio" layoutX="258.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentsMonthlyRadioAction" text="Monthly" toggleGroup="$WeekOrMonth" />
+            <RadioButton fx:id="appointmentsMonthlyRadio" layoutX="258.0" layoutY="26.0" mnemonicParsing="false" onAction="#onAppointmentsMonthlyRadioAction" text="Month" toggleGroup="$WeekOrMonth" />
             <DatePicker fx:id="WeekOrMonthSelect" layoutX="348.0" layoutY="22.0" onAction="#onWeekOrMonthSelectAction" prefHeight="25.0" prefWidth="110.0" promptText="Date Filer" showWeekNumbers="true" />
+            <RadioButton fx:id="appointmentsNoFilterRadio" layoutX="178.0" layoutY="6.0" mnemonicParsing="false" onAction="#onAppointmentsNoFilterRadioAction" selected="true" text="No Filter" toggleGroup="$WeekOrMonth" />
             </children>
         </AnchorPane>
         <TextArea fx:id="errorMessageBox" editable="false" layoutX="17.0" layoutY="462.0" prefHeight="113.0" prefWidth="220.0" visible="false" wrapText="true">

@@ -36,19 +36,19 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ComboBox layoutX="14.0" layoutY="48.0" prefWidth="150.0" promptText="Select Contact" />
+                        <ComboBox fx:id="selectContactCombo" layoutX="14.0" layoutY="48.0" onAction="#onSelectContactComboAction" prefWidth="150.0" promptText="Select Contact" />
                         <Label layoutX="14.0" layoutY="23.0" text="Details of Contact:" />
-                        <TableView layoutX="185.0" layoutY="31.0" prefHeight="359.0" prefWidth="746.0">
+                        <TableView fx:id="ContactAppointmentTable" layoutX="185.0" layoutY="31.0" prefHeight="359.0" prefWidth="746.0">
                           <columns>
-                              <TableColumn fx:id="AppointmentTableAppointmentIDCol" prefWidth="60.0" text="Appt. ID" />
-                              <TableColumn fx:id="AppointmentTableTitleCol" prefWidth="80.0" text="Title" />
-                              <TableColumn fx:id="AppointmentTableDescriptionCol" prefWidth="100.0" text="Description" />
-                              <TableColumn fx:id="AppointmentTableLocationCol" prefWidth="65.0" text="Location" />
-                              <TableColumn fx:id="AppointmentTableContactCol" prefWidth="65.0" text="Contact" />
-                              <TableColumn fx:id="AppointmentTableTypeCol" prefWidth="65.0" text="Type" />
-                              <TableColumn fx:id="AppointmentTableStartDateAndTimeCol" prefWidth="65.0" text="Start" />
-                              <TableColumn fx:id="AppointmentTableEndDateAndTimeCol" prefWidth="55.0" text="End" />
-                              <TableColumn fx:id="AppointmentTableCustomerIDCol" prefWidth="80.0" text="Customer ID" />
+                              <TableColumn fx:id="ContactAppointmentTableAppointmentIDCol" prefWidth="60.0" text="Appt. ID" />
+                              <TableColumn fx:id="ContactAppointmentTableTitleCol" prefWidth="80.0" text="Title" />
+                              <TableColumn fx:id="ContactAppointmentTableDescriptionCol" prefWidth="100.0" text="Description" />
+                              <TableColumn fx:id="ContactAppointmentTableLocationCol" prefWidth="65.0" text="Location" />
+                              <TableColumn fx:id="ContactAppointmentTableContactCol" prefWidth="65.0" text="Contact" />
+                              <TableColumn fx:id="ContactAppointmentTableTypeCol" prefWidth="65.0" text="Type" />
+                              <TableColumn fx:id="ContactAppointmentTableStartDateAndTimeCol" prefWidth="65.0" text="Start" />
+                              <TableColumn fx:id="ContactAppointmentTableEndDateAndTimeCol" prefWidth="55.0" text="End" />
+                              <TableColumn fx:id="ContactAppointmentTableCustomerIDCol" prefWidth="80.0" text="Customer ID" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
@@ -58,19 +58,19 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <ComboBox layoutX="14.0" layoutY="48.0" prefWidth="150.0" promptText="Select Customer" />
+                                <ComboBox fx:id="selectCustomerCombo" layoutX="14.0" layoutY="48.0" onAction="#onSelectCustomerComboAction" prefWidth="150.0" promptText="Select Customer" />
                                 <Label layoutX="14.0" layoutY="23.0" text="Details of Customer:" />
-                                <TableView layoutX="185.0" layoutY="31.0" prefHeight="359.0" prefWidth="746.0">
+                                <TableView fx:id="CustomerAppointmentTable" layoutX="185.0" layoutY="31.0" prefHeight="359.0" prefWidth="746.0">
                                     <columns>
-                                        <TableColumn fx:id="AppointmentTableAppointmentIDCol" prefWidth="60.0" text="Appt. ID" />
-                                        <TableColumn fx:id="AppointmentTableTitleCol" prefWidth="80.0" text="Title" />
-                                        <TableColumn fx:id="AppointmentTableDescriptionCol" prefWidth="100.0" text="Description" />
-                                        <TableColumn fx:id="AppointmentTableLocationCol" prefWidth="65.0" text="Location" />
-                                        <TableColumn fx:id="AppointmentTableContactCol" prefWidth="65.0" text="Contact" />
-                                        <TableColumn fx:id="AppointmentTableTypeCol" prefWidth="65.0" text="Type" />
-                                        <TableColumn fx:id="AppointmentTableStartDateAndTimeCol" prefWidth="65.0" text="Start" />
-                                        <TableColumn fx:id="AppointmentTableEndDateAndTimeCol" prefWidth="55.0" text="End" />
-                                        <TableColumn fx:id="AppointmentTableCustomerIDCol" prefWidth="80.0" text="User ID" />
+                                        <TableColumn fx:id="CustomerAppointmentTableAppointmentIDCol" prefWidth="60.0" text="Appt. ID" />
+                                        <TableColumn fx:id="CustomerAppointmentTableTitleCol" prefWidth="80.0" text="Title" />
+                                        <TableColumn fx:id="CustomerAppointmentTableDescriptionCol" prefWidth="100.0" text="Description" />
+                                        <TableColumn fx:id="CustomerAppointmentTableLocationCol" prefWidth="65.0" text="Location" />
+                                        <TableColumn fx:id="CustomerAppointmentTableContactCol" prefWidth="65.0" text="Contact" />
+                                        <TableColumn fx:id="CustomerAppointmentTableTypeCol" prefWidth="65.0" text="Type" />
+                                        <TableColumn fx:id="CustomerAppointmentTableStartDateAndTimeCol" prefWidth="65.0" text="Start" />
+                                        <TableColumn fx:id="CustomerAppointmentTableEndDateAndTimeCol" prefWidth="55.0" text="End" />
+                                        <TableColumn fx:id="CustomerAppointmentTableCustomerIDCol" prefWidth="80.0" text="User ID" />
                                     </columns>
                                 </TableView>
                             </children></AnchorPane>

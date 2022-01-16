@@ -45,6 +45,7 @@ public class MainForm {
     public Button denyButton;
     public Button reportsButton;
     public DatePicker WeekOrMonthSelect;
+    public RadioButton appointmentsNoFilterRadio;
 
     public void onExitButtonAction(ActionEvent actionEvent) {
         Platform.exit();
@@ -109,5 +110,8 @@ public class MainForm {
     }
 
     public void onWeekOrMonthSelectAction(ActionEvent actionEvent) {
+    }
+
+    public void onAppointmentsNoFilterRadioAction(ActionEvent actionEvent) {
     }
 }
