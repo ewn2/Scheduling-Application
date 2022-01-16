@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.sql.*;
+
 public class Main extends Application {
 
     @Override
@@ -17,8 +19,22 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         JDBC.makeConnection();
+        String tableName = "contacts";
+        String selectStatement = "SELECT * FROM";
+        String allContacts = selectStatement + " " + tableName;
+        JDBC.makePreparedStatement(allContacts, JDBC.getConnection());
+        Statement selectContactsQuery = JDBC.getPreparedStatement();
+        System.out.println(JDBC.getPreparedStatement());
+        selectContactsQuery.execute(allContacts);
+        ResultSet rs = selectContactsQuery.getResultSet();
+        System.out.println(rs);
+        while(rs.next())
+        {
+            System.out.println(rs.getString("Contact_ID") + " " + rs.getString("Contact_Name") + " " + rs.getString("Email"));
+        }
         launch(args);
+        JDBC.closeConnection();
     }
 }
