@@ -11,8 +11,7 @@
             <Font name="System Bold" size="48.0" />
          </font>
       </Label>
-      <Button layoutX="791.0" layoutY="529.0" mnemonicParsing="false" text="Save" />
-      <Button layoutX="890.0" layoutY="529.0" mnemonicParsing="false" text="Cancel" />
+      <Label layoutX="14.0" layoutY="85.0" text="Customer ID" />
       <Label layoutX="14.0" layoutY="125.0" text="Name" />
       <Label layoutX="14.0" layoutY="165.0" text="Phone #" />
       <Label layoutX="14.0" layoutY="205.0" text="Country" />
@@ -20,6 +19,7 @@
       <Label layoutX="14.0" layoutY="285.0" text="State/Province" />
       <Label layoutX="14.0" layoutY="325.0" text="City" />
       <Label layoutX="14.0" layoutY="365.0" text="Address" />
+      <TextField fx:id="addCustomerIDBox" disable="true" layoutX="95.0" layoutY="85.0" text="Auto-Gen" />
       <TextField fx:id="addCustomerNameBox" layoutX="95.0" layoutY="125.0" />
       <TextField fx:id="addCustomerPhoneBox" layoutX="95.0" layoutY="165.0" />
       <ComboBox fx:id="addCustomerCountryCombo" layoutX="95.0" layoutY="205.0" prefWidth="150.0" />
@@ -27,8 +27,8 @@
       <ComboBox fx:id="addCustomerStateCombo" layoutX="95.0" layoutY="285.0" prefWidth="150.0" />
       <TextField fx:id="addCustomerCityBox" layoutX="95.0" layoutY="325.0" />
       <TextField fx:id="addCustomerAddressBox" layoutX="95.0" layoutY="365.0" />
-      <Button fx:id="addPartSaveButton" layoutX="830.0" layoutY="535.0" mnemonicParsing="false" onAction="#onAddPartSaveButtonAction" text="Save" />
-      <Button fx:id="addPartCancelButton" layoutX="890.0" layoutY="535.0" mnemonicParsing="false" onAction="#onAddPartCancelButtonAction" text="Cancel" />
+      <Button fx:id="addCustomerSaveButton" layoutX="830.0" layoutY="535.0" mnemonicParsing="false" onAction="#onAddCustomerSaveButtonAction" text="Save" />
+      <Button fx:id="addCustomerCancelButton" layoutX="890.0" layoutY="535.0" mnemonicParsing="false" onAction="#onAddCustomerCancelButtonAction" text="Cancel" />
       <TextArea fx:id="errorMessageBox" editable="false" layoutX="14.0" layoutY="416.0" prefHeight="113.0" prefWidth="270.0" visible="true" wrapText="true">
          <font>
             <Font name="System Bold" size="16.0" />
