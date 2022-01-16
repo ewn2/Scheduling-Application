@@ -43,6 +43,7 @@ public class MainForm {
     public TextArea errorMessageBox;
     public Button confirmButton;
     public Button denyButton;
+    public Button reportsButton;
 
     public void onExitButtonAction(ActionEvent actionEvent) {
         Platform.exit();
@@ -96,5 +97,13 @@ public class MainForm {
     }
 
     public void onDenyButtonAction(ActionEvent actionEvent) {
+    }
+
+    public void onReportsButtonAction(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("/sample/View/ViewReport.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 }

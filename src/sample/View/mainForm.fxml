@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.MainForm">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.MainForm">
     <children>
         <Label layoutX="17.0" layoutY="14.0" text="Meeting Scheduling System">
             <font>
@@ -67,5 +67,6 @@
             </font></TextArea>
         <Button fx:id="confirmButton" layoutX="246.0" layoutY="494.0" mnemonicParsing="false" onAction="#onConfirmButtonAction" text="Yes" />
         <Button fx:id="denyButton" layoutX="247.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDenyButtonAction" text="No" />
+      <Button fx:id="reportsButton" layoutX="785.0" layoutY="536.0" mnemonicParsing="false" onAction="#onReportsButtonAction" text="Reports Page" />
     </children>
 </AnchorPane>
