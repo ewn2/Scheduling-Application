@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.Controller.AddAppointment"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.AddAppointment">
+    <children>
+        <Label layoutX="17.0" layoutY="14.0" text="Add Appointment">
+            <font>
+                <Font name="System Bold" size="48.0" />
+            </font>
+        </Label>
+        <Label layoutX="14.0" layoutY="85.0" text="Appt. ID" />
+        <Label layoutX="314.0" layoutY="85.0" text="User ID" />
+        <Label layoutX="314.0" layoutY="125.0" text="Customer ID" />
+        <Label layoutX="14.0" layoutY="125.0" text="Title" />
+        <Label layoutX="14.0" layoutY="165.0" text="Description" />
+        <Label layoutX="14.0" layoutY="205.0" text="Location" />
+        <Label layoutX="14.0" layoutY="245.0" text="Contact" />
+        <Label layoutX="14.0" layoutY="285.0" text="Date Start" />
+        <Label layoutX="14.0" layoutY="325.0" text="Time Start" />
+        <Label layoutX="14.0" layoutY="365.0" text="Appt. Type" />
+        <Label layoutX="314.0" layoutY="285.0" text="Date End" />
+        <Label layoutX="314.0" layoutY="325.0" text="Time End" />
+        <TextField fx:id="addAppointmentIDBox" disable="true" layoutX="95.0" layoutY="85.0" text="Auto-Gen" />
+        <TextField fx:id="addAppointmentTitleBox" layoutX="95.0" layoutY="125.0" />
+        <TextField fx:id="addAppointmentCustomerIDBox" layoutX="395.0" layoutY="125.0" />
+        <TextField fx:id="addAppointmentUserIDBox" layoutX="395.0" layoutY="85.0" />
+        <TextField fx:id="addAppointmentDescriptionBox" layoutX="95.0" layoutY="165.0" />
+        <TextField fx:id="addAppointmentLocationBox" layoutX="95.0" layoutY="205.0" />
+        <ComboBox fx:id="addAppointmentContactCombo" layoutX="95.0" layoutY="245.0" prefWidth="150" />
+        <DatePicker fx:id="addAppointmentStartDatePicker" layoutX="95.0" layoutY="285.0" onAction="#onAddAppointmentStartDatePickerAction" />
+        <DatePicker fx:id="addAppointmentEndDatePicker" layoutX="395.0" layoutY="285.0" onAction="#onAddAppointmentEndDatePickerAction" />
+        <ComboBox fx:id="addAppointmentStartTimeCombo" layoutX="95.0" layoutY="325.0" prefWidth="150" />
+        <ComboBox fx:id="addAppointmentEndTimeCombo" layoutX="395.0" layoutY="325.0" prefWidth="150" />
+        <TextField fx:id="addAppointmentTypeBox" layoutX="95.0" layoutY="365.0" />
+        <Button fx:id="addAppointmentSaveButton" layoutX="830.0" layoutY="535.0" mnemonicParsing="false" onAction="#onAddAppointmentSaveButtonAction" text="Save" />
+        <Button fx:id="addAppointmentCancelButton" layoutX="890.0" layoutY="535.0" mnemonicParsing="false" onAction="#onAddAppointmentCancelButtonAction" text="Cancel" />
+        <TextArea fx:id="errorMessageBox" editable="false" layoutX="14.0" layoutY="416.0" prefHeight="113.0" prefWidth="270.0" visible="true" wrapText="true">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font></TextArea>
 
+    </children>
 </AnchorPane>
