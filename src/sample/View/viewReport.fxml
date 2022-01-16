@@ -4,33 +4,56 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.ViewReport">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.ViewReport">
     <children>
         <Label layoutX="17.0" layoutY="14.0" text="Meeting Scheduling System">
             <font>
                 <Font name="System Bold" size="48.0" />
             </font>
         </Label>
-        <TabPane layoutX="17.0" layoutY="85.0" prefHeight="502.0" prefWidth="960.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane layoutX="17.0" layoutY="85.0" prefHeight="428.0" prefWidth="960.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="Appointments Breakdown">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="73.0" layoutY="71.0" prefHeight="350.0" prefWidth="350.0">
+                          <columns>
+                            <TableColumn prefWidth="175.0" text="Month" />
+                            <TableColumn prefWidth="175.0" text="Appointments" />
+                          </columns>
+                        </TableView>
+                        <TableView layoutX="513.0" layoutY="71.0" prefHeight="350.0" prefWidth="350.0">
+                          <columns>
+                            <TableColumn prefWidth="175.0" text="Appointment Type" />
+                            <TableColumn prefWidth="175.0" text="Appointments" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="Contact Schedules">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ComboBox layoutX="14.0" layoutY="48.0" prefWidth="150.0" />
+                        <Label layoutX="14.0" layoutY="14.0" text="Contact" />
+                        <TableView layoutX="185.0" layoutY="31.0" prefHeight="359.0" prefWidth="746.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="Tab3">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
             </tabs>
         </TabPane>
+        <Button fx:id="viewReportCancelButton" layoutX="890.0" layoutY="535.0" mnemonicParsing="false" onAction="#onViewReportCancelButtonAction" text="Cancel" />
     </children>
 </AnchorPane>
