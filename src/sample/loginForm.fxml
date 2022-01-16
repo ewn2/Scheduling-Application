@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.loginForm">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.loginForm">
     <children>
         <Label fx:id="mainScreenTitleLabel" layoutX="17.0" layoutY="14.0" text="Meeting Scheduling System">
             <font>
-                <Font name="System Bold" size="24.0" />
+                <Font name="System Bold" size="48.0" />
             </font>
         </Label>
         <Button fx:id="ExitButton" layoutX="890.0" layoutY="535.0" mnemonicParsing="false" onAction="#onExitButtonAction" prefHeight="27.0" prefWidth="60.0" text="Exit" />
