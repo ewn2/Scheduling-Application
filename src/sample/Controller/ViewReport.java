@@ -1,4 +1,4 @@
 package sample.Controller;
 
-public class ViewSchedule {
+public class ViewReport {
 }

@@ -1,8 +1,16 @@
 package sample.Controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class MainForm {
     public Label mainScreenTitleLabel;
@@ -37,24 +45,45 @@ public class MainForm {
     public Button denyButton;
 
     public void onExitButtonAction(ActionEvent actionEvent) {
+        Platform.exit();
     }
 
     public void onCustomerDeleteButtonAction(ActionEvent actionEvent) {
     }
 
-    public void onCustomerModifyButtonAction(ActionEvent actionEvent) {
+    public void onCustomerModifyButtonAction(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("/sample/View/ModifyCustomer.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void onCustomerAddButtonAction(ActionEvent actionEvent) {
+    public void onCustomerAddButtonAction(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("/sample/View/AddCustomer.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void onAppointmentDeleteButtonAction(ActionEvent actionEvent) {
     }
 
-    public void onAppointmentModifyButtonAction(ActionEvent actionEvent) {
+    public void onAppointmentModifyButtonAction(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("/sample/View/modifyAppointment.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void onAppointmentAddButtonAction(ActionEvent actionEvent) {
+    public void onAppointmentAddButtonAction(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("/sample/View/AddAppointment.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void onAppointmentsWeeklyRadioAction(ActionEvent actionEvent) {

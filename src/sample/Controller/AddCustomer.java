@@ -36,7 +36,7 @@ public class AddCustomer {
     }
 
     private void returnToMainScreen(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("loginForm.fxml")));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/sample/View/MainForm.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);

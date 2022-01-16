@@ -48,10 +48,10 @@ public class loginForm {
         returnToMainScreen(actionEvent);
     }
 
-    private void returnToMainScreen(ActionEvent event) throws IOException {
+    private void returnToMainScreen(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/sample/View/MainForm.fxml"));
         Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
