@@ -44,6 +44,7 @@ public class MainForm {
     public Button confirmButton;
     public Button denyButton;
     public Button reportsButton;
+    public DatePicker WeekOrMonthSelect;
 
     public void onExitButtonAction(ActionEvent actionEvent) {
         Platform.exit();
@@ -105,5 +106,8 @@ public class MainForm {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void onWeekOrMonthSelectAction(ActionEvent actionEvent) {
     }
 }

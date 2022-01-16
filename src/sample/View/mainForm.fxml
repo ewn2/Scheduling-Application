@@ -49,24 +49,25 @@
                 <Button fx:id="AppointmentDeleteButton" layoutX="581.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentDeleteButtonAction" text="Delete" />
                 <Button fx:id="AppointmentModifyButton" layoutX="518.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentModifyButtonAction" text="Modify" />
                 <Button fx:id="AppointmentAddButton" layoutX="470.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentAddButtonAction" text="Add" />
-                <Label layoutX="14.0" layoutY="14.0" text="Appointments">
+                <Label layoutX="14.0" layoutY="14.0" text="All Appointments">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
-            <RadioButton fx:id="appointmentsWeeklyRadio" layoutX="158.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentsWeeklyRadioAction" selected="true" text="Weekly">
+            <RadioButton fx:id="appointmentsWeeklyRadio" layoutX="178.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentsWeeklyRadioAction" text="Weekly">
                <toggleGroup>
                   <ToggleGroup fx:id="WeekOrMonth" />
                </toggleGroup></RadioButton>
             <RadioButton fx:id="appointmentsMonthlyRadio" layoutX="258.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentsMonthlyRadioAction" text="Monthly" toggleGroup="$WeekOrMonth" />
+            <DatePicker fx:id="WeekOrMonthSelect" layoutX="348.0" layoutY="22.0" onAction="#onWeekOrMonthSelectAction" prefHeight="25.0" prefWidth="110.0" promptText="Date Filer" showWeekNumbers="true" />
             </children>
         </AnchorPane>
-        <TextArea fx:id="errorMessageBox" editable="false" layoutX="17.0" layoutY="462.0" prefHeight="113.0" prefWidth="220.0" wrapText="true">
+        <TextArea fx:id="errorMessageBox" editable="false" layoutX="17.0" layoutY="462.0" prefHeight="113.0" prefWidth="220.0" visible="false" wrapText="true">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font></TextArea>
-        <Button fx:id="confirmButton" layoutX="246.0" layoutY="494.0" mnemonicParsing="false" onAction="#onConfirmButtonAction" text="Yes" />
-        <Button fx:id="denyButton" layoutX="247.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDenyButtonAction" text="No" />
+        <Button fx:id="confirmButton" layoutX="246.0" layoutY="494.0" mnemonicParsing="false" onAction="#onConfirmButtonAction" text="Yes" visible="false" />
+        <Button fx:id="denyButton" layoutX="247.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDenyButtonAction" text="No" visible="false" />
       <Button fx:id="reportsButton" layoutX="785.0" layoutY="536.0" mnemonicParsing="false" onAction="#onReportsButtonAction" text="Reports Page" />
     </children>
 </AnchorPane>
