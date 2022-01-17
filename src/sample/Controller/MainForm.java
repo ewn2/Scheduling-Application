@@ -3,22 +3,27 @@ package sample.Controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import sample.Model.Customer;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class MainForm {
+public class MainForm implements Initializable {
     public Label mainScreenTitleLabel;
     public Button ExitButton;
     public AnchorPane CustomerAnchorPane;
-    public TableView CustomerTable;
-    public TableColumn customerTableCustomerIDCol;
-    public TableColumn customerTableCustomerNameCol;
+    public TableView<Customer> CustomerTable;
+    public TableColumn<Customer, Integer> customerTableCustomerIDCol;
+    public TableColumn<Customer, String> customerTableCustomerNameCol;
     public Button customerDeleteButton;
     public Button customerModifyButton;
     public Button customerAddButton;
@@ -46,18 +51,56 @@ public class MainForm {
     public Button reportsButton;
     public DatePicker WeekOrMonthSelect;
     public RadioButton appointmentsNoFilterRadio;
-    public TableColumn customerTableCustomerPhoneCol;
-    public TableColumn customerTableCustomerCountryCol;
-    public TableColumn customerTableCustomerPostalCol;
-    public TableColumn customerTableCustomerStateCol;
-    public TableColumn customerTableCustomerCityCol;
-    public TableColumn customerTableCustomerAddressCol;
+    public TableColumn<Customer, String> customerTableCustomerPhoneCol;
+    public TableColumn<Customer, String> customerTableCustomerCountryCol;
+    public TableColumn<Customer, String> customerTableCustomerPostalCol;
+    public TableColumn<Customer, String> customerTableCustomerStateCol;
+    public TableColumn<Customer, String> customerTableCustomerCityCol;
+    public TableColumn<Customer, String> customerTableCustomerAddressCol;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        CustomerTable.setItems(Customer.customerPopulation());
+        customerTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("CustomerID"));
+        customerTableCustomerNameCol.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
+        customerTableCustomerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("CustomerPhone"));
+        customerTableCustomerCountryCol.setCellValueFactory(new PropertyValueFactory<>("CustomerCountry"));
+        customerTableCustomerPostalCol.setCellValueFactory(new PropertyValueFactory<>("CustomerPostal"));
+        customerTableCustomerStateCol.setCellValueFactory(new PropertyValueFactory<>("CustomerState"));
+        customerTableCustomerCityCol.setCellValueFactory(new PropertyValueFactory<>("CustomerCity"));
+        customerTableCustomerAddressCol.setCellValueFactory(new PropertyValueFactory<>("CustomerAddress"));
+    }
 
     public void onExitButtonAction(ActionEvent actionEvent) {
         Platform.exit();
     }
 
+    public Customer selectedCustomer = null;
+    //public Appointment selectedAppointment = null;
+
     public void onCustomerDeleteButtonAction(ActionEvent actionEvent) {
+        //selectedAppointment = null;
+        selectedCustomer = null;
+        selectedCustomer = CustomerTable.getSelectionModel().getSelectedItem();
+        if (selectedCustomer != null) {
+            errorMessageBox.setVisible(true);
+            errorMessageBox.setText("Delete this Customer?");
+            confirmButton.setVisible(true);
+            denyButton.setVisible(true);
+        }
+        /*
+        if (selectedCustomer != null) {
+            ObservableList<Part> emptyCheck = FXCollections.observableArrayList();
+            emptyCheck = chosenProduct.getAllAssociatedAppointments();
+            errorMessageBox.setVisible(true);
+            if (emptyCheck.toString() == "[]") {
+                errorMessageBox.setText("Delete this Customer?");
+                confirmButton.setVisible(true);
+                denyButton.setVisible(true);
+            } else {
+                errorMessageBox.setText("You may not delete a Customer with existing Appointments");
+            }
+        }*/
     }
 
     public void onCustomerModifyButtonAction(ActionEvent actionEvent) throws IOException {
@@ -102,9 +145,29 @@ public class MainForm {
     }
 
     public void onConfirmButtonAction(ActionEvent actionEvent) {
+        errorMessageBox.setVisible(false);
+        confirmButton.setVisible(false);
+        denyButton.setVisible(false);
+        if (selectedCustomer != null) {
+            Customer.deleteCustomer(selectedCustomer);
+            CustomerTable.setItems(Customer.customerPopulation());
+        }
+        /*
+        if (selectedAppointment != null) {
+            Appointment.deleteAppointment(selectedAppointment);
+            AppointmentTable.setItems(Appointment.appointmentPopulation());
+        }
+         */
+        selectedCustomer = null;
+        //selectedAppointment = null;
     }
 
     public void onDenyButtonAction(ActionEvent actionEvent) {
+        errorMessageBox.setVisible(false);
+        confirmButton.setVisible(false);
+        denyButton.setVisible(false);
+        selectedCustomer = null;
+        //selectedAppointment = null;
     }
 
     public void onReportsButtonAction(ActionEvent actionEvent) throws IOException {

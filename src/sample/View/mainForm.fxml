@@ -16,8 +16,8 @@
             <font>
                 <Font name="System Bold" size="16.0" />
             </font></TextArea>
-        <Button fx:id="confirmButton" layoutX="246.0" layoutY="494.0" mnemonicParsing="false" onAction="#onConfirmButtonAction" text="Yes" visible="false" />
-        <Button fx:id="denyButton" layoutX="247.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDenyButtonAction" text="No" visible="false" />
+        <Button fx:id="confirmButton" layoutX="247.0" layoutY="536.0" mnemonicParsing="false" onAction="#onConfirmButtonAction" text="Yes" visible="false" />
+        <Button fx:id="denyButton" layoutX="297.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDenyButtonAction" text="No" visible="false" />
       <Button fx:id="reportsButton" layoutX="785.0" layoutY="536.0" mnemonicParsing="false" onAction="#onReportsButtonAction" text="Reports Page" />
       <TabPane layoutX="14.0" layoutY="84.0" prefHeight="451.0" prefWidth="964.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
