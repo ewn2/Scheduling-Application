@@ -11,8 +11,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.Model.User;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class loginForm {
@@ -44,8 +46,16 @@ public class loginForm {
         denyButton.setVisible(false);
     }
 
-    public void onLoginButtonAction(ActionEvent actionEvent) throws IOException {
-        returnToMainScreen(actionEvent);
+    public void onLoginButtonAction(ActionEvent actionEvent) throws IOException, SQLException {
+        String username = usernameTextbox.getText();
+        String password = passwordTextbox.getText();
+        if (User.validUser(username,password)) {
+            returnToMainScreen(actionEvent);
+        }
+        else {
+            errorMessageBox.setVisible(true);
+            errorMessageBox.setText("Incorrect Username or Password");
+        }
     }
 
     private void returnToMainScreen(ActionEvent actionEvent) throws IOException {

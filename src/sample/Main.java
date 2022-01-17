@@ -21,7 +21,7 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
         JDBC.makeConnection();
-        String tableName = "contacts";
+        String tableName = "users";
         String selectStatement = "SELECT * FROM";
         String allContacts = selectStatement + " " + tableName;
         JDBC.makePreparedStatement(allContacts, JDBC.getConnection());
@@ -32,7 +32,7 @@ public class Main extends Application {
         System.out.println(rs);
         while(rs.next())
         {
-            System.out.println(rs.getString("Contact_ID") + " " + rs.getString("Contact_Name") + " " + rs.getString("Email"));
+            System.out.println(rs.getString("User_ID") + " " + rs.getString("User_Name") + " " + rs.getString("Password"));
         }
         launch(args);
         JDBC.closeConnection();
