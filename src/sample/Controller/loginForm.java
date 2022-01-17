@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.ZoneId;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -73,6 +74,8 @@ public class loginForm implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        resourceBundle = ResourceBundle.getBundle("sample/Language", Locale.getDefault());
+        errorMessageBox.setText(resourceBundle.getString("TestKey"));
         String localeLabel = (String.valueOf((ZoneId.systemDefault())));
         ZoneIDLabel.setText(localeLabel);
     }

@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 import java.sql.*;
 import java.time.ZoneId;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class Main extends Application {
 
@@ -36,7 +38,12 @@ public class Main extends Application {
             System.out.println(rs.getString("User_ID") + " " + rs.getString("User_Name") + " " + rs.getString("Password"));
         }
         ZoneId systemZone = ZoneId.systemDefault();
+        Locale location = Locale.getDefault();
+        String EnFr = location.getLanguage();
+        ResourceBundle propertyChoice = ResourceBundle.getBundle("sample/Language", Locale.getDefault());
         System.out.println(systemZone);
+        System.out.println(location);
+        System.out.println(EnFr);
         launch(args);
         JDBC.closeConnection();
     }

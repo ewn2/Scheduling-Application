@@ -46,10 +46,6 @@ public class User {
     }
 
     public static void loginAttempt(String username, String date, String time, boolean valid) throws IOException {
-        //Write to a file if it exists, otherwise create it first. Lookup Java file I/O in the morning.
-        //FileWriter fw = new FileWriter("login_activity.txt");
-        //BufferedWriter bw = new BufferedWriter(fw);
-        //PrintWriter fout = new PrintWriter(bw);
         PrintWriter fout = new PrintWriter(new FileOutputStream(new File("login_activity.txt"),true));
         fout.append("\n" + username + " " + date + " " + time + " " + valid);
         fout.close();
