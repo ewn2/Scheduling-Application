@@ -60,7 +60,7 @@ public class loginForm implements Initializable {
         }
         else {
             errorMessageBox.setVisible(true);
-            errorMessageBox.setText("Incorrect Username or Password");
+            //errorMessageBox.setText("Incorrect Username or Password");
         }
     }
 
@@ -75,7 +75,12 @@ public class loginForm implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         resourceBundle = ResourceBundle.getBundle("sample/Language", Locale.getDefault());
-        errorMessageBox.setText(resourceBundle.getString("TestKey"));
+        errorMessageBox.setText(resourceBundle.getString("loginError"));
+        usernameLabel.setText(resourceBundle.getString("usernameLabel"));
+        passwordLabel.setText(resourceBundle.getString("passwordLabel"));
+        ExitButton.setText(resourceBundle.getString("ExitButton"));
+        loginButton.setText(resourceBundle.getString("loginButton"));
+        mainScreenTitleLabel.setText(resourceBundle.getString("mainScreenTitleLabel"));
         String localeLabel = (String.valueOf((ZoneId.systemDefault())));
         ZoneIDLabel.setText(localeLabel);
     }
