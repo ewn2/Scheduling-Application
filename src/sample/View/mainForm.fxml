@@ -12,57 +12,6 @@
             </font>
         </Label>
         <Button fx:id="ExitButton" layoutX="890.0" layoutY="535.0" mnemonicParsing="false" onAction="#onExitButtonAction" prefHeight="27.0" prefWidth="60.0" text="Exit" />
-        <AnchorPane fx:id="CustomerAnchorPane" layoutX="17.0" layoutY="130.0" prefHeight="350.0" prefWidth="280.0">
-            <children>
-                <TableView fx:id="CustomerTable" layoutX="8.0" layoutY="58.0" prefHeight="223.0" prefWidth="250.0">
-                    <columns>
-                        <TableColumn fx:id="customerTableCustomerIDCol" prefWidth="85.0" text="Customer ID" />
-                        <TableColumn fx:id="customerTableCustomerNameCol" prefWidth="165.0" text="Customer Name" />
-                    </columns>
-                </TableView>
-                <Button fx:id="customerDeleteButton" layoutX="181.0" layoutY="287.0" mnemonicParsing="false" onAction="#onCustomerDeleteButtonAction" text="Delete" />
-                <Button fx:id="customerModifyButton" layoutX="118.0" layoutY="287.0" mnemonicParsing="false" onAction="#onCustomerModifyButtonAction" text="Modify" />
-                <Button fx:id="customerAddButton" layoutX="70.0" layoutY="287.0" mnemonicParsing="false" onAction="#onCustomerAddButtonAction" text="Add" />
-                <Label layoutX="14.0" layoutY="14.0" text="Customers">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
-                </Label>
-            </children>
-        </AnchorPane>
-        <AnchorPane fx:id="AppointmentAnchorPane" layoutX="310.0" layoutY="130.0" prefHeight="350.0" prefWidth="680.0">
-            <children>
-                <TableView fx:id="AppointmentTable" layoutX="8.0" layoutY="58.0" prefHeight="320.0" prefWidth="650.0">
-                    <columns>
-                        <TableColumn fx:id="AppointmentTableAppointmentIDCol" prefWidth="60.0" text="Appt. ID" />
-                        <TableColumn fx:id="AppointmentTableTitleCol" prefWidth="65.0" text="Title" />
-                        <TableColumn fx:id="AppointmentTableDescriptionCol" prefWidth="70.0" text="Description" />
-                        <TableColumn fx:id="AppointmentTableLocationCol" prefWidth="65.0" text="Location" />
-                        <TableColumn fx:id="AppointmentTableContactCol" prefWidth="65.0" text="Contact" />
-                        <TableColumn fx:id="AppointmentTableTypeCol" prefWidth="65.0" text="Type" />
-                        <TableColumn fx:id="AppointmentTableStartDateAndTimeCol" prefWidth="65.0" text="Start" />
-                        <TableColumn fx:id="AppointmentTableEndDateAndTimeCol" prefWidth="55.0" text="End" />
-                        <TableColumn fx:id="AppointmentTableCustomerIDCol" prefWidth="80.0" text="Customer ID" />
-                        <TableColumn fx:id="AppointmentTableUserIDCol" prefWidth="60.0" text="User ID" />
-                    </columns>
-                </TableView>
-                <Button fx:id="AppointmentDeleteButton" layoutX="581.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentDeleteButtonAction" text="Delete" />
-                <Button fx:id="AppointmentModifyButton" layoutX="518.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentModifyButtonAction" text="Modify" />
-                <Button fx:id="AppointmentAddButton" layoutX="470.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentAddButtonAction" text="Add" />
-                <Label layoutX="14.0" layoutY="14.0" text="All Appointments">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
-                </Label>
-            <RadioButton fx:id="appointmentsWeeklyRadio" layoutX="178.0" layoutY="26.0" mnemonicParsing="false" onAction="#onAppointmentsWeeklyRadioAction" text="Week">
-               <toggleGroup>
-                  <ToggleGroup fx:id="WeekOrMonth" />
-               </toggleGroup></RadioButton>
-            <RadioButton fx:id="appointmentsMonthlyRadio" layoutX="258.0" layoutY="26.0" mnemonicParsing="false" onAction="#onAppointmentsMonthlyRadioAction" text="Month" toggleGroup="$WeekOrMonth" />
-            <DatePicker fx:id="WeekOrMonthSelect" layoutX="348.0" layoutY="22.0" onAction="#onWeekOrMonthSelectAction" prefHeight="25.0" prefWidth="110.0" promptText="Date Filer" showWeekNumbers="true" />
-            <RadioButton fx:id="appointmentsNoFilterRadio" layoutX="178.0" layoutY="6.0" mnemonicParsing="false" onAction="#onAppointmentsNoFilterRadioAction" selected="true" text="No Filter" toggleGroup="$WeekOrMonth" />
-            </children>
-        </AnchorPane>
         <TextArea fx:id="errorMessageBox" editable="false" layoutX="17.0" layoutY="462.0" prefHeight="113.0" prefWidth="220.0" visible="false" wrapText="true">
             <font>
                 <Font name="System Bold" size="16.0" />
@@ -70,5 +19,82 @@
         <Button fx:id="confirmButton" layoutX="246.0" layoutY="494.0" mnemonicParsing="false" onAction="#onConfirmButtonAction" text="Yes" visible="false" />
         <Button fx:id="denyButton" layoutX="247.0" layoutY="536.0" mnemonicParsing="false" onAction="#onDenyButtonAction" text="No" visible="false" />
       <Button fx:id="reportsButton" layoutX="785.0" layoutY="536.0" mnemonicParsing="false" onAction="#onReportsButtonAction" text="Reports Page" />
+      <TabPane layoutX="14.0" layoutY="84.0" prefHeight="451.0" prefWidth="964.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Customers">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                          <AnchorPane fx:id="CustomerAnchorPane" prefHeight="416.0" prefWidth="964.0">
+                              <children>
+                                  <TableView fx:id="CustomerTable" layoutX="8.0" layoutY="58.0" prefHeight="223.0" prefWidth="944.0">
+                                      <columns>
+                                          <TableColumn fx:id="customerTableCustomerIDCol" prefWidth="118.0" text="Customer ID" />
+                                          <TableColumn fx:id="customerTableCustomerNameCol" prefWidth="118.0" text="Name" />
+                                          <TableColumn fx:id="customerTableCustomerPhoneCol" prefWidth="118.0" text="Phone" />
+                                          <TableColumn fx:id="customerTableCustomerCountryCol" prefWidth="118.0" text="Country" />
+                                          <TableColumn fx:id="customerTableCustomerPostalCol" prefWidth="118.0" text="Postal Code" />
+                                          <TableColumn fx:id="customerTableCustomerStateCol" prefWidth="118.0" text="State/Province" />
+                                          <TableColumn fx:id="customerTableCustomerCityCol" prefWidth="118.0" text="City" />
+                                          <TableColumn fx:id="customerTableCustomerAddressCol" prefWidth="118.0" text="Address" />
+                                      </columns>
+                                  </TableView>
+                                  <Button fx:id="customerDeleteButton" layoutX="181.0" layoutY="287.0" mnemonicParsing="false" onAction="#onCustomerDeleteButtonAction" text="Delete" />
+                                  <Button fx:id="customerModifyButton" layoutX="118.0" layoutY="287.0" mnemonicParsing="false" onAction="#onCustomerModifyButtonAction" text="Modify" />
+                                  <Button fx:id="customerAddButton" layoutX="70.0" layoutY="287.0" mnemonicParsing="false" onAction="#onCustomerAddButtonAction" text="Add" />
+                                  <Label layoutX="14.0" layoutY="14.0" text="All Customers">
+                                      <font>
+                                          <Font name="System Bold" size="18.0" />
+                                      </font>
+                                  </Label>
+                              </children>
+                          </AnchorPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Appointments">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                          <AnchorPane fx:id="AppointmentAnchorPane" prefHeight="416.0" prefWidth="964.0">
+                              <children>
+                                  <TableView fx:id="AppointmentTable" layoutX="8.0" layoutY="58.0" prefHeight="278.0" prefWidth="944.0">
+                                      <columns>
+                                          <TableColumn fx:id="AppointmentTableAppointmentIDCol" prefWidth="94.4" text="Appt. ID" />
+                                          <TableColumn fx:id="AppointmentTableTitleCol" prefWidth="94.4" text="Title" />
+                                          <TableColumn fx:id="AppointmentTableDescriptionCol" prefWidth="94.4" text="Description" />
+                                          <TableColumn fx:id="AppointmentTableLocationCol" prefWidth="94.4" text="Location" />
+                                          <TableColumn fx:id="AppointmentTableContactCol" prefWidth="94.4" text="Contact" />
+                                          <TableColumn fx:id="AppointmentTableTypeCol" prefWidth="94.4" text="Type" />
+                                          <TableColumn fx:id="AppointmentTableStartDateAndTimeCol" prefWidth="94.4" text="Start" />
+                                          <TableColumn fx:id="AppointmentTableEndDateAndTimeCol" prefWidth="94.4" text="End" />
+                                          <TableColumn fx:id="AppointmentTableCustomerIDCol" prefWidth="94.4" text="Customer ID" />
+                                          <TableColumn fx:id="AppointmentTableUserIDCol" prefWidth="94.4" text="User ID" />
+                                      </columns>
+                                  </TableView>
+                                  <Button fx:id="AppointmentDeleteButton" layoutX="581.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentDeleteButtonAction" text="Delete" />
+                                  <Button fx:id="AppointmentModifyButton" layoutX="518.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentModifyButtonAction" text="Modify" />
+                                  <Button fx:id="AppointmentAddButton" layoutX="470.0" layoutY="22.0" mnemonicParsing="false" onAction="#onAppointmentAddButtonAction" text="Add" />
+                                  <Label layoutX="14.0" layoutY="14.0" text="All Appointments">
+                                      <font>
+                                          <Font name="System Bold" size="18.0" />
+                                      </font>
+                                  </Label>
+                              <RadioButton fx:id="appointmentsWeeklyRadio" layoutX="178.0" layoutY="26.0" mnemonicParsing="false" onAction="#onAppointmentsWeeklyRadioAction" text="Week">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="WeekOrMonth" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="appointmentsMonthlyRadio" layoutX="258.0" layoutY="26.0" mnemonicParsing="false" onAction="#onAppointmentsMonthlyRadioAction" text="Month" toggleGroup="$WeekOrMonth" />
+                              <DatePicker fx:id="WeekOrMonthSelect" layoutX="348.0" layoutY="22.0" onAction="#onWeekOrMonthSelectAction" prefHeight="25.0" prefWidth="110.0" promptText="Date Filer" showWeekNumbers="true" />
+                              <RadioButton fx:id="appointmentsNoFilterRadio" layoutX="178.0" layoutY="6.0" mnemonicParsing="false" onAction="#onAppointmentsNoFilterRadioAction" selected="true" text="No Filter" toggleGroup="$WeekOrMonth" />
+                              </children>
+                          </AnchorPane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
     </children>
 </AnchorPane>

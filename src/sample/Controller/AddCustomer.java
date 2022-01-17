@@ -14,6 +14,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.JDBC;
+import sample.Model.Customer;
 import sample.Model.User;
 
 import java.io.IOException;
@@ -88,7 +89,45 @@ public class AddCustomer implements Initializable {
     }
 
     public void onAddCustomerSaveButtonAction(ActionEvent actionEvent) throws IOException {
-        returnToMainScreen(actionEvent);
+        boolean validEntries = true;
+        boolean addedCustomer = false;
+        try {
+            int id = 0;
+            String CustomerName = addCustomerNameBox.getText();
+            String CustomerPhone = addCustomerPhoneBox.getText();
+            String CustomerCountry = addCustomerCountryCombo.getValue().toString();
+            String CustomerPostal = addCustomerPostalBox.getText();
+            String CustomerState = addCustomerStateCombo.getValue().toString();
+            String CustomerCity = addCustomerCityBox.getText();
+            String CustomerAddress = addCustomerAddressBox.getText();
+        } catch (Exception e) {
+            errorMessageBox.setVisible(true);
+            errorMessageBox.setText("Error: Please check all boxes are filled with correct data");
+            validEntries = false;
+        }
+        int id = 0;
+        String CustomerName = addCustomerNameBox.getText();
+        String CustomerPhone = addCustomerPhoneBox.getText();
+        String CustomerCountry = addCustomerCountryCombo.getValue().toString();
+        String CustomerPostal = addCustomerPostalBox.getText();
+        String CustomerState = addCustomerStateCombo.getValue().toString();
+        String CustomerCity = addCustomerCityBox.getText();
+        String CustomerAddress = addCustomerAddressBox.getText();
+        if (validEntries) {
+            try {
+                Customer newCustomer = new Customer(id, CustomerName,CustomerPhone,CustomerCountry,CustomerPostal,CustomerState,CustomerCity,CustomerAddress);
+                newCustomer.setCustomerID(Customer.uniqueCustomerID());
+                Customer.addCustomer(newCustomer);
+                addedCustomer = true;
+            } catch (Exception e) {
+                errorMessageBox.setVisible(true);
+                errorMessageBox.setText("Error: Please check all boxes are filled with correct data");
+            }
+        }
+
+        if (addedCustomer) {
+            returnToMainScreen(actionEvent);
+        }
     }
 
     public void onAddCustomerCancelButtonAction(ActionEvent actionEvent) throws IOException {
