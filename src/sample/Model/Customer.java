@@ -1,5 +1,8 @@
 package sample.Model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Customer {
     private int CustomerID;
     private String CustomerName;
@@ -82,5 +85,40 @@ public class Customer {
     }
     public void setCustomerAddress(String CustomerAddress) {
         this.CustomerAddress = CustomerAddress;
+    }
+
+    private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+    public static ObservableList<Customer> customerPopulation() {
+        return allCustomers;
+    }
+    public static void addCustomer(Customer newCustomer) {
+        allCustomers.add(newCustomer);
+    }
+    public static Customer lookupCustomer(int customerID) {
+        for (Customer customer : allCustomers) {
+            if (customer.getCustomerID() == customerID) {
+                return customer;
+            }
+        }
+        return null;
+    }
+    public static ObservableList<Customer> lookupCustomer(String customerName) {
+        ObservableList<Customer> matches = FXCollections.observableArrayList();
+        for (Customer customer : allCustomers) {
+            if (customer.getCustomerName().toUpperCase().contains((String.valueOf(customer)).toUpperCase())) {
+                matches.add(customer);
+            }
+        }
+        return matches;
+    }
+    public static void updateCustomer(int index, Customer selectedCustomer) {
+        allCustomers.set(index, selectedCustomer);
+    }
+    public static boolean deleteCustomer(Customer selectedCustomer) {
+        if (allCustomers.contains(selectedCustomer)) {
+            allCustomers.remove(selectedCustomer);
+            return true;
+        }
+        return false;
     }
 }
