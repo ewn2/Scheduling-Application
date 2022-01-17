@@ -46,6 +46,12 @@ public class MainForm {
     public Button reportsButton;
     public DatePicker WeekOrMonthSelect;
     public RadioButton appointmentsNoFilterRadio;
+    public TableColumn customerTableCustomerPhoneCol;
+    public TableColumn customerTableCustomerCountryCol;
+    public TableColumn customerTableCustomerPostalCol;
+    public TableColumn customerTableCustomerStateCol;
+    public TableColumn customerTableCustomerCityCol;
+    public TableColumn customerTableCustomerAddressCol;
 
     public void onExitButtonAction(ActionEvent actionEvent) {
         Platform.exit();
