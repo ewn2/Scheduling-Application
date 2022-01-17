@@ -21,12 +21,14 @@ public class ModifyAppointment {
     public ComboBox ModifyAppointmentContactCombo;
     public DatePicker ModifyAppointmentStartDatePicker;
     public DatePicker ModifyAppointmentEndDatePicker;
-    public ComboBox ModifyAppointmentStartTimeCombo;
-    public ComboBox ModifyAppointmentEndTimeCombo;
     public TextField ModifyAppointmentTypeBox;
     public Button ModifyAppointmentSaveButton;
     public Button ModifyAppointmentCancelButton;
     public TextArea errorMessageBox;
+    public ComboBox ModifyAppointmentStartTimeHourCombo;
+    public ComboBox ModifyAppointmentEndTimeHourCombo;
+    public ComboBox ModifyAppointmentStartTimeMinuteCombo;
+    public ComboBox ModifyAppointmentEndTimeMinuteCombo;
 
     public void onModifyAppointmentStartDatePickerAction(ActionEvent actionEvent) {
     }

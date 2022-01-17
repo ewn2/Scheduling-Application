@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.AddAppointment">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.AddAppointment">
     <children>
         <Label layoutX="17.0" layoutY="14.0" text="Add Appointment">
             <font>
@@ -32,15 +32,19 @@
         <ComboBox fx:id="addAppointmentContactCombo" layoutX="95.0" layoutY="245.0" prefWidth="150" />
         <DatePicker fx:id="addAppointmentStartDatePicker" layoutX="95.0" layoutY="285.0" onAction="#onAddAppointmentStartDatePickerAction" />
         <DatePicker fx:id="addAppointmentEndDatePicker" layoutX="395.0" layoutY="285.0" onAction="#onAddAppointmentEndDatePickerAction" />
-        <ComboBox fx:id="addAppointmentStartTimeCombo" layoutX="95.0" layoutY="325.0" prefWidth="150" />
-        <ComboBox fx:id="addAppointmentEndTimeCombo" layoutX="395.0" layoutY="325.0" prefWidth="150" />
+        <ComboBox fx:id="addAppointmentStartTimeHourCombo" layoutX="95.0" layoutY="325.0" prefHeight="25.0" prefWidth="39.0" />
+        <ComboBox fx:id="addAppointmentEndTimeHourCombo" layoutX="395.0" layoutY="325.0" prefHeight="25.0" prefWidth="39.0" />
         <TextField fx:id="addAppointmentTypeBox" layoutX="95.0" layoutY="365.0" />
         <Button fx:id="addAppointmentSaveButton" layoutX="830.0" layoutY="535.0" mnemonicParsing="false" onAction="#onAddAppointmentSaveButtonAction" text="Save" />
         <Button fx:id="addAppointmentCancelButton" layoutX="890.0" layoutY="535.0" mnemonicParsing="false" onAction="#onAddAppointmentCancelButtonAction" text="Cancel" />
-        <TextArea fx:id="errorMessageBox" editable="false" layoutX="14.0" layoutY="416.0" prefHeight="113.0" prefWidth="270.0" visible="true" wrapText="true">
+        <TextArea fx:id="errorMessageBox" editable="false" layoutX="14.0" layoutY="416.0" prefHeight="113.0" prefWidth="270.0" visible="false" wrapText="true">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font></TextArea>
+      <ComboBox fx:id="addAppointmentStartTimeMinuteCombo" layoutX="152.0" layoutY="325.0" prefHeight="25.0" prefWidth="50.0" />
+      <ComboBox fx:id="addAppointmentEndTimeMinuteCombo" layoutX="452.0" layoutY="325.0" prefHeight="25.0" prefWidth="50.0" />
+      <Label layoutX="148.0" layoutY="325.0" text=":" />
+      <Label layoutX="448.0" layoutY="325.0" prefHeight="17.0" prefWidth="3.0" text=":" />
 
     </children>
 </AnchorPane>

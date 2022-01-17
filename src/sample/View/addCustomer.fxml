@@ -29,7 +29,7 @@
       <TextField fx:id="addCustomerAddressBox" layoutX="95.0" layoutY="365.0" />
       <Button fx:id="addCustomerSaveButton" layoutX="830.0" layoutY="535.0" mnemonicParsing="false" onAction="#onAddCustomerSaveButtonAction" text="Save" />
       <Button fx:id="addCustomerCancelButton" layoutX="890.0" layoutY="535.0" mnemonicParsing="false" onAction="#onAddCustomerCancelButtonAction" text="Cancel" />
-      <TextArea fx:id="errorMessageBox" editable="false" layoutX="14.0" layoutY="416.0" prefHeight="113.0" prefWidth="270.0" visible="true" wrapText="true">
+      <TextArea fx:id="errorMessageBox" editable="false" layoutX="14.0" layoutY="416.0" prefHeight="113.0" prefWidth="270.0" visible="false" wrapText="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></TextArea>

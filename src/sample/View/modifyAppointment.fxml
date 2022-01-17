@@ -32,15 +32,19 @@
         <ComboBox fx:id="ModifyAppointmentContactCombo" layoutX="95.0" layoutY="245.0" prefWidth="150" />
         <DatePicker fx:id="ModifyAppointmentStartDatePicker" layoutX="95.0" layoutY="285.0" onAction="#onModifyAppointmentStartDatePickerAction" />
         <DatePicker fx:id="ModifyAppointmentEndDatePicker" layoutX="395.0" layoutY="285.0" onAction="#onModifyAppointmentEndDatePickerAction" />
-        <ComboBox fx:id="ModifyAppointmentStartTimeCombo" layoutX="95.0" layoutY="325.0" prefWidth="150" />
-        <ComboBox fx:id="ModifyAppointmentEndTimeCombo" layoutX="395.0" layoutY="325.0" prefWidth="150" />
         <TextField fx:id="ModifyAppointmentTypeBox" layoutX="95.0" layoutY="365.0" />
         <Button fx:id="ModifyAppointmentSaveButton" layoutX="830.0" layoutY="535.0" mnemonicParsing="false" onAction="#onModifyAppointmentSaveButtonAction" text="Save" />
         <Button fx:id="ModifyAppointmentCancelButton" layoutX="890.0" layoutY="535.0" mnemonicParsing="false" onAction="#onModifyAppointmentCancelButtonAction" text="Cancel" />
-        <TextArea fx:id="errorMessageBox" editable="false" layoutX="14.0" layoutY="416.0" prefHeight="113.0" prefWidth="270.0" visible="true" wrapText="true">
+        <ComboBox fx:id="ModifyAppointmentStartTimeHourCombo" layoutX="95.0" layoutY="325.0" prefHeight="25.0" prefWidth="39.0" />
+        <ComboBox fx:id="ModifyAppointmentEndTimeHourCombo" layoutX="395.0" layoutY="325.0" prefHeight="25.0" prefWidth="39.0" />
+        <TextArea fx:id="errorMessageBox" editable="false" layoutX="14.0" layoutY="416.0" prefHeight="113.0" prefWidth="270.0" visible="false" wrapText="true">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font></TextArea>
+        <ComboBox fx:id="ModifyAppointmentStartTimeMinuteCombo" layoutX="152.0" layoutY="325.0" prefHeight="25.0" prefWidth="50.0" />
+        <ComboBox fx:id="ModifyAppointmentEndTimeMinuteCombo" layoutX="452.0" layoutY="325.0" prefHeight="25.0" prefWidth="50.0" />
+        <Label layoutX="148.0" layoutY="325.0" text=":" />
+        <Label layoutX="448.0" layoutY="325.0" prefHeight="17.0" prefWidth="3.0" text=":" />
 
     </children>
 </AnchorPane>

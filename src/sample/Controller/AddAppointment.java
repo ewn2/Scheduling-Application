@@ -21,12 +21,14 @@ public class AddAppointment {
     public ComboBox addAppointmentContactCombo;
     public DatePicker addAppointmentStartDatePicker;
     public DatePicker addAppointmentEndDatePicker;
-    public ComboBox addAppointmentStartTimeCombo;
-    public ComboBox addAppointmentEndTimeCombo;
     public TextField addAppointmentTypeBox;
     public Button addAppointmentSaveButton;
     public Button addAppointmentCancelButton;
     public TextArea errorMessageBox;
+    public ComboBox addAppointmentStartTimeHourCombo;
+    public ComboBox addAppointmentEndTimeHourCombo;
+    public ComboBox addAppointmentStartTimeMinuteCombo;
+    public ComboBox addAppointmentEndTimeMinuteCombo;
 
     public void onAddAppointmentStartDatePickerAction(ActionEvent actionEvent) {
     }
