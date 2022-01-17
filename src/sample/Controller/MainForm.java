@@ -78,6 +78,8 @@ public class MainForm implements Initializable {
     public Customer selectedCustomer = null;
     //public Appointment selectedAppointment = null;
 
+    public static Customer customerPasser = null;
+
     public void onCustomerDeleteButtonAction(ActionEvent actionEvent) {
         //selectedAppointment = null;
         selectedCustomer = null;
@@ -88,7 +90,7 @@ public class MainForm implements Initializable {
             confirmButton.setVisible(true);
             denyButton.setVisible(true);
         }
-        /*
+        /* //Switch Delete Customer to this after appointments implemented
         if (selectedCustomer != null) {
             ObservableList<Part> emptyCheck = FXCollections.observableArrayList();
             emptyCheck = chosenProduct.getAllAssociatedAppointments();
@@ -104,11 +106,15 @@ public class MainForm implements Initializable {
     }
 
     public void onCustomerModifyButtonAction(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/sample/View/ModifyCustomer.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        customerPasser = null;
+        customerPasser = CustomerTable.getSelectionModel().getSelectedItem();
+        if (customerPasser != null) {
+            Parent parent = FXMLLoader.load(getClass().getResource("/sample/View/ModifyCustomer.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void onCustomerAddButtonAction(ActionEvent actionEvent) throws IOException {
