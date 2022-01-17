@@ -2,7 +2,9 @@ package sample.Controller;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,10 +16,13 @@ import javafx.stage.Stage;
 import sample.Model.User;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
-public class loginForm {
+public class loginForm implements Initializable {
     public Label mainScreenTitleLabel;
     public Button ExitButton;
     public TextArea errorMessageBox;
@@ -64,5 +69,11 @@ public class loginForm {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        String localeLabel = (String.valueOf((ZoneId.systemDefault())));
+        ZoneIDLabel.setText(localeLabel);
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.sql.*;
+import java.time.ZoneId;
 
 public class Main extends Application {
 
@@ -34,6 +35,8 @@ public class Main extends Application {
         {
             System.out.println(rs.getString("User_ID") + " " + rs.getString("User_Name") + " " + rs.getString("Password"));
         }
+        ZoneId systemZone = ZoneId.systemDefault();
+        System.out.println(systemZone);
         launch(args);
         JDBC.closeConnection();
     }
