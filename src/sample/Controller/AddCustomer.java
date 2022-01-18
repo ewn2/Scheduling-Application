@@ -94,12 +94,33 @@ public class AddCustomer implements Initializable {
         try {
             int id = 0;
             String CustomerName = addCustomerNameBox.getText();
+            if (CustomerName == null || CustomerName.trim().isEmpty()) {
+                throw new Exception();
+            }
             String CustomerPhone = addCustomerPhoneBox.getText();
+            if (CustomerPhone == null || CustomerPhone.trim().isEmpty()) {
+                throw new Exception();
+            }
             String CustomerCountry = addCustomerCountryCombo.getValue().toString();
+            if (CustomerCountry == null || CustomerCountry.trim().isEmpty()) {
+                throw new Exception();
+            }
             String CustomerPostal = addCustomerPostalBox.getText();
+            if (CustomerPostal == null || CustomerPostal.trim().isEmpty()) {
+                throw new Exception();
+            }
             String CustomerState = addCustomerStateCombo.getValue().toString();
+            if (CustomerState == null || CustomerState.trim().isEmpty()) {
+                throw new Exception();
+            }
             String CustomerCity = addCustomerCityBox.getText();
+            if (CustomerCity == null || CustomerCity.trim().isEmpty()) {
+                throw new Exception();
+            }
             String CustomerAddress = addCustomerAddressBox.getText();
+            if (CustomerAddress == null || CustomerAddress.trim().isEmpty()) {
+                throw new Exception();
+            }
         } catch (Exception e) {
             errorMessageBox.setVisible(true);
             errorMessageBox.setText("Error: Please check all boxes are filled with correct data");
