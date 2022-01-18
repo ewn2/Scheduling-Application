@@ -52,10 +52,15 @@ public class loginForm implements Initializable {
         denyButton.setVisible(false);
     }
 
+    public static String loggedInUser;
+    public static String getLoggedInUserID;
+
     public void onLoginButtonAction(ActionEvent actionEvent) throws IOException, SQLException {
         String username = usernameTextbox.getText();
         String password = passwordTextbox.getText();
         if (User.validUser(username,password)) {
+            //User.setUsername(username);
+            loggedInUser = username;
             returnToMainScreen(actionEvent);
         }
         else {
@@ -82,6 +87,7 @@ public class loginForm implements Initializable {
         loginButton.setText(resourceBundle.getString("loginButton"));
         mainScreenTitleLabel.setText(resourceBundle.getString("mainScreenTitleLabel"));
         String localeLabel = (String.valueOf((ZoneId.systemDefault())));
-        ZoneIDLabel.setText(localeLabel);
+        String languageLabel = (String.valueOf(Locale.getDefault()));
+        ZoneIDLabel.setText(languageLabel + ", " + localeLabel);
     }
 }

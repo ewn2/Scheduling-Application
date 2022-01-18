@@ -13,6 +13,7 @@ public class User {
     private String username;
     private int User_ID;
 
+    /*
     public User(){
     }
 
@@ -29,6 +30,7 @@ public class User {
     public void setUser_ID(int User_ID){
         this.User_ID = User_ID;
     }
+     */
 
     public static Boolean validUser(String username, String password) throws SQLException, IOException {
         String logQuery = "SELECT * FROM users WHERE User_Name='" + username + "' AND Password='" + password + "'";
