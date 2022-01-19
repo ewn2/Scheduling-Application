@@ -33,7 +33,6 @@ public class AddCustomer implements Initializable {
     public ComboBox addCustomerCountryCombo;
     public TextField addCustomerPostalBox;
     public ComboBox addCustomerStateCombo;
-    public TextField addCustomerCityBox;
     public TextField addCustomerAddressBox;
     public Button addCustomerSaveButton;
     public Button addCustomerCancelButton;
@@ -113,10 +112,6 @@ public class AddCustomer implements Initializable {
             if (CustomerState == null || CustomerState.trim().isEmpty()) {
                 throw new Exception();
             }
-            String CustomerCity = addCustomerCityBox.getText();
-            if (CustomerCity == null || CustomerCity.trim().isEmpty()) {
-                throw new Exception();
-            }
             String CustomerAddress = addCustomerAddressBox.getText();
             if (CustomerAddress == null || CustomerAddress.trim().isEmpty()) {
                 throw new Exception();
@@ -132,11 +127,10 @@ public class AddCustomer implements Initializable {
         String CustomerCountry = addCustomerCountryCombo.getValue().toString();
         String CustomerPostal = addCustomerPostalBox.getText();
         String CustomerState = addCustomerStateCombo.getValue().toString();
-        String CustomerCity = addCustomerCityBox.getText();
         String CustomerAddress = addCustomerAddressBox.getText();
         if (validEntries) {
             try {
-                Customer newCustomer = new Customer(id, CustomerName,CustomerPhone,CustomerCountry,CustomerPostal,CustomerState,CustomerCity,CustomerAddress);
+                Customer newCustomer = new Customer(id, CustomerName,CustomerPhone,CustomerCountry,CustomerPostal,CustomerState,CustomerAddress);
                 newCustomer.setCustomerID(Customer.uniqueCustomerID());
                 Customer.addCustomer(newCustomer);
                 addedCustomer = true;

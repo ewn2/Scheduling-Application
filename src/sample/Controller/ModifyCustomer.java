@@ -28,7 +28,6 @@ public class ModifyCustomer implements Initializable {
     public ComboBox ModifyCustomerCountryCombo;
     public TextField ModifyCustomerPostalBox;
     public ComboBox ModifyCustomerStateCombo;
-    public TextField ModifyCustomerCityBox;
     public TextField ModifyCustomerAddressBox;
     public Button ModifyCustomerSaveButton;
     public Button ModifyCustomerCancelButton;
@@ -57,7 +56,6 @@ public class ModifyCustomer implements Initializable {
         }
         ModifyCustomerPostalBox.setText(String.valueOf(customerToModify.getCustomerPostal()));
         ModifyCustomerStateCombo.setValue(String.valueOf(customerToModify.getCustomerState()));
-        ModifyCustomerCityBox.setText(String.valueOf(customerToModify.getCustomerCity()));
         ModifyCustomerAddressBox.setText(String.valueOf(customerToModify.getCustomerAddress()));
     }
 
@@ -119,12 +117,29 @@ public class ModifyCustomer implements Initializable {
         try {
             int id = 0;
             String CustomerName = ModifyCustomerNameBox.getText();
+            if (CustomerName == null || CustomerName.trim().isEmpty()) {
+                throw new Exception();
+            }
             String CustomerPhone = ModifyCustomerPhoneBox.getText();
+            if (CustomerPhone == null || CustomerPhone.trim().isEmpty()) {
+                throw new Exception();
+            }
             String CustomerCountry = ModifyCustomerCountryCombo.getValue().toString();
+            if (CustomerCountry == null || CustomerCountry.trim().isEmpty()) {
+                throw new Exception();
+            }
             String CustomerPostal = ModifyCustomerPostalBox.getText();
+            if (CustomerPostal == null || CustomerPostal.trim().isEmpty()) {
+                throw new Exception();
+            }
             String CustomerState = ModifyCustomerStateCombo.getValue().toString();
-            String CustomerCity = ModifyCustomerCityBox.getText();
+            if (CustomerState == null || CustomerState.trim().isEmpty()) {
+                throw new Exception();
+            }
             String CustomerAddress = ModifyCustomerAddressBox.getText();
+            if (CustomerAddress == null || CustomerAddress.trim().isEmpty()) {
+                throw new Exception();
+            }
         } catch (Exception e) {
             errorMessageBox.setVisible(true);
             errorMessageBox.setText("Error: Please check all boxes are filled with correct data");
@@ -136,12 +151,11 @@ public class ModifyCustomer implements Initializable {
         String CustomerCountry = ModifyCustomerCountryCombo.getValue().toString();
         String CustomerPostal = ModifyCustomerPostalBox.getText();
         String CustomerState = ModifyCustomerStateCombo.getValue().toString();
-        String CustomerCity = ModifyCustomerCityBox.getText();
         String CustomerAddress = ModifyCustomerAddressBox.getText();
         if (validEntries) {
             try {
                 id = customerToModify.getCustomerID();
-                Customer newCustomer = new Customer(id, CustomerName,CustomerPhone,CustomerCountry,CustomerPostal,CustomerState,CustomerCity,CustomerAddress);
+                Customer newCustomer = new Customer(id, CustomerName,CustomerPhone,CustomerCountry,CustomerPostal,CustomerState,CustomerAddress);
                 newCustomer.setCustomerID(id);
                 Customer.updateCustomer(id ,newCustomer);
                 addedCustomer = true;

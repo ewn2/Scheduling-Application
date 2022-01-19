@@ -10,27 +10,27 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class User {
-    private String username;
-    private int User_ID;
+    private static String loggedInUser;
+    private static int loggedInUser_ID;
 
     /*
     public User(){
     }
-
+*/
     public String getUsername() {
-        return username;
+        return loggedInUser;
     }
     public int getUser_ID(){
-        return User_ID;
+        return loggedInUser_ID;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public static void setUsername(String username) {
+        loggedInUser = username;
     }
-    public void setUser_ID(int User_ID){
-        this.User_ID = User_ID;
+
+    public static void setUser_ID(int User_ID) {
+        loggedInUser_ID = User_ID;
     }
-     */
 
     public static Boolean validUser(String username, String password) throws SQLException, IOException {
         String logQuery = "SELECT * FROM users WHERE User_Name='" + username + "' AND Password='" + password + "'";
@@ -41,6 +41,15 @@ public class User {
         while(rs.next())
         {
             User.loginAttempt(username, String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now()),true);
+            setUsername(username);
+            String logQuery2 = "SELECT User_ID FROM users WHERE User_Name='" + username + "' AND Password='" + password + "'";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            Statement checkQuery2 = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            ResultSet rs2 = checkQuery.getResultSet();
+            while (rs2.next()) {
+                setUser_ID(rs2.getInt("User_ID"));
+            }
             return true;
         }
         User.loginAttempt(username, String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now()),false);

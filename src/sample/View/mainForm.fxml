@@ -27,16 +27,15 @@
                      <children>
                           <AnchorPane fx:id="CustomerAnchorPane" prefHeight="416.0" prefWidth="964.0">
                               <children>
-                                  <TableView fx:id="CustomerTable" layoutX="8.0" layoutY="58.0" prefHeight="223.0" prefWidth="944.0">
+                                  <TableView fx:id="CustomerTable" layoutX="8.0" layoutY="58.0" prefHeight="223.0" prefWidth="945.0">
                                       <columns>
-                                          <TableColumn fx:id="customerTableCustomerIDCol" prefWidth="118.0" text="Customer ID" />
-                                          <TableColumn fx:id="customerTableCustomerNameCol" prefWidth="118.0" text="Name" />
-                                          <TableColumn fx:id="customerTableCustomerPhoneCol" prefWidth="118.0" text="Phone" />
-                                          <TableColumn fx:id="customerTableCustomerCountryCol" prefWidth="118.0" text="Country" />
-                                          <TableColumn fx:id="customerTableCustomerPostalCol" prefWidth="118.0" text="Postal Code" />
-                                          <TableColumn fx:id="customerTableCustomerStateCol" prefWidth="118.0" text="State/Province" />
-                                          <TableColumn fx:id="customerTableCustomerCityCol" prefWidth="118.0" text="City" />
-                                          <TableColumn fx:id="customerTableCustomerAddressCol" prefWidth="118.0" text="Address" />
+                                          <TableColumn fx:id="customerTableCustomerIDCol" prefWidth="135.0" text="Customer ID" />
+                                          <TableColumn fx:id="customerTableCustomerNameCol" prefWidth="135.0" text="Name" />
+                                          <TableColumn fx:id="customerTableCustomerPhoneCol" prefWidth="135.0" text="Phone" />
+                                          <TableColumn fx:id="customerTableCustomerCountryCol" prefWidth="135.0" text="Country" />
+                                          <TableColumn fx:id="customerTableCustomerPostalCol" prefWidth="135.0" text="Postal Code" />
+                                          <TableColumn fx:id="customerTableCustomerStateCol" prefWidth="135.0" text="State/Province" />
+                                          <TableColumn fx:id="customerTableCustomerAddressCol" prefWidth="135.0" text="Address" />
                                       </columns>
                                   </TableView>
                                   <Button fx:id="customerDeleteButton" layoutX="181.0" layoutY="287.0" mnemonicParsing="false" onAction="#onCustomerDeleteButtonAction" text="Delete" />

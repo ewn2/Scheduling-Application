@@ -55,7 +55,6 @@ public class MainForm implements Initializable {
     public TableColumn<Customer, String> customerTableCustomerCountryCol;
     public TableColumn<Customer, String> customerTableCustomerPostalCol;
     public TableColumn<Customer, String> customerTableCustomerStateCol;
-    public TableColumn<Customer, String> customerTableCustomerCityCol;
     public TableColumn<Customer, String> customerTableCustomerAddressCol;
 
     @Override
@@ -67,7 +66,6 @@ public class MainForm implements Initializable {
         customerTableCustomerCountryCol.setCellValueFactory(new PropertyValueFactory<>("CustomerCountry"));
         customerTableCustomerPostalCol.setCellValueFactory(new PropertyValueFactory<>("CustomerPostal"));
         customerTableCustomerStateCol.setCellValueFactory(new PropertyValueFactory<>("CustomerState"));
-        customerTableCustomerCityCol.setCellValueFactory(new PropertyValueFactory<>("CustomerCity"));
         customerTableCustomerAddressCol.setCellValueFactory(new PropertyValueFactory<>("CustomerAddress"));
     }
 

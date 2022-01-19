@@ -10,7 +10,6 @@ public class Customer {
     private String CustomerCountry;
     private String CustomerPostal;
     private String CustomerState;
-    private String CustomerCity;
     private String CustomerAddress;
 
     private static int customerIDGenerated = -1;
@@ -20,14 +19,13 @@ public class Customer {
         return customerIDGenerated;
     }
 
-    public Customer(int CustomerID, String CustomerName, String CustomerPhone, String CustomerCountry, String CustomerPostal, String CustomerState, String CustomerCity, String CustomerAddress) {
+    public Customer(int CustomerID, String CustomerName, String CustomerPhone, String CustomerCountry, String CustomerPostal, String CustomerState, String CustomerAddress) {
         this.CustomerID = CustomerID;
         this.CustomerName = CustomerName;
         this.CustomerPhone = CustomerPhone;
         this.CustomerCountry = CustomerCountry;
         this.CustomerPostal = CustomerPostal;
         this.CustomerState = CustomerState;
-        this.CustomerCity = CustomerCity;
         this.CustomerAddress = CustomerAddress;
     }
 
@@ -71,13 +69,6 @@ public class Customer {
     }
     public void setCustomerState(String CustomerState) {
         this.CustomerState = CustomerState;
-    }
-
-    public String getCustomerCity() {
-        return CustomerCity;
-    }
-    public void setCustomerCity(String CustomerCity) {
-        this.CustomerCity = CustomerCity;
     }
 
     public String getCustomerAddress() {
