@@ -78,8 +78,7 @@ public class loginForm implements Initializable {
     }
 
     @FXML
-    public static ZoneId usersTimezone = ZoneId.of("Asia/Kolkata");
-    //public static ZoneId usersTimezone = ZoneId.systemDefault();
+    public static ZoneId usersTimezone = ZoneId.systemDefault();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
