@@ -15,6 +15,7 @@ import sample.JDBC;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.LocalTime;
@@ -53,7 +54,11 @@ public class AddAppointment implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateTimeCombos();
-        businessHoursDisplayAdjustment();
+        try {
+            businessHoursDisplayAdjustment();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void populateTimeCombos(){
@@ -83,19 +88,13 @@ public class AddAppointment implements Initializable {
         addAppointmentEndTimeMinuteCombo1.getItems().addAll(minuteBoxes1);
     }
 
-    public void businessHoursDisplayAdjustment() {
-
-        SimpleDateFormat estDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        estDateFormat.setTimeZone(TimeZone.getTimeZone("EST"));
-        //Current Date Time in EST
-        System.out.println("Current Date and Time in GMT time zone: " + estDateFormat.format(new Date()));
-
-        Timestamp ESTOpenHours = Timestamp.valueOf("2000-01-01 08:00:00");//yyyy-MM-dd HH:mm:ss.S
-        Timestamp ESTCloseHours = Timestamp.valueOf("2000-01-01 22:00:00");
-        String adjOpen = ESTOpenHours.toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm"));
-        String adjClose = ESTCloseHours.toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm"));
-        businessHoursOpen.setText(adjOpen);
-        businessHoursClosed.setText(adjClose);
+    public void businessHoursDisplayAdjustment() throws ParseException {
+        ZonedDateTime startTime = LocalDate.now().atTime(8,0).atZone(ZoneId.of("US/Eastern"));
+        String UserStartTime = startTime.toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm"));
+        ZonedDateTime endTime = LocalDate.now().atTime(22,0).atZone(ZoneId.of("US/Eastern"));
+        String UserEndTime = endTime.toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm"));
+        businessHoursOpen.setText(UserStartTime);
+        businessHoursClosed.setText(UserEndTime);
     }
 
     public void populateCountry() throws SQLException {
@@ -110,9 +109,9 @@ public class AddAppointment implements Initializable {
         }
     }
 
-    private Date startDate;
+    private LocalDateTime startDate;
     public void onAddAppointmentStartDatePickerAction(ActionEvent actionEvent) {
-        //startDate = addAppointmentStartDatePicker.getValue().atStartOfDay();
+        startDate = addAppointmentStartDatePicker.getValue().atStartOfDay();
     }
 
     private LocalDate endDate;
