@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.JDBC;
+import sample.Model.Appointment;
+import sample.Model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -120,6 +122,8 @@ public class AddAppointment implements Initializable {
         businessHoursClosed.setText(UserEndTime);
     }
 
+    private ZonedDateTime meetingStart;
+    private ZonedDateTime meetingEnd;
     public boolean StartEndAppointmentCheck() {
         int hourValue = Integer.parseInt(addAppointmentStartTimeHourCombo.getValue().toString());
         int minuteValue = Integer.parseInt((addAppointmentStartTimeMinuteCombo.getValue().toString()+addAppointmentStartTimeMinuteCombo1.getValue().toString()));
@@ -130,12 +134,12 @@ public class AddAppointment implements Initializable {
         if (startToCheck.compareTo(startTime.withZoneSameInstant(ZoneId.systemDefault())) >= 0 && endToCheck.compareTo(startTime.withZoneSameInstant(ZoneId.systemDefault())) >= 0 ) {
             if (endToCheck.compareTo(endTime.withZoneSameInstant(ZoneId.systemDefault())) <= 0 && startToCheck.compareTo(endTime.withZoneSameInstant(ZoneId.systemDefault())) <= 0) {
                 if (checkDates()) {
-                    System.out.println("Good");
+                    meetingStart = startToCheck;
+                    meetingEnd = endToCheck;
                     return true;
                 }
             }
         }
-        System.out.println("Bad");
         return false;
     }
 
@@ -192,9 +196,86 @@ public class AddAppointment implements Initializable {
         return false;
     }
 
-    public void onAddAppointmentSaveButtonAction(ActionEvent actionEvent) throws IOException {
-        StartEndAppointmentCheck();
-        //returnToMainScreen(actionEvent);
+    public void onAddAppointmentSaveButtonAction(ActionEvent actionEvent) throws IOException, SQLException {
+        boolean validEntries = true;
+        boolean addedAppointment = false;
+        if (StartEndAppointmentCheck()) {
+            try {
+                int id = 0;
+                String AppointmentTitle = addAppointmentTitleBox.getText();
+                if (AppointmentTitle == null || AppointmentTitle.trim().isEmpty() || AppointmentTitle.length() > 50) {
+                    throw new Exception();
+                }
+                String AppointmentDesc = addAppointmentDescriptionBox.getText();
+                if (AppointmentDesc == null || AppointmentDesc.trim().isEmpty() || AppointmentDesc.length() > 50) {
+                    throw new Exception();
+                }
+                String AppointmentLocation = addAppointmentLocationBox.getText();
+                if (AppointmentLocation == null || AppointmentLocation.trim().isEmpty() || AppointmentLocation.length() > 50) {
+                    throw new Exception();
+                }
+                String AppointmentContact = addAppointmentContactCombo.getValue().toString(); //Pull from DB
+                if (AppointmentContact == null || AppointmentContact.trim().isEmpty()) {
+                    throw new Exception();
+                }
+                String AppointmentType = addAppointmentTypeBox.getText();
+                if (AppointmentType == null || AppointmentType.trim().isEmpty() || AppointmentType.length() > 50) {
+                    throw new Exception();
+                }
+                LocalDateTime AppointmentStartDateTime = startDate.atTime(LocalTime.from(meetingStart));
+                System.out.println(AppointmentStartDateTime);
+                LocalDateTime AppointmentEndDateTime = endDate.atTime(LocalTime.from(meetingEnd));
+                System.out.println(AppointmentEndDateTime);
+                String AppointmentCustomerIDString = addAppointmentCustomerIDCombo.getValue().toString(); //Pull from DB
+                if (AppointmentCustomerIDString == null || AppointmentCustomerIDString.trim().isEmpty()) {
+                    throw new Exception();
+                }
+                String AppointmentUserIDString = addAppointmentUserIDCombo.getValue().toString(); //Pull from DB
+                if (AppointmentUserIDString == null || AppointmentUserIDString.trim().isEmpty()) {
+                    throw new Exception();
+                }
+            } catch (Exception e) {
+                errorMessageBox.setVisible(true);
+                errorMessageBox.setText("Error: Please check all boxes are filled and within the 50 Character limit per Box");
+                validEntries = false;
+            }
+            int id = 0;
+            String AppointmentTitle = addAppointmentTitleBox.getText();
+            String AppointmentDesc = addAppointmentDescriptionBox.getText();
+            String AppointmentLocation = addAppointmentLocationBox.getText();
+            String AppointmentContact = addAppointmentContactCombo.getValue().toString(); //Pull from DB
+            String AppointmentType = addAppointmentTypeBox.getText();
+            LocalDateTime AppointmentStartDateTime = startDate.atTime(LocalTime.from(meetingStart));
+            String AptStartDateTime = AppointmentStartDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            LocalDateTime AppointmentEndDateTime = endDate.atTime(LocalTime.from(meetingEnd));
+            String AptEndDateTime = AppointmentEndDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            String AppointmentCustomerIDString = addAppointmentCustomerIDCombo.getValue().toString(); //Pull from DB
+            String AppointmentUserIDString = addAppointmentUserIDCombo.getValue().toString(); //Pull from DBs
+            int AppointmentContactID = 0;
+            int AppointmentCustomerID = Integer.parseInt(AppointmentCustomerIDString);
+            int AppointmentUserID = Integer.parseInt(AppointmentUserIDString);
+            if (validEntries) {
+                try {
+                    Appointment newAppointment = new Appointment(id, AppointmentTitle,AppointmentDesc,AppointmentLocation,AppointmentContact,AppointmentType,AptStartDateTime,AptEndDateTime,AppointmentCustomerID,AppointmentUserID);
+                    newAppointment.setAppointmentID(Appointment.uniqueAppointmentID());
+                    Appointment.addAppointment(newAppointment);
+                    if (Appointment.addAppointmentToDatabase(newAppointment)) {
+                        addedAppointment = true;
+                    }
+                    else {
+                        throw new Exception();
+                    }
+                } catch (Exception e) {
+                    errorMessageBox.setVisible(true);
+                    errorMessageBox.setText("Error: Cannot add Customer to database, check connection");
+                }
+            }
+            returnToMainScreen(actionEvent);
+        }
+        else {
+            errorMessageBox.setVisible(true);
+            errorMessageBox.setText("Error: Appointment Start and End times and dates must conform to business hours");
+        }
     }
 
     public void onAddAppointmentCancelButtonAction(ActionEvent actionEvent) throws IOException {

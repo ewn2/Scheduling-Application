@@ -2,7 +2,11 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.JDBC;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.Vector;
 
@@ -33,6 +37,29 @@ public class Appointment {
         this.AppointmentCustomerID = AppointmentCustomerID;
         this.AppointmentUserID = AppointmentUserID;
     }
+
+    public static boolean addAppointmentToDatabase(Appointment givenAppointment) throws SQLException {
+        try {
+            int AppointmentContactID = 0;
+            String logQuery = "SELECT Contact_ID FROM contacts WHERE Contact_Name='" + givenAppointment.getAppointmentContact() + "'";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            Statement checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            ResultSet rs = checkQuery.getResultSet();
+            while (rs.next()) {
+                AppointmentContactID = rs.getInt("Contact_ID");
+            }
+            String addCustomerQuery = "INSERT INTO appointments VALUES ("+givenAppointment.getAppointmentID()+", '"+givenAppointment.getAppointmentTitle()+"', '"+givenAppointment.getAppointmentDesc()+"', '"+givenAppointment.getAppointmentLocation()+"', '"+givenAppointment.getAppointmentType()+"', '"+givenAppointment.getAppointmentStartDateTime()+"','"+givenAppointment.getAppointmentEndDateTime()+"', CURRENT_TIMESTAMP, 'program', CURRENT_TIMESTAMP, 'program', "+givenAppointment.getAppointmentCustomerID()+","+givenAppointment.getAppointmentUserID()+","+AppointmentContactID+")";
+            JDBC.makePreparedStatement(addCustomerQuery, JDBC.getConnection());
+            Statement checkQuery2 = JDBC.getPreparedStatement();
+            checkQuery2.execute(addCustomerQuery);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
 
     public int getAppointmentID() {
         return AppointmentID;
