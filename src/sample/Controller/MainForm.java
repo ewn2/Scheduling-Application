@@ -1,6 +1,8 @@
 package sample.Controller;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,6 +18,7 @@ import sample.Model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 public class MainForm implements Initializable {
@@ -101,10 +104,10 @@ public class MainForm implements Initializable {
             confirmButton.setVisible(true);
             denyButton.setVisible(true);
         }
-        /* //Switch Delete Customer to this after appointments implemented
+        //Switch Delete Customer to this after appointments implemented
         if (selectedCustomer != null) {
-            ObservableList<Part> emptyCheck = FXCollections.observableArrayList();
-            emptyCheck = chosenProduct.getAllAssociatedAppointments();
+            ObservableList<Appointment> emptyCheck = FXCollections.observableArrayList();
+            emptyCheck = selectedCustomer.getAssociatedAppointments();
             errorMessageBox.setVisible(true);
             if (emptyCheck.toString() == "[]") {
                 errorMessageBox.setText("Delete this Customer?");
@@ -113,7 +116,7 @@ public class MainForm implements Initializable {
             } else {
                 errorMessageBox.setText("You may not delete a Customer with existing Appointments");
             }
-        }*/
+        }
     }
 
     public void onCustomerModifyButtonAction(ActionEvent actionEvent) throws IOException {
@@ -166,7 +169,13 @@ public class MainForm implements Initializable {
         confirmButton.setVisible(false);
         denyButton.setVisible(false);
         if (selectedCustomer != null) {
-            Customer.deleteCustomer(selectedCustomer);
+            if (Customer.deleteCustomerFromDatabase(selectedCustomer)) {
+                Customer.deleteCustomer(selectedCustomer);
+            }
+            else {
+                errorMessageBox.setVisible(true);
+                errorMessageBox.setText("Error connecting to database, check connection");
+            }
             CustomerTable.setItems(Customer.customerPopulation());
         }
         /*

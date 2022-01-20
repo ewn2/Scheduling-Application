@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 public class Customer {
+    private ObservableList<Appointment> associatedAppointments = FXCollections.observableArrayList();
     private int CustomerID;
     private String CustomerName;
     private String CustomerPhone;
@@ -17,6 +18,22 @@ public class Customer {
     private String CustomerPostal;
     private String CustomerState;
     private String CustomerAddress;
+
+    public void addAssociatedAppointment(Appointment appointment) {
+        associatedAppointments.add(appointment);
+    }
+
+    public boolean deleteAssociatedAppointments(Appointment appointment) {
+        if (associatedAppointments.contains(appointment)) {
+            associatedAppointments.remove(appointment);
+            return true;
+        }
+        else return false;
+    }
+
+    public ObservableList<Appointment> getAssociatedAppointments() {
+        return associatedAppointments;
+    }
 
     private static int customerIDGenerated = -1;
 
@@ -41,10 +58,10 @@ public class Customer {
         this.CustomerAddress = CustomerAddress;
     }
 
-    public boolean addCustomerToDatabase(int CustomerID, String CustomerName, String CustomerPhone, String CustomerCountry, String CustomerPostal, String CustomerState, String CustomerAddress) throws SQLException {
+    public static boolean addCustomerToDatabase(Customer givenCustomer) throws SQLException {
         try {
             int division = 0;
-            String divQuery = "SELECT Division_ID from first_level_divisions join countries on first_level_divisions.Country_ID=countries.Country_ID WHERE Country='"+CustomerCountry+"' AND Division='"+CustomerState+"'";
+            String divQuery = "SELECT Division_ID from first_level_divisions join countries on first_level_divisions.Country_ID=countries.Country_ID WHERE Country='"+givenCustomer.getCustomerCountry()+"' AND Division='"+givenCustomer.getCustomerState()+"'";
             JDBC.makePreparedStatement(divQuery, JDBC.getConnection());
             Statement checkQuery = JDBC.getPreparedStatement();
             checkQuery.execute(divQuery);
@@ -52,10 +69,23 @@ public class Customer {
             while (rs.next()) {
                 division = rs.getInt("Division_ID");
             }
-            String addCustomerQuery = "INSERT INTO customers VALUES ("+CustomerID+", '"+CustomerName+"', '"+CustomerAddress+"', '"+CustomerPostal+"', '"+CustomerPhone+"', CURRENT_TIMESTAMP, 'program', CURRENT_TIMESTAMP, 'program', "+division+")";
+            String addCustomerQuery = "INSERT INTO customers VALUES ("+givenCustomer.getCustomerID()+", '"+givenCustomer.getCustomerName()+"', '"+givenCustomer.getCustomerAddress()+"', '"+givenCustomer.getCustomerPostal()+"', '"+givenCustomer.getCustomerPhone()+"', CURRENT_TIMESTAMP, 'program', CURRENT_TIMESTAMP, 'program', "+division+")";
             JDBC.makePreparedStatement(addCustomerQuery, JDBC.getConnection());
             Statement checkQuery2 = JDBC.getPreparedStatement();
             checkQuery2.execute(addCustomerQuery);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean deleteCustomerFromDatabase(Customer givenCustomer) {
+        try {
+            String deleteCustomerQuery = "DELETE FROM customers WHERE Customer_ID="+givenCustomer.getCustomerID()+"";
+            JDBC.makePreparedStatement(deleteCustomerQuery, JDBC.getConnection());
+            Statement checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(deleteCustomerQuery);
             return true;
         }
         catch (Exception e) {

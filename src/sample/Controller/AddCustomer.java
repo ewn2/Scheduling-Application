@@ -133,10 +133,15 @@ public class AddCustomer implements Initializable {
                 Customer newCustomer = new Customer(id, CustomerName,CustomerPhone,CustomerCountry,CustomerPostal,CustomerState,CustomerAddress);
                 newCustomer.setCustomerID(Customer.uniqueCustomerID());
                 Customer.addCustomer(newCustomer);
-                addedCustomer = true;
+                if (Customer.addCustomerToDatabase(newCustomer)) {
+                    addedCustomer = true;
+                }
+                else {
+                    throw new Exception();
+                }
             } catch (Exception e) {
                 errorMessageBox.setVisible(true);
-                errorMessageBox.setText("Error: Please check all boxes are filled with valid data");
+                errorMessageBox.setText("Error: Cannot add Customer to database, check connection");
             }
         }
 
