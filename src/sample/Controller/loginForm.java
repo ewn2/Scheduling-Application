@@ -77,6 +77,10 @@ public class loginForm implements Initializable {
         stage.show();
     }
 
+    @FXML
+    public static ZoneId usersTimezone = ZoneId.of("Asia/Kolkata");
+    //public static ZoneId usersTimezone = ZoneId.systemDefault();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         resourceBundle = ResourceBundle.getBundle("sample/Language", Locale.getDefault());
@@ -86,7 +90,7 @@ public class loginForm implements Initializable {
         ExitButton.setText(resourceBundle.getString("ExitButton"));
         loginButton.setText(resourceBundle.getString("loginButton"));
         mainScreenTitleLabel.setText(resourceBundle.getString("mainScreenTitleLabel"));
-        String localeLabel = (String.valueOf((ZoneId.systemDefault())));
+        String localeLabel = (String.valueOf(usersTimezone));
         String languageLabel = (String.valueOf(Locale.getDefault()));
         ZoneIDLabel.setText(languageLabel + ", " + localeLabel);
     }

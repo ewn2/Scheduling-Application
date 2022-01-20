@@ -88,6 +88,7 @@
                               <RadioButton fx:id="appointmentsMonthlyRadio" layoutX="258.0" layoutY="26.0" mnemonicParsing="false" onAction="#onAppointmentsMonthlyRadioAction" text="Month" toggleGroup="$WeekOrMonth" />
                               <DatePicker fx:id="WeekOrMonthSelect" layoutX="348.0" layoutY="22.0" onAction="#onWeekOrMonthSelectAction" prefHeight="25.0" prefWidth="110.0" promptText="Date Filer" showWeekNumbers="true" />
                               <RadioButton fx:id="appointmentsNoFilterRadio" layoutX="178.0" layoutY="6.0" mnemonicParsing="false" onAction="#onAppointmentsNoFilterRadioAction" selected="true" text="No Filter" toggleGroup="$WeekOrMonth" />
+                              <Label fx:id="timeZoneLabel" layoutX="686.0" layoutY="26.0" text="TimeZone" />
                               </children>
                           </AnchorPane>
                      </children></AnchorPane>

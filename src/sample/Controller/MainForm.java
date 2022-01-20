@@ -19,6 +19,7 @@ import sample.Model.Customer;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
@@ -61,9 +62,11 @@ public class MainForm implements Initializable {
     public TableColumn<Customer, String> customerTableCustomerPostalCol;
     public TableColumn<Customer, String> customerTableCustomerStateCol;
     public TableColumn<Customer, String> customerTableCustomerAddressCol;
+    public Label timeZoneLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        timeZoneLabel.setText("User's Timezone: " + loginForm.usersTimezone);
         CustomerTable.setItems(Customer.customerPopulation());
         customerTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("CustomerID"));
         customerTableCustomerNameCol.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
