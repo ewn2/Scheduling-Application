@@ -109,13 +109,30 @@ public class AddAppointment implements Initializable {
         addAppointmentEndTimeMinuteCombo1.getItems().addAll(minuteBoxes1);
     }
 
+    private ZonedDateTime startTime = LocalDate.now().atTime(8,0).atZone(ZoneId.of("US/Eastern"));
+    private ZonedDateTime endTime = LocalDate.now().atTime(22,0).atZone(ZoneId.of("US/Eastern"));
     public void businessHoursDisplayAdjustment() throws ParseException {
-        ZonedDateTime startTime = LocalDate.now().atTime(8,0).atZone(ZoneId.of("US/Eastern"));
         String UserStartTime = startTime.toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm"));
-        ZonedDateTime endTime = LocalDate.now().atTime(22,0).atZone(ZoneId.of("US/Eastern"));
         String UserEndTime = endTime.toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm"));
         businessHoursOpen.setText(UserStartTime);
         businessHoursClosed.setText(UserEndTime);
+    }
+
+    public boolean StartEndAppointmentCheck() {
+        int hourValue = Integer.parseInt(addAppointmentStartTimeHourCombo.getValue().toString());
+        int minuteValue = Integer.parseInt((addAppointmentStartTimeMinuteCombo.getValue().toString()+addAppointmentStartTimeMinuteCombo1.getValue().toString()));
+        ZonedDateTime startToCheck = LocalDate.now().atTime(hourValue,minuteValue).atZone(ZoneId.systemDefault());
+        int hourValueEnd = Integer.parseInt(addAppointmentEndTimeHourCombo.getValue().toString());
+        int minuteValueEnd = Integer.parseInt((addAppointmentEndTimeMinuteCombo.getValue().toString()+addAppointmentEndTimeMinuteCombo1.getValue().toString()));
+        ZonedDateTime endToCheck = LocalDate.now().atTime(hourValueEnd,minuteValueEnd).atZone(ZoneId.systemDefault());
+        if (startToCheck.compareTo(startTime.withZoneSameInstant(ZoneId.systemDefault())) >= 0) {
+            if (endToCheck.compareTo(endTime.withZoneSameInstant(ZoneId.systemDefault())) <= 0) {
+                System.out.println("Good");
+                return true;
+            }
+        }
+        System.out.println("Bad");
+        return false;
     }
 
     public void populateContacts() throws SQLException {
@@ -162,7 +179,8 @@ public class AddAppointment implements Initializable {
     }
 
     public void onAddAppointmentSaveButtonAction(ActionEvent actionEvent) throws IOException {
-        returnToMainScreen(actionEvent);
+        StartEndAppointmentCheck();
+        //returnToMainScreen(actionEvent);
     }
 
     public void onAddAppointmentCancelButtonAction(ActionEvent actionEvent) throws IOException {
