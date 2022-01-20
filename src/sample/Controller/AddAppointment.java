@@ -184,7 +184,10 @@ public class AddAppointment implements Initializable {
 
     public boolean checkDates() {
         if (startDate.atTime(LocalTime.from(startTime)).compareTo(endDate.atTime(LocalTime.from(endTime))) <= 0 && startDate != null && endDate != null) {
-            return true;
+            Duration duration = Duration.between(startDate.atTime(LocalTime.from(startTime)), endDate.atTime(LocalTime.from(endTime)));
+            if (duration.toHours() <= 14) {
+                return true;
+            }
         }
         return false;
     }
