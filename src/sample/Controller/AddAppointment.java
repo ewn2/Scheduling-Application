@@ -107,6 +107,8 @@ public class AddAppointment implements Initializable {
         addAppointmentEndTimeMinuteCombo.getItems().addAll(minuteBoxes);
         addAppointmentStartTimeMinuteCombo1.getItems().addAll(minuteBoxes1);
         addAppointmentEndTimeMinuteCombo1.getItems().addAll(minuteBoxes1);
+        addAppointmentStartDatePicker.setValue(startDate);
+        addAppointmentEndDatePicker.setValue(endDate);
     }
 
     private ZonedDateTime startTime = LocalDate.now().atTime(8,0).atZone(ZoneId.of("US/Eastern"));
@@ -125,10 +127,12 @@ public class AddAppointment implements Initializable {
         int hourValueEnd = Integer.parseInt(addAppointmentEndTimeHourCombo.getValue().toString());
         int minuteValueEnd = Integer.parseInt((addAppointmentEndTimeMinuteCombo.getValue().toString()+addAppointmentEndTimeMinuteCombo1.getValue().toString()));
         ZonedDateTime endToCheck = LocalDate.now().atTime(hourValueEnd,minuteValueEnd).atZone(ZoneId.systemDefault());
-        if (startToCheck.compareTo(startTime.withZoneSameInstant(ZoneId.systemDefault())) >= 0) {
-            if (endToCheck.compareTo(endTime.withZoneSameInstant(ZoneId.systemDefault())) <= 0) {
-                System.out.println("Good");
-                return true;
+        if (startToCheck.compareTo(startTime.withZoneSameInstant(ZoneId.systemDefault())) >= 0 && endToCheck.compareTo(startTime.withZoneSameInstant(ZoneId.systemDefault())) >= 0 ) {
+            if (endToCheck.compareTo(endTime.withZoneSameInstant(ZoneId.systemDefault())) <= 0 && startToCheck.compareTo(endTime.withZoneSameInstant(ZoneId.systemDefault())) <= 0) {
+                if (checkDates()) {
+                    System.out.println("Good");
+                    return true;
+                }
             }
         }
         System.out.println("Bad");
@@ -169,13 +173,20 @@ public class AddAppointment implements Initializable {
         }
     }
 
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate startDate = LocalDate.now();
+    private LocalDate endDate = LocalDate.now();
     public void onAddAppointmentStartDatePickerAction(ActionEvent actionEvent) {
         startDate = addAppointmentStartDatePicker.getValue();
     }
     public void onAddAppointmentEndDatePickerAction(ActionEvent actionEvent) {
         endDate = addAppointmentEndDatePicker.getValue();
+    }
+
+    public boolean checkDates() {
+        if (startDate.atTime(LocalTime.from(startTime)).compareTo(endDate.atTime(LocalTime.from(endTime))) <= 0 && startDate != null && endDate != null) {
+            return true;
+        }
+        return false;
     }
 
     public void onAddAppointmentSaveButtonAction(ActionEvent actionEvent) throws IOException {
