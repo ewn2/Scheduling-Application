@@ -29,6 +29,10 @@ public class AddAppointment {
     public ComboBox addAppointmentEndTimeHourCombo;
     public ComboBox addAppointmentStartTimeMinuteCombo;
     public ComboBox addAppointmentEndTimeMinuteCombo;
+    public ComboBox addAppointmentStartTimeMinuteCombo1;
+    public ComboBox addAppointmentEndTimeMinuteCombo1;
+    public Label addAppointmentSelectedStart;
+    public Label addAppointmentSelectedEnd;
 
     public void onAddAppointmentStartDatePickerAction(ActionEvent actionEvent) {
     }
@@ -50,5 +54,11 @@ public class AddAppointment {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void onStartTimeAdjustedAction(ActionEvent actionEvent) {
+    }
+
+    public void onEndTimeAdjustedAction(ActionEvent actionEvent) {
     }
 }

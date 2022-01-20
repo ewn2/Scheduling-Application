@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import sample.Model.Appointment;
 import sample.Model.Customer;
 
 import java.io.IOException;
@@ -28,17 +29,17 @@ public class MainForm implements Initializable {
     public Button customerModifyButton;
     public Button customerAddButton;
     public AnchorPane AppointmentAnchorPane;
-    public TableView AppointmentTable;
-    public TableColumn AppointmentTableAppointmentIDCol;
-    public TableColumn AppointmentTableTitleCol;
-    public TableColumn AppointmentTableDescriptionCol;
-    public TableColumn AppointmentTableLocationCol;
-    public TableColumn AppointmentTableContactCol;
-    public TableColumn AppointmentTableTypeCol;
-    public TableColumn AppointmentTableStartDateAndTimeCol;
-    public TableColumn AppointmentTableEndDateAndTimeCol;
-    public TableColumn AppointmentTableCustomerIDCol;
-    public TableColumn AppointmentTableUserIDCol;
+    public TableView<Appointment> AppointmentTable;
+    public TableColumn<Appointment, Integer> AppointmentTableAppointmentIDCol;
+    public TableColumn<Appointment, String> AppointmentTableTitleCol;
+    public TableColumn<Appointment, String> AppointmentTableDescriptionCol;
+    public TableColumn<Appointment, String> AppointmentTableLocationCol;
+    public TableColumn<Appointment, String> AppointmentTableContactCol;
+    public TableColumn<Appointment, String> AppointmentTableTypeCol;
+    public TableColumn<Appointment, String> AppointmentTableStartDateAndTimeCol;
+    public TableColumn<Appointment, String> AppointmentTableEndDateAndTimeCol;
+    public TableColumn<Appointment, Integer> AppointmentTableCustomerIDCol;
+    public TableColumn<Appointment, Integer> AppointmentTableUserIDCol;
     public Button AppointmentDeleteButton;
     public Button AppointmentModifyButton;
     public Button AppointmentAddButton;
@@ -67,6 +68,17 @@ public class MainForm implements Initializable {
         customerTableCustomerPostalCol.setCellValueFactory(new PropertyValueFactory<>("CustomerPostal"));
         customerTableCustomerStateCol.setCellValueFactory(new PropertyValueFactory<>("CustomerState"));
         customerTableCustomerAddressCol.setCellValueFactory(new PropertyValueFactory<>("CustomerAddress"));
+        AppointmentTable.setItems(Appointment.appointmentPopulation());
+        AppointmentTableAppointmentIDCol;
+        AppointmentTableTitleCol;
+        AppointmentTableDescriptionCol;
+        AppointmentTableLocationCol;
+        AppointmentTableContactCol;
+        AppointmentTableTypeCol;
+        AppointmentTableStartDateAndTimeCol;
+        AppointmentTableEndDateAndTimeCol;
+        AppointmentTableCustomerIDCol;
+        AppointmentTableUserIDCol;
     }
 
     public void onExitButtonAction(ActionEvent actionEvent) {
@@ -74,9 +86,10 @@ public class MainForm implements Initializable {
     }
 
     public Customer selectedCustomer = null;
-    //public Appointment selectedAppointment = null;
+    public Appointment selectedAppointment = null;
 
     public static Customer customerPasser = null;
+    public static Appointment appointmentPasser = null;
 
     public void onCustomerDeleteButtonAction(ActionEvent actionEvent) {
         //selectedAppointment = null;

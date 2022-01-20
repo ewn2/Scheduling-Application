@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sample.Model.Appointment;
 import sample.Model.Customer;
 
 import java.sql.*;
@@ -47,7 +48,39 @@ public class Main extends Application {
             Customer.addCustomer(fillerCustomer);
             Customer.usedIDs.add(CustomerID);
         }
+    }
 
+    public static void appointmentData() throws SQLException {
+        int AppointmentID = 0;
+        String AppointmentTitle = null;
+        String AppointmentDesc = null;
+        String AppointmentLocation = null;
+        String AppointmentContact = null;
+        String AppointmentType = null;
+        String AppointmentStartDateTime = null;//YYYY-MM-DD hh:mm:ss
+        String AppointmentEndDateTime = null;//YYYY-MM-DD hh:mm:ss
+        int AppointmentCustomerID = 0;
+        int AppointmentUserID = 0;
+        String logQuery = "SELECT * FROM appointments join customers on appointments.Customer_ID=customers.Customer_ID join contacts on appointments.Contact_ID=contacts.Contact_ID join users on appointments.User_ID=users.User_ID";
+        JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+        Statement checkQuery = JDBC.getPreparedStatement();
+        checkQuery.execute(logQuery);
+        ResultSet rs2 = checkQuery.getResultSet();
+        while (rs2.next()) {
+            AppointmentID = rs2.getInt("Appointment_ID");
+            AppointmentTitle = rs2.getString("Title");
+            AppointmentDesc = rs2.getString("Description");
+            AppointmentLocation = rs2.getString("Location");
+            AppointmentContact = rs2.getString("Contact_Name");
+            AppointmentType = rs2.getString("Type");
+            AppointmentStartDateTime = rs2.getTimestamp("Start").toString();
+            AppointmentEndDateTime = rs2.getTimestamp("End").toString();
+            AppointmentCustomerID = rs2.getInt("Customer_ID");
+            AppointmentUserID = rs2.getInt("User_ID");
+            Appointment fillerAppointment = new Appointment(AppointmentID, AppointmentTitle, AppointmentDesc, AppointmentLocation, AppointmentContact, AppointmentType, AppointmentStartDateTime, AppointmentEndDateTime, AppointmentCustomerID, AppointmentUserID);
+            Appointment.addAppointment(fillerAppointment);
+            Appointment.usedAppointmentIDs.add(AppointmentID);
+        }
     }
 
 
@@ -73,6 +106,7 @@ public class Main extends Application {
         System.out.println(location);
         System.out.println(EnFr);
         customerData();
+        appointmentData();
         launch(args);
         JDBC.closeConnection();
     }
