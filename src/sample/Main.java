@@ -80,8 +80,9 @@ public class Main extends Application {
             AppointmentLocation = rs2.getString("Location");
             AppointmentContact = rs2.getString("Contact_Name");
             AppointmentType = rs2.getString("Type");
-            AppointmentStartDateTime = rs2.getTimestamp("Start").toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S z"));
-            AppointmentEndDateTime = rs2.getTimestamp("End").toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S z"));
+            AppointmentStartDateTime = rs2.getTimestamp("Start").toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            //Convert it back to UTC when inserting into the database?
+            AppointmentEndDateTime = rs2.getTimestamp("End").toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
             AppointmentCustomerID = rs2.getInt("Customer_ID");
             AppointmentUserID = rs2.getInt("User_ID");
             Appointment fillerAppointment = new Appointment(AppointmentID, AppointmentTitle, AppointmentDesc, AppointmentLocation, AppointmentContact, AppointmentType, AppointmentStartDateTime, AppointmentEndDateTime, AppointmentCustomerID, AppointmentUserID);

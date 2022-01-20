@@ -32,8 +32,8 @@
         <ComboBox fx:id="addAppointmentContactCombo" layoutX="95.0" layoutY="245.0" prefWidth="150" />
         <DatePicker fx:id="addAppointmentStartDatePicker" layoutX="95.0" layoutY="285.0" onAction="#onAddAppointmentStartDatePickerAction" />
         <DatePicker fx:id="addAppointmentEndDatePicker" layoutX="395.0" layoutY="285.0" onAction="#onAddAppointmentEndDatePickerAction" />
-        <ComboBox fx:id="addAppointmentStartTimeHourCombo" layoutX="95.0" layoutY="325.0" onAction="#onStartTimeAdjustedAction" prefHeight="25.0" prefWidth="55.0" promptText="00" />
-        <ComboBox fx:id="addAppointmentEndTimeHourCombo" layoutX="395.0" layoutY="325.0" onAction="#onEndTimeAdjustedAction" prefHeight="25.0" prefWidth="55.0" promptText="00" />
+        <ComboBox fx:id="addAppointmentStartTimeHourCombo" layoutX="95.0" layoutY="325.0" onAction="#onStartTimeAdjustedAction" prefHeight="25.0" prefWidth="55.0" promptText="0" />
+        <ComboBox fx:id="addAppointmentEndTimeHourCombo" layoutX="395.0" layoutY="325.0" onAction="#onEndTimeAdjustedAction" prefHeight="25.0" prefWidth="55.0" promptText="0" />
         <TextField fx:id="addAppointmentTypeBox" layoutX="95.0" layoutY="365.0" />
         <Button fx:id="addAppointmentSaveButton" layoutX="830.0" layoutY="535.0" mnemonicParsing="false" onAction="#onAddAppointmentSaveButtonAction" text="Save" />
         <Button fx:id="addAppointmentCancelButton" layoutX="890.0" layoutY="535.0" mnemonicParsing="false" onAction="#onAddAppointmentCancelButtonAction" text="Cancel" />
@@ -44,12 +44,17 @@
         </TextArea>
         <ComboBox fx:id="addAppointmentStartTimeMinuteCombo" layoutX="152.0" layoutY="325.0" onAction="#onStartTimeAdjustedAction" prefHeight="25.0" prefWidth="30.0" promptText="0" />
         <ComboBox fx:id="addAppointmentStartTimeMinuteCombo1" layoutX="202.0" layoutY="325.0" onAction="#onStartTimeAdjustedAction" prefHeight="25.0" prefWidth="30.0" promptText="0" />
-        <Label fx:id="addAppointmentSelectedStart" layoutX="255.0" layoutY="325.0" text="00:00" />
+        <Label fx:id="addAppointmentSelectedStart" layoutX="255.0" layoutY="325.0" text="0:00" />
         <ComboBox fx:id="addAppointmentEndTimeMinuteCombo" layoutX="452.0" layoutY="325.0" onAction="#onEndTimeAdjustedAction" prefHeight="25.0" prefWidth="30.0" promptText="0" />
         <ComboBox fx:id="addAppointmentEndTimeMinuteCombo1" layoutX="502.0" layoutY="325.0" onAction="#onEndTimeAdjustedAction" prefHeight="25.0" prefWidth="30.0" promptText="0" />
-        <Label fx:id="addAppointmentSelectedEnd" layoutX="555.0" layoutY="325.0" text="00:00" />
+        <Label fx:id="addAppointmentSelectedEnd" layoutX="555.0" layoutY="325.0" text="0:00" />
         <Label layoutX="150.0" layoutY="325.0" text=":" />
         <Label layoutX="450.0" layoutY="325.0" text=":" />
+      <Label layoutX="325.0" layoutY="174.0" text="Business Hours (Local Time)" />
+      <Label layoutX="339.0" layoutY="197.0" text="Open: " />
+      <Label layoutX="339.0" layoutY="222.0" text="Close: " />
+      <Label fx:id="businessHoursOpen" layoutX="381.0" layoutY="197.0" text="0:00" />
+      <Label fx:id="businessHoursClosed" layoutX="379.0" layoutY="222.0" text="0:00" />
 
     </children>
 </AnchorPane>
