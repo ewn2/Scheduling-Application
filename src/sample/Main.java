@@ -80,8 +80,10 @@ public class Main extends Application {
             AppointmentLocation = rs2.getString("Location");
             AppointmentContact = rs2.getString("Contact_Name");
             AppointmentType = rs2.getString("Type");
-            AppointmentStartDateTime = rs2.getTimestamp("Start").toString();
-            AppointmentEndDateTime = rs2.getTimestamp("End").toString();
+            //AppointmentStartDateTime = rs2.getTimestamp("Start").toString();
+            AppointmentStartDateTime = rs2.getTimestamp("Start").toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            //AppointmentEndDateTime = rs2.getTimestamp("End").toString();
+            AppointmentEndDateTime = rs2.getTimestamp("End").toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
             AppointmentCustomerID = rs2.getInt("Customer_ID");
             AppointmentUserID = rs2.getInt("User_ID");
             Appointment fillerAppointment = new Appointment(AppointmentID, AppointmentTitle, AppointmentDesc, AppointmentLocation, AppointmentContact, AppointmentType, AppointmentStartDateTime, AppointmentEndDateTime, AppointmentCustomerID, AppointmentUserID);
