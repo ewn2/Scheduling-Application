@@ -30,8 +30,8 @@
         <TextField fx:id="addAppointmentDescriptionBox" layoutX="95.0" layoutY="165.0" />
         <TextField fx:id="addAppointmentLocationBox" layoutX="95.0" layoutY="205.0" />
         <ComboBox fx:id="addAppointmentContactCombo" layoutX="95.0" layoutY="245.0" prefWidth="150" />
-        <DatePicker fx:id="addAppointmentStartDatePicker" layoutX="95.0" layoutY="285.0" onAction="#onAddAppointmentStartDatePickerAction" />
-        <DatePicker fx:id="addAppointmentEndDatePicker" layoutX="395.0" layoutY="285.0" onAction="#onAddAppointmentEndDatePickerAction" />
+        <DatePicker fx:id="addAppointmentStartDatePicker" editable="false" layoutX="95.0" layoutY="285.0" onAction="#onAddAppointmentStartDatePickerAction" />
+        <DatePicker fx:id="addAppointmentEndDatePicker" editable="false" layoutX="395.0" layoutY="285.0" onAction="#onAddAppointmentEndDatePickerAction" />
         <ComboBox fx:id="addAppointmentStartTimeHourCombo" layoutX="95.0" layoutY="325.0" onAction="#onStartTimeAdjustedAction" prefHeight="25.0" prefWidth="55.0" promptText="0" />
         <ComboBox fx:id="addAppointmentEndTimeHourCombo" layoutX="395.0" layoutY="325.0" onAction="#onEndTimeAdjustedAction" prefHeight="25.0" prefWidth="55.0" promptText="0" />
         <TextField fx:id="addAppointmentTypeBox" layoutX="95.0" layoutY="365.0" />

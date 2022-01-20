@@ -65,6 +65,21 @@ public class AddAppointment implements Initializable {
         addAppointmentEndTimeHourCombo.setValue("0");
         addAppointmentEndTimeMinuteCombo.setValue("0");
         addAppointmentEndTimeMinuteCombo1.setValue("0");
+        try {
+            populateContacts();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            populateCustomers();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            populateUsers();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void populateTimeCombos(){
@@ -103,24 +118,45 @@ public class AddAppointment implements Initializable {
         businessHoursClosed.setText(UserEndTime);
     }
 
-    public void populateCountry() throws SQLException {
-        String logQuery = "SELECT * FROM countries";
+    public void populateContacts() throws SQLException {
+        String logQuery = "SELECT * FROM contacts";
         JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
         Statement checkQuery = JDBC.getPreparedStatement();
         checkQuery.execute(logQuery);
         ResultSet rs = checkQuery.getResultSet();
         while (rs.next()) {
-            String ire = rs.getString("Country");
-            //addCustomerCountryCombo.getItems().add(ire);
+            String ire = rs.getString("Contact_Name");
+            addAppointmentContactCombo.getItems().add(ire);
+        }
+    }
+    public void populateCustomers() throws SQLException {
+        String logQuery = "SELECT * FROM customers";
+        JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+        Statement checkQuery = JDBC.getPreparedStatement();
+        checkQuery.execute(logQuery);
+        ResultSet rs = checkQuery.getResultSet();
+        while (rs.next()) {
+            String ire = rs.getString("Customer_ID");
+            addAppointmentCustomerIDCombo.getItems().add(ire);
+        }
+    }
+    public void populateUsers() throws SQLException {
+        String logQuery = "SELECT * FROM users";
+        JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+        Statement checkQuery = JDBC.getPreparedStatement();
+        checkQuery.execute(logQuery);
+        ResultSet rs = checkQuery.getResultSet();
+        while (rs.next()) {
+            String ire = rs.getString("User_ID");
+            addAppointmentUserIDCombo.getItems().add(ire);
         }
     }
 
-    private LocalDateTime startDate;
-    public void onAddAppointmentStartDatePickerAction(ActionEvent actionEvent) {
-        startDate = addAppointmentStartDatePicker.getValue().atStartOfDay();
-    }
-
+    private LocalDate startDate;
     private LocalDate endDate;
+    public void onAddAppointmentStartDatePickerAction(ActionEvent actionEvent) {
+        startDate = addAppointmentStartDatePicker.getValue();
+    }
     public void onAddAppointmentEndDatePickerAction(ActionEvent actionEvent) {
         endDate = addAppointmentEndDatePicker.getValue();
     }
