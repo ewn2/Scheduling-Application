@@ -69,16 +69,16 @@ public class MainForm implements Initializable {
         customerTableCustomerStateCol.setCellValueFactory(new PropertyValueFactory<>("CustomerState"));
         customerTableCustomerAddressCol.setCellValueFactory(new PropertyValueFactory<>("CustomerAddress"));
         AppointmentTable.setItems(Appointment.appointmentPopulation());
-        AppointmentTableAppointmentIDCol;
-        AppointmentTableTitleCol;
-        AppointmentTableDescriptionCol;
-        AppointmentTableLocationCol;
-        AppointmentTableContactCol;
-        AppointmentTableTypeCol;
-        AppointmentTableStartDateAndTimeCol;
-        AppointmentTableEndDateAndTimeCol;
-        AppointmentTableCustomerIDCol;
-        AppointmentTableUserIDCol;
+        AppointmentTableAppointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
+        AppointmentTableTitleCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentTitle"));
+        AppointmentTableDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentDesc"));
+        AppointmentTableLocationCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentLocation"));
+        AppointmentTableContactCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentContact"));
+        AppointmentTableTypeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentType"));
+        AppointmentTableStartDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentStartDateTime"));
+        AppointmentTableEndDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentEndDateTime"));
+        AppointmentTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustomerID"));
+        AppointmentTableUserIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserID"));
     }
 
     public void onExitButtonAction(ActionEvent actionEvent) {

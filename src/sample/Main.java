@@ -48,6 +48,9 @@ public class Main extends Application {
             Customer.addCustomer(fillerCustomer);
             Customer.usedIDs.add(CustomerID);
         }
+        if (!Customer.usedIDs.contains(0)) {
+            Customer.usedIDs.add(0);
+        }
     }
 
     public static void appointmentData() throws SQLException {

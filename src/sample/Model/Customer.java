@@ -2,7 +2,11 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.JDBC;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 
 public class Customer {
@@ -36,6 +40,30 @@ public class Customer {
         this.CustomerState = CustomerState;
         this.CustomerAddress = CustomerAddress;
     }
+
+    public boolean addCustomerToDatabase(int CustomerID, String CustomerName, String CustomerPhone, String CustomerCountry, String CustomerPostal, String CustomerState, String CustomerAddress) throws SQLException {
+        try {
+            int division = 0;
+            String divQuery = "SELECT Division_ID from first_level_divisions join countries on first_level_divisions.Country_ID=countries.Country_ID WHERE Country='"+CustomerCountry+"' AND Division='"+CustomerState+"'";
+            JDBC.makePreparedStatement(divQuery, JDBC.getConnection());
+            Statement checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(divQuery);
+            ResultSet rs = checkQuery.getResultSet();
+            while (rs.next()) {
+                division = rs.getInt("Division_ID");
+            }
+            String addCustomerQuery = "INSERT INTO customers VALUES ("+CustomerID+", '"+CustomerName+"', '"+CustomerAddress+"', '"+CustomerPostal+"', '"+CustomerPhone+"', CURRENT_TIMESTAMP, 'program', CURRENT_TIMESTAMP, 'program', "+division+")";
+            JDBC.makePreparedStatement(addCustomerQuery, JDBC.getConnection());
+            Statement checkQuery2 = JDBC.getPreparedStatement();
+            checkQuery2.execute(addCustomerQuery);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
+
 
     public int getCustomerID() {
         return CustomerID;
@@ -115,6 +143,9 @@ public class Customer {
     }
     public static boolean deleteCustomer(Customer selectedCustomer) {
         if (allCustomers.contains(selectedCustomer)) {
+            if (usedIDs.contains(selectedCustomer.getCustomerID())) {
+                usedIDs.remove(selectedCustomer.getCustomerID());
+            }
             allCustomers.remove(selectedCustomer);
             return true;
         }
