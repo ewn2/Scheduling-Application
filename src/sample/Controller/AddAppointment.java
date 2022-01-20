@@ -29,8 +29,6 @@ import java.util.*;
 public class AddAppointment implements Initializable {
     public TextField addAppointmentIDBox;
     public TextField addAppointmentTitleBox;
-    public TextField addAppointmentCustomerIDBox;
-    public TextField addAppointmentUserIDBox;
     public TextField addAppointmentDescriptionBox;
     public TextField addAppointmentLocationBox;
     public ComboBox addAppointmentContactCombo;
@@ -50,6 +48,8 @@ public class AddAppointment implements Initializable {
     public Label addAppointmentSelectedEnd;
     public Label businessHoursOpen;
     public Label businessHoursClosed;
+    public ComboBox addAppointmentUserIDCombo;
+    public ComboBox addAppointmentCustomerIDCombo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -59,6 +59,12 @@ public class AddAppointment implements Initializable {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        addAppointmentStartTimeHourCombo.setValue("0");
+        addAppointmentStartTimeMinuteCombo.setValue("0");
+        addAppointmentStartTimeMinuteCombo1.setValue("0");
+        addAppointmentEndTimeHourCombo.setValue("0");
+        addAppointmentEndTimeMinuteCombo.setValue("0");
+        addAppointmentEndTimeMinuteCombo1.setValue("0");
     }
 
     public void populateTimeCombos(){
@@ -136,8 +142,10 @@ public class AddAppointment implements Initializable {
     }
 
     public void onStartTimeAdjustedAction(ActionEvent actionEvent) {
+        addAppointmentSelectedStart.setText(addAppointmentStartTimeHourCombo.getValue().toString() + ":" + addAppointmentStartTimeMinuteCombo.getValue().toString() + addAppointmentStartTimeMinuteCombo1.getValue().toString());
     }
 
     public void onEndTimeAdjustedAction(ActionEvent actionEvent) {
+        addAppointmentSelectedEnd.setText(addAppointmentEndTimeHourCombo.getValue().toString() + ":" + addAppointmentEndTimeMinuteCombo.getValue().toString() + addAppointmentEndTimeMinuteCombo1.getValue().toString());
     }
 }

@@ -25,8 +25,8 @@
         <Label layoutX="314.0" layoutY="325.0" text="Time End" />
         <TextField fx:id="addAppointmentIDBox" disable="true" layoutX="95.0" layoutY="85.0" text="Auto-Gen" />
         <TextField fx:id="addAppointmentTitleBox" layoutX="95.0" layoutY="125.0" />
-        <TextField fx:id="addAppointmentCustomerIDBox" layoutX="395.0" layoutY="125.0" />
-        <TextField fx:id="addAppointmentUserIDBox" layoutX="395.0" layoutY="85.0" />
+        <ComboBox fx:id="addAppointmentCustomerIDCombo" layoutX="395.0" layoutY="125.0" prefWidth="150" />
+        <ComboBox fx:id="addAppointmentUserIDCombo" layoutX="395.0" layoutY="85.0" prefWidth="150" />
         <TextField fx:id="addAppointmentDescriptionBox" layoutX="95.0" layoutY="165.0" />
         <TextField fx:id="addAppointmentLocationBox" layoutX="95.0" layoutY="205.0" />
         <ComboBox fx:id="addAppointmentContactCombo" layoutX="95.0" layoutY="245.0" prefWidth="150" />
