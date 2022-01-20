@@ -18,6 +18,7 @@ import sample.Model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
@@ -98,12 +99,6 @@ public class MainForm implements Initializable {
         //selectedAppointment = null;
         selectedCustomer = null;
         selectedCustomer = CustomerTable.getSelectionModel().getSelectedItem();
-        if (selectedCustomer != null) {
-            errorMessageBox.setVisible(true);
-            errorMessageBox.setText("Delete this Customer?");
-            confirmButton.setVisible(true);
-            denyButton.setVisible(true);
-        }
         //Switch Delete Customer to this after appointments implemented
         if (selectedCustomer != null) {
             ObservableList<Appointment> emptyCheck = FXCollections.observableArrayList();
@@ -164,7 +159,7 @@ public class MainForm implements Initializable {
     public void onAppointmentsMonthlyRadioAction(ActionEvent actionEvent) {
     }
 
-    public void onConfirmButtonAction(ActionEvent actionEvent) {
+    public void onConfirmButtonAction(ActionEvent actionEvent) throws SQLException {
         errorMessageBox.setVisible(false);
         confirmButton.setVisible(false);
         denyButton.setVisible(false);
@@ -176,7 +171,8 @@ public class MainForm implements Initializable {
                 errorMessageBox.setVisible(true);
                 errorMessageBox.setText("Error connecting to database, check connection");
             }
-            CustomerTable.setItems(Customer.customerPopulation());
+            //CustomerTable.setItems(Customer.customerPopulation());
+            //CustomerTable.refresh();
         }
         /*
         if (selectedAppointment != null) {

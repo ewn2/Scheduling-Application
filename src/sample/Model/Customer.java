@@ -3,6 +3,7 @@ package sample.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.JDBC;
+import sample.Main;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -171,10 +172,23 @@ public class Customer {
     public static void updateCustomer(int index, Customer selectedCustomer) {
         allCustomers.set(index, selectedCustomer);
     }
-    public static boolean deleteCustomer(Customer selectedCustomer) {
+    public static boolean deleteCustomer(Customer selectedCustomer) throws SQLException {
         if (allCustomers.contains(selectedCustomer)) {
             if (usedIDs.contains(selectedCustomer.getCustomerID())) {
-                usedIDs.remove(selectedCustomer.getCustomerID());
+                usedIDs.clear();
+                int CustomerID = 0;
+                String logQuery = "SELECT Customer_ID FROM customers join first_level_divisions on customers.Division_ID=first_level_divisions.Division_ID join countries on countries.Country_ID=first_level_divisions.Country_ID";
+                JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+                Statement checkQuery = JDBC.getPreparedStatement();
+                checkQuery.execute(logQuery);
+                ResultSet rs2 = checkQuery.getResultSet();
+                while (rs2.next()) {
+                    CustomerID = rs2.getInt("Customer_ID");
+                    Customer.usedIDs.add(CustomerID);
+                }
+                if (!Customer.usedIDs.contains(0)) {
+                    Customer.usedIDs.add(0);
+                }
             }
             allCustomers.remove(selectedCustomer);
             return true;
