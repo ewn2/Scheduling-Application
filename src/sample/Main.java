@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("loginForm.fxml"));
         primaryStage.setTitle("Meeting Scheduling System");
         primaryStage.setScene(new Scene(root, 1000, 600));
@@ -45,6 +45,7 @@ public class Main extends Application {
             CustomerAddress = rs2.getString("Address");
             Customer fillerCustomer = new Customer(CustomerID, CustomerName, CustomerPhone, CustomerCountry, CustomerPostal, CustomerState, CustomerAddress);
             Customer.addCustomer(fillerCustomer);
+            Customer.usedIDs.add(CustomerID);
         }
 
     }
@@ -61,8 +62,7 @@ public class Main extends Application {
         selectContactsQuery.execute(allContacts);
         ResultSet rs = selectContactsQuery.getResultSet();
         System.out.println(rs);
-        while(rs.next())
-        {
+        while (rs.next()) {
             System.out.println(rs.getString("User_ID") + " " + rs.getString("User_Name") + " " + rs.getString("Password"));
         }
         ZoneId systemZone = ZoneId.systemDefault();

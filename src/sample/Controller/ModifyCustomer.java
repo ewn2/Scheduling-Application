@@ -142,7 +142,7 @@ public class ModifyCustomer implements Initializable {
             }
         } catch (Exception e) {
             errorMessageBox.setVisible(true);
-            errorMessageBox.setText("Error: Please check all boxes are filled with correct data");
+            errorMessageBox.setText("Error: Please check all boxes are filled and within the 50 Character limit per Box, 100 for Address");
             validEntries = false;
         }
         int id = 0;
@@ -157,11 +157,12 @@ public class ModifyCustomer implements Initializable {
                 id = customerToModify.getCustomerID();
                 Customer newCustomer = new Customer(id, CustomerName,CustomerPhone,CustomerCountry,CustomerPostal,CustomerState,CustomerAddress);
                 newCustomer.setCustomerID(id);
-                Customer.updateCustomer(id ,newCustomer);
+                Customer.updateCustomer((id - 1) ,newCustomer);
                 addedCustomer = true;
             } catch (Exception e) {
+                System.out.println(e);
                 errorMessageBox.setVisible(true);
-                errorMessageBox.setText("Error: Please check all boxes are filled with correct data");
+                errorMessageBox.setText("Error: Please check all boxes are filled with valid data");
             }
         }
 

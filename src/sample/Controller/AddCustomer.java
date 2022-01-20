@@ -93,11 +93,11 @@ public class AddCustomer implements Initializable {
         try {
             int id = 0;
             String CustomerName = addCustomerNameBox.getText();
-            if (CustomerName == null || CustomerName.trim().isEmpty()) {
+            if (CustomerName == null || CustomerName.trim().isEmpty() || CustomerName.length() > 50) {
                 throw new Exception();
             }
             String CustomerPhone = addCustomerPhoneBox.getText();
-            if (CustomerPhone == null || CustomerPhone.trim().isEmpty()) {
+            if (CustomerPhone == null || CustomerPhone.trim().isEmpty() || CustomerPhone.length() > 50) {
                 throw new Exception();
             }
             String CustomerCountry = addCustomerCountryCombo.getValue().toString();
@@ -105,7 +105,7 @@ public class AddCustomer implements Initializable {
                 throw new Exception();
             }
             String CustomerPostal = addCustomerPostalBox.getText();
-            if (CustomerPostal == null || CustomerPostal.trim().isEmpty()) {
+            if (CustomerPostal == null || CustomerPostal.trim().isEmpty() || CustomerPostal.length() > 50) {
                 throw new Exception();
             }
             String CustomerState = addCustomerStateCombo.getValue().toString();
@@ -113,12 +113,12 @@ public class AddCustomer implements Initializable {
                 throw new Exception();
             }
             String CustomerAddress = addCustomerAddressBox.getText();
-            if (CustomerAddress == null || CustomerAddress.trim().isEmpty()) {
+            if (CustomerAddress == null || CustomerAddress.trim().isEmpty() || CustomerAddress.length() > 100) {
                 throw new Exception();
             }
         } catch (Exception e) {
             errorMessageBox.setVisible(true);
-            errorMessageBox.setText("Error: Please check all boxes are filled with correct data");
+            errorMessageBox.setText("Error: Please check all boxes are filled and within the 50 Character limit per Box, 100 for Address");
             validEntries = false;
         }
         int id = 0;
@@ -136,7 +136,7 @@ public class AddCustomer implements Initializable {
                 addedCustomer = true;
             } catch (Exception e) {
                 errorMessageBox.setVisible(true);
-                errorMessageBox.setText("Error: Please check all boxes are filled with correct data");
+                errorMessageBox.setText("Error: Please check all boxes are filled with valid data");
             }
         }
 

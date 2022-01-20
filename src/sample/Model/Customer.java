@@ -3,6 +3,8 @@ package sample.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Vector;
+
 public class Customer {
     private int CustomerID;
     private String CustomerName;
@@ -14,8 +16,14 @@ public class Customer {
 
     private static int customerIDGenerated = -1;
 
+    public static Vector<Integer> usedIDs = new Vector<>(0);
+
     public static int uniqueCustomerID() {
         customerIDGenerated++;
+        while (usedIDs.contains(customerIDGenerated)) {
+            customerIDGenerated++;
+        }
+        usedIDs.add(customerIDGenerated);
         return customerIDGenerated;
     }
 
