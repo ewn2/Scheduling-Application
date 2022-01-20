@@ -115,13 +115,13 @@ public class ModifyCustomer implements Initializable {
         boolean validEntries = true;
         boolean addedCustomer = false;
         try {
-            int id = 0;
+            int id = customerToModify.getCustomerID();
             String CustomerName = ModifyCustomerNameBox.getText();
-            if (CustomerName == null || CustomerName.trim().isEmpty()) {
+            if (CustomerName == null || CustomerName.trim().isEmpty() || CustomerName.length() > 50) {
                 throw new Exception();
             }
             String CustomerPhone = ModifyCustomerPhoneBox.getText();
-            if (CustomerPhone == null || CustomerPhone.trim().isEmpty()) {
+            if (CustomerPhone == null || CustomerPhone.trim().isEmpty() || CustomerPhone.length() > 50) {
                 throw new Exception();
             }
             String CustomerCountry = ModifyCustomerCountryCombo.getValue().toString();
@@ -129,7 +129,7 @@ public class ModifyCustomer implements Initializable {
                 throw new Exception();
             }
             String CustomerPostal = ModifyCustomerPostalBox.getText();
-            if (CustomerPostal == null || CustomerPostal.trim().isEmpty()) {
+            if (CustomerPostal == null || CustomerPostal.trim().isEmpty() || CustomerPostal.length() > 50) {
                 throw new Exception();
             }
             String CustomerState = ModifyCustomerStateCombo.getValue().toString();
@@ -137,7 +137,7 @@ public class ModifyCustomer implements Initializable {
                 throw new Exception();
             }
             String CustomerAddress = ModifyCustomerAddressBox.getText();
-            if (CustomerAddress == null || CustomerAddress.trim().isEmpty()) {
+            if (CustomerAddress == null || CustomerAddress.trim().isEmpty() || CustomerAddress.length() > 100) {
                 throw new Exception();
             }
         } catch (Exception e) {
@@ -145,7 +145,7 @@ public class ModifyCustomer implements Initializable {
             errorMessageBox.setText("Error: Please check all boxes are filled and within the 50 Character limit per Box, 100 for Address");
             validEntries = false;
         }
-        int id = 0;
+        int id = customerToModify.getCustomerID();
         String CustomerName = ModifyCustomerNameBox.getText();
         String CustomerPhone = ModifyCustomerPhoneBox.getText();
         String CustomerCountry = ModifyCustomerCountryCombo.getValue().toString();
@@ -154,15 +154,18 @@ public class ModifyCustomer implements Initializable {
         String CustomerAddress = ModifyCustomerAddressBox.getText();
         if (validEntries) {
             try {
-                id = customerToModify.getCustomerID();
                 Customer newCustomer = new Customer(id, CustomerName,CustomerPhone,CustomerCountry,CustomerPostal,CustomerState,CustomerAddress);
                 newCustomer.setCustomerID(id);
-                Customer.updateCustomer((id - 1) ,newCustomer);
-                addedCustomer = true;
+                Customer.updateCustomer(id, newCustomer);
+                if (Customer.modifyCustomerInDatabase(newCustomer)) {
+                    addedCustomer = true;
+                }
+                else {
+                    throw new Exception();
+                }
             } catch (Exception e) {
-                System.out.println(e);
                 errorMessageBox.setVisible(true);
-                errorMessageBox.setText("Error: Please check all boxes are filled with valid data");
+                errorMessageBox.setText("Error: Cannot modify Customer in database, check connection");
             }
         }
 

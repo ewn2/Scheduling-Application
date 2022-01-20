@@ -2,6 +2,7 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.Controller.loginForm;
 import sample.JDBC;
 import sample.Main;
 
@@ -71,6 +72,29 @@ public class Customer {
                 division = rs.getInt("Division_ID");
             }
             String addCustomerQuery = "INSERT INTO customers VALUES ("+givenCustomer.getCustomerID()+", '"+givenCustomer.getCustomerName()+"', '"+givenCustomer.getCustomerAddress()+"', '"+givenCustomer.getCustomerPostal()+"', '"+givenCustomer.getCustomerPhone()+"', CURRENT_TIMESTAMP, 'program', CURRENT_TIMESTAMP, 'program', "+division+")";
+            JDBC.makePreparedStatement(addCustomerQuery, JDBC.getConnection());
+            Statement checkQuery2 = JDBC.getPreparedStatement();
+            checkQuery2.execute(addCustomerQuery);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean modifyCustomerInDatabase(Customer givenCustomer) throws SQLException {
+        try {
+            int division = 0;
+            String divQuery = "SELECT Division_ID from first_level_divisions join countries on first_level_divisions.Country_ID=countries.Country_ID WHERE Country='"+givenCustomer.getCustomerCountry()+"' AND Division='"+givenCustomer.getCustomerState()+"'";
+            JDBC.makePreparedStatement(divQuery, JDBC.getConnection());
+            Statement checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(divQuery);
+            ResultSet rs = checkQuery.getResultSet();
+            while (rs.next()) {
+                division = rs.getInt("Division_ID");
+            }
+
+            String addCustomerQuery = "UPDATE customers JOIN first_level_divisions on customers.Division_ID=first_level_divisions.Division_ID join countries on countries.Country_ID=first_level_divisions.Country_ID SET Customer_Name='"+givenCustomer.getCustomerName()+"', Address='"+givenCustomer.getCustomerAddress()+"', Postal_Code='"+givenCustomer.getCustomerPostal()+"', Phone='"+givenCustomer.getCustomerPhone()+"', customers.Last_Update=CURRENT_TIMESTAMP, customers.Last_Updated_By='"+ loginForm.loggedInUser +"', customers.Division_ID="+division+" WHERE Customer_ID=" + givenCustomer.getCustomerID();
             JDBC.makePreparedStatement(addCustomerQuery, JDBC.getConnection());
             Statement checkQuery2 = JDBC.getPreparedStatement();
             checkQuery2.execute(addCustomerQuery);
@@ -169,8 +193,15 @@ public class Customer {
         }
         return matches;
     }
-    public static void updateCustomer(int index, Customer selectedCustomer) {
-        allCustomers.set(index, selectedCustomer);
+    public static void updateCustomer(int index, Customer selectedCustomer) throws SQLException {
+        for (Customer customer : allCustomers) {
+            if (customer.getCustomerID() == index) {
+                System.out.println(allCustomers.indexOf(customer));
+                int f = allCustomers.indexOf(customer);
+                System.out.println(allCustomers.indexOf(customer));
+                allCustomers.set(f, selectedCustomer);
+            }
+        }
     }
     public static boolean deleteCustomer(Customer selectedCustomer) throws SQLException {
         if (allCustomers.contains(selectedCustomer)) {
