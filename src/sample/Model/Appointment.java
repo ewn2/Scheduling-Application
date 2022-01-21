@@ -184,7 +184,6 @@ public class Appointment {
             while (rs.next()) {
                 AppointmentContactID = rs.getInt("Contact_ID");
             }
-
             String addAppointmentQuery = "UPDATE appointments JOIN users on appointments.User_ID=users.User_ID join contacts on appointments.Contact_ID=contacts.Contact_ID join customers on appointments.Customer_ID=customers.Customer_ID SET Title='"+givenAppointment.getAppointmentTitle()+"', Location='"+givenAppointment.getAppointmentLocation()+"', Type='"+givenAppointment.getAppointmentType()+"', Start='"+givenAppointment.getAppointmentStartDateTime()+"', End='"+givenAppointment.getAppointmentEndDateTime()+"', appointments.Last_Update=CURRENT_TIMESTAMP, appointments.Last_Updated_By='"+ loginForm.loggedInUser +"', appointments.Customer_ID="+givenAppointment.getAppointmentCustomerID()+", appointments.User_ID="+givenAppointment.getAppointmentUserID()+", appointments.Contact_ID="+AppointmentContactID+" WHERE Appointment_ID=" + givenAppointment.getAppointmentID();
             JDBC.makePreparedStatement(addAppointmentQuery, JDBC.getConnection());
             Statement checkQuery2 = JDBC.getPreparedStatement();
