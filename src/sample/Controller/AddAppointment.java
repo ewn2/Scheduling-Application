@@ -245,9 +245,11 @@ public class AddAppointment implements Initializable {
             String AppointmentLocation = addAppointmentLocationBox.getText();
             String AppointmentContact = addAppointmentContactCombo.getValue().toString(); //Pull from DB
             String AppointmentType = addAppointmentTypeBox.getText();
-            LocalDateTime AppointmentStartDateTime = startDate.atTime(LocalTime.from(meetingStart));
+            ZonedDateTime convertStartToUTC = meetingStart.withZoneSameInstant(ZoneId.of("UTC"));
+            LocalDateTime AppointmentStartDateTime = startDate.atTime(LocalTime.from(convertStartToUTC));
             String AptStartDateTime = AppointmentStartDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
-            LocalDateTime AppointmentEndDateTime = endDate.atTime(LocalTime.from(meetingEnd));
+            ZonedDateTime convertEndToUTC = meetingEnd.withZoneSameInstant(ZoneId.of("UTC"));
+            LocalDateTime AppointmentEndDateTime = endDate.atTime(LocalTime.from(convertEndToUTC));
             String AptEndDateTime = AppointmentEndDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
             String AppointmentCustomerIDString = addAppointmentCustomerIDCombo.getValue().toString(); //Pull from DB
             String AppointmentUserIDString = addAppointmentUserIDCombo.getValue().toString(); //Pull from DBs
