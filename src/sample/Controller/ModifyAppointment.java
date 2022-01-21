@@ -212,6 +212,12 @@ public class ModifyAppointment implements Initializable {
         ModifyAppointmentEndTimeMinuteCombo1.setValue(aptEnd.substring(15,16));
         ModifyAppointmentSelectedStart.setText(ModifyAppointmentStartTimeHourCombo.getValue().toString() + ":" + ModifyAppointmentStartTimeMinuteCombo.getValue().toString() + ModifyAppointmentStartTimeMinuteCombo1.getValue().toString());
         ModifyAppointmentSelectedEnd.setText(ModifyAppointmentEndTimeHourCombo.getValue().toString() + ":" + ModifyAppointmentEndTimeMinuteCombo.getValue().toString() + ModifyAppointmentEndTimeMinuteCombo1.getValue().toString());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate handler1 = LocalDate.parse(aptStart.substring(0,10), formatter);
+        LocalDate handler2 = LocalDate.parse(aptEnd.substring(0,10), formatter);
+        ModifyAppointmentStartDatePicker.setValue(handler1);
+        ModifyAppointmentEndDatePicker.setValue(handler2);
+
         try {
             populateContacts();
         } catch (SQLException throwables) {
