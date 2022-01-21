@@ -154,11 +154,15 @@ public class MainForm implements Initializable {
     }
 
     public void onAppointmentModifyButtonAction(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/sample/View/modifyAppointment.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        appointmentPasser = null;
+        appointmentPasser = AppointmentTable.getSelectionModel().getSelectedItem();
+        if (appointmentPasser != null) {
+            Parent parent = FXMLLoader.load(getClass().getResource("/sample/View/modifyAppointment.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void onAppointmentAddButtonAction(ActionEvent actionEvent) throws IOException {
