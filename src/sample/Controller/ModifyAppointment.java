@@ -24,6 +24,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class ModifyAppointment implements Initializable {
     public TextField ModifyAppointmentIDBox;
@@ -197,14 +198,20 @@ public class ModifyAppointment implements Initializable {
         try {
             businessHoursDisplayAdjustment();
         } catch (ParseException e) {
-            e.printStackTrace();
+            errorMessageBox.setVisible(true);
+            errorMessageBox.setText("Error setting Business Hours label");
         }
-        ModifyAppointmentStartTimeHourCombo.setValue("0");
-        ModifyAppointmentStartTimeMinuteCombo.setValue("0");
-        ModifyAppointmentStartTimeMinuteCombo1.setValue("0");
-        ModifyAppointmentEndTimeHourCombo.setValue("0");
-        ModifyAppointmentEndTimeMinuteCombo.setValue("0");
-        ModifyAppointmentEndTimeMinuteCombo1.setValue("0");
+        String aptStart = appointmentToModify.getAppointmentStartDateTime();
+        String aptEnd = appointmentToModify.getAppointmentEndDateTime();
+        System.out.println(aptEnd);
+        ModifyAppointmentStartTimeHourCombo.setValue(aptStart.substring(11,13));
+        ModifyAppointmentStartTimeMinuteCombo.setValue(aptStart.substring(14,15));
+        ModifyAppointmentStartTimeMinuteCombo1.setValue(aptStart.substring(15,16));
+        ModifyAppointmentEndTimeHourCombo.setValue(aptEnd.substring(11,13));
+        ModifyAppointmentEndTimeMinuteCombo.setValue(aptEnd.substring(14,15));
+        ModifyAppointmentEndTimeMinuteCombo1.setValue(aptEnd.substring(15,16));
+        ModifyAppointmentSelectedStart.setText(ModifyAppointmentStartTimeHourCombo.getValue().toString() + ":" + ModifyAppointmentStartTimeMinuteCombo.getValue().toString() + ModifyAppointmentStartTimeMinuteCombo1.getValue().toString());
+        ModifyAppointmentSelectedEnd.setText(ModifyAppointmentEndTimeHourCombo.getValue().toString() + ":" + ModifyAppointmentEndTimeMinuteCombo.getValue().toString() + ModifyAppointmentEndTimeMinuteCombo1.getValue().toString());
         try {
             populateContacts();
         } catch (SQLException throwables) {
