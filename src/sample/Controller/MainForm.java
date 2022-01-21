@@ -75,7 +75,11 @@ public class MainForm implements Initializable {
         customerTableCustomerPostalCol.setCellValueFactory(new PropertyValueFactory<>("CustomerPostal"));
         customerTableCustomerStateCol.setCellValueFactory(new PropertyValueFactory<>("CustomerState"));
         customerTableCustomerAddressCol.setCellValueFactory(new PropertyValueFactory<>("CustomerAddress"));
-        AppointmentTable.setItems(Appointment.appointmentPopulation());
+        try {
+            AppointmentTable.setItems(Appointment.appointmentPopulation());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         AppointmentTableAppointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
         AppointmentTableTitleCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentTitle"));
         AppointmentTableDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentDesc"));

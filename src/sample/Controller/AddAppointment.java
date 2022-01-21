@@ -246,11 +246,17 @@ public class AddAppointment implements Initializable {
             String AppointmentContact = addAppointmentContactCombo.getValue().toString(); //Pull from DB
             String AppointmentType = addAppointmentTypeBox.getText();
             ZonedDateTime convertStartToUTC = meetingStart.withZoneSameInstant(ZoneId.of("UTC"));
+            ZonedDateTime localStart = meetingStart.withZoneSameInstant(ZoneId.systemDefault());
             LocalDateTime AppointmentStartDateTime = startDate.atTime(LocalTime.from(convertStartToUTC));
+            LocalDateTime AppointmentStartDateTimeLocal = startDate.atTime(LocalTime.from(localStart));
             String AptStartDateTime = AppointmentStartDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            String AptStartDateTimeLocal = AppointmentStartDateTimeLocal.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
             ZonedDateTime convertEndToUTC = meetingEnd.withZoneSameInstant(ZoneId.of("UTC"));
+            ZonedDateTime localEnd = meetingEnd.withZoneSameInstant(ZoneId.systemDefault());
             LocalDateTime AppointmentEndDateTime = endDate.atTime(LocalTime.from(convertEndToUTC));
+            LocalDateTime AppointmentEndDateTimeLocal = endDate.atTime(LocalTime.from(localEnd));
             String AptEndDateTime = AppointmentEndDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            String AptEndDateTimeLocal = AppointmentEndDateTimeLocal.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
             String AppointmentCustomerIDString = addAppointmentCustomerIDCombo.getValue().toString(); //Pull from DB
             String AppointmentUserIDString = addAppointmentUserIDCombo.getValue().toString(); //Pull from DBs
             int AppointmentContactID = 0;
@@ -258,9 +264,11 @@ public class AddAppointment implements Initializable {
             int AppointmentUserID = Integer.parseInt(AppointmentUserIDString);
             if (validEntries) {
                 try {
-                    Appointment newAppointment = new Appointment(id, AppointmentTitle,AppointmentDesc,AppointmentLocation,AppointmentContact,AppointmentType,AptStartDateTime,AptEndDateTime,AppointmentCustomerID,AppointmentUserID);
+                    Appointment newAppointment = new Appointment(id, AppointmentTitle,AppointmentDesc,AppointmentLocation,AppointmentContact,AppointmentType,AptStartDateTimeLocal,AptEndDateTimeLocal,AppointmentCustomerID,AppointmentUserID);
                     newAppointment.setAppointmentID(Appointment.uniqueAppointmentID());
                     Appointment.addAppointment(newAppointment);
+                    newAppointment.setAppointmentStartDateTime(AptStartDateTime);
+                    newAppointment.setAppointmentEndDateTime(AptEndDateTime);
                     if (Appointment.addAppointmentToDatabase(newAppointment)) {
                         addedAppointment = true;
                     }

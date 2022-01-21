@@ -3,6 +3,7 @@ package sample.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.JDBC;
+import sample.Main;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -145,7 +146,9 @@ public class Appointment {
     }
 
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
-    public static ObservableList<Appointment> appointmentPopulation() {
+    public static ObservableList<Appointment> appointmentPopulation() throws SQLException {
+        allAppointments.clear();
+        Main.appointmentData();
         return allAppointments;
     }
     public static void addAppointment(Appointment newAppointment) {
