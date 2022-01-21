@@ -226,6 +226,9 @@ public class AddAppointment implements Initializable {
                 System.out.println(AppointmentStartDateTime);
                 LocalDateTime AppointmentEndDateTime = endDate.atTime(LocalTime.from(meetingEnd));
                 System.out.println(AppointmentEndDateTime);
+                if (AppointmentStartDateTime.isAfter(AppointmentEndDateTime)) {
+                    throw new Exception();
+                }
                 String AppointmentCustomerIDString = addAppointmentCustomerIDCombo.getValue().toString(); //Pull from DB
                 if (AppointmentCustomerIDString == null || AppointmentCustomerIDString.trim().isEmpty()) {
                     throw new Exception();
@@ -236,7 +239,7 @@ public class AddAppointment implements Initializable {
                 }
             } catch (Exception e) {
                 errorMessageBox.setVisible(true);
-                errorMessageBox.setText("Error: Please check all boxes are filled and within the 50 Character limit per Box");
+                errorMessageBox.setText("Error: Please check all boxes are filled and Appointment Start & End are valid");
                 validEntries = false;
             }
             int id = 0;
@@ -274,7 +277,6 @@ public class AddAppointment implements Initializable {
                             if (customer.getCustomerID() == newAppointment.getAppointmentCustomerID()) {
                                 if (!customer.getAssociatedAppointments().contains(newAppointment)) {
                                     customer.addAssociatedAppointment(newAppointment);
-                                    System.out.println("Added Assoc entry AddAppointment");
                                 }
                             }
                         }
@@ -288,7 +290,9 @@ public class AddAppointment implements Initializable {
                     errorMessageBox.setText("Error: Cannot add Customer to database, check connection");
                 }
             }
-            returnToMainScreen(actionEvent);
+            if (addedAppointment) {
+                returnToMainScreen(actionEvent);
+            }
         }
         else {
             errorMessageBox.setVisible(true);
