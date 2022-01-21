@@ -103,10 +103,9 @@ public class MainForm implements Initializable {
     public static Appointment appointmentPasser = null;
 
     public void onCustomerDeleteButtonAction(ActionEvent actionEvent) {
-        //selectedAppointment = null;
+        selectedAppointment = null;
         selectedCustomer = null;
         selectedCustomer = CustomerTable.getSelectionModel().getSelectedItem();
-        //Switch Delete Customer to this after appointments implemented
         if (selectedCustomer != null) {
             ObservableList<Appointment> emptyCheck = FXCollections.observableArrayList();
             emptyCheck = selectedCustomer.getAssociatedAppointments();
@@ -142,6 +141,15 @@ public class MainForm implements Initializable {
     }
 
     public void onAppointmentDeleteButtonAction(ActionEvent actionEvent) {
+        selectedAppointment = null;
+        selectedCustomer = null;
+        selectedAppointment = AppointmentTable.getSelectionModel().getSelectedItem();
+        if (selectedAppointment != null) {
+            errorMessageBox.setVisible(true);
+                errorMessageBox.setText("Delete this Appointment?");
+                confirmButton.setVisible(true);
+                denyButton.setVisible(true);
+        }
     }
 
     public void onAppointmentModifyButtonAction(ActionEvent actionEvent) throws IOException {
@@ -181,6 +189,22 @@ public class MainForm implements Initializable {
             //CustomerTable.setItems(Customer.customerPopulation());
             //CustomerTable.refresh();
         }
+        if (selectedAppointment != null) {
+            if (Appointment.deleteAppointmentFromDatabase(selectedAppointment)) {
+                Appointment.deleteAppointment(selectedAppointment);
+                for (Customer customer : Customer.customerPopulation()) {
+                    if (customer.getCustomerID() == selectedAppointment.getAppointmentCustomerID()) {
+                        customer.deleteAssociatedAppointments(selectedAppointment);
+                    }
+                }
+            }
+            else {
+                errorMessageBox.setVisible(true);
+                errorMessageBox.setText("Error connecting to database, check connection");
+            }
+            //CustomerTable.setItems(Customer.customerPopulation());
+            //CustomerTable.refresh();
+        }
         /*
         if (selectedAppointment != null) {
             Appointment.deleteAppointment(selectedAppointment);
@@ -188,7 +212,7 @@ public class MainForm implements Initializable {
         }
          */
         selectedCustomer = null;
-        //selectedAppointment = null;
+        selectedAppointment = null;
     }
 
     public void onDenyButtonAction(ActionEvent actionEvent) {
@@ -196,7 +220,7 @@ public class MainForm implements Initializable {
         confirmButton.setVisible(false);
         denyButton.setVisible(false);
         selectedCustomer = null;
-        //selectedAppointment = null;
+        selectedAppointment = null;
     }
 
     public void onReportsButtonAction(ActionEvent actionEvent) throws IOException {

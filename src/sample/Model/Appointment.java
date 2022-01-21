@@ -152,6 +152,13 @@ public class Appointment {
         return allAppointments;
     }
     public static void addAppointment(Appointment newAppointment) {
+        ObservableList<Customer> ListOfCustomers = FXCollections.observableArrayList();
+        ListOfCustomers = Customer.customerPopulation();
+        for (Customer customer : ListOfCustomers) {
+            if (customer.getCustomerID() == newAppointment.getAppointmentCustomerID()) {
+                customer.addAssociatedAppointment(newAppointment);
+            }
+        }
         allAppointments.add(newAppointment);
     }
     public static Appointment lookupAppointment(int appointmentID) {
@@ -174,8 +181,37 @@ public class Appointment {
     public static void updateAppointment(int index, Appointment selectedAppointment) {
         allAppointments.set(index, selectedAppointment);
     }
-    public static boolean deleteAppointment(Appointment selectedAppointment) {
+
+    public static boolean deleteAppointmentFromDatabase(Appointment givenAppointment) {
+        try {
+            String deleteAppointmentQuery = "DELETE FROM appointments WHERE Appointment_ID="+givenAppointment.getAppointmentID()+"";
+            JDBC.makePreparedStatement(deleteAppointmentQuery, JDBC.getConnection());
+            Statement checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(deleteAppointmentQuery);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+    public static boolean deleteAppointment(Appointment selectedAppointment) throws SQLException {
         if (allAppointments.contains(selectedAppointment)) {
+            if (usedAppointmentIDs.contains(selectedAppointment.getAppointmentID())) {
+                usedAppointmentIDs.clear();
+                int AppointmentID = 0;
+                String logQuery = "SELECT Appointment_ID FROM appointments join users on appointments.User_ID=users.User_ID join contacts on appointments.Contact_ID=contacts.Contact_ID join customers on appointments.Customer_ID=customers.Customer_ID";
+                JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+                Statement checkQuery = JDBC.getPreparedStatement();
+                checkQuery.execute(logQuery);
+                ResultSet rs2 = checkQuery.getResultSet();
+                while (rs2.next()) {
+                    AppointmentID = rs2.getInt("Appointment_ID");
+                    Appointment.usedAppointmentIDs.add(AppointmentID);
+                }
+                if (!Appointment.usedAppointmentIDs.contains(0)) {
+                    Appointment.usedAppointmentIDs.add(0);
+                }
+            }
             allAppointments.remove(selectedAppointment);
             return true;
         }
