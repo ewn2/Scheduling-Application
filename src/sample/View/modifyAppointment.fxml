@@ -41,8 +41,6 @@
             <font>
                 <Font name="System Bold" size="16.0" />
             </font></TextArea>
-        <Label layoutX="148.0" layoutY="325.0" text=":" />
-        <Label layoutX="448.0" layoutY="325.0" prefHeight="17.0" prefWidth="3.0" text=":" />
         <ComboBox fx:id="ModifyAppointmentStartTimeMinuteCombo" layoutX="152.0" layoutY="325.0" onAction="#onStartTimeAdjustedAction" prefHeight="25.0" prefWidth="30.0" promptText="0" />
         <ComboBox fx:id="ModifyAppointmentStartTimeMinuteCombo1" layoutX="202.0" layoutY="325.0" onAction="#onStartTimeAdjustedAction" prefHeight="25.0" prefWidth="30.0" promptText="0" />
         <Label fx:id="ModifyAppointmentSelectedStart" layoutX="255.0" layoutY="325.0" text="0:00" />
