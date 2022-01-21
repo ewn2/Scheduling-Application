@@ -89,7 +89,10 @@ public class Main extends Application {
             Appointment.usedAppointmentIDs.add(AppointmentID);
             for (Customer customer : Customer.customerPopulation()) {
                 if (customer.getCustomerID() == fillerAppointment.getAppointmentCustomerID()) {
-                    customer.addAssociatedAppointment(fillerAppointment);
+                    if (!customer.getAssociatedAppointments().equals(fillerAppointment)) {
+                        customer.addAssociatedAppointment(fillerAppointment);
+                        System.out.println("Added Assoc entry Main");
+                    }
                 }
             }
         }

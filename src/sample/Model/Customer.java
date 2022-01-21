@@ -22,15 +22,32 @@ public class Customer {
     private String CustomerAddress;
 
     public void addAssociatedAppointment(Appointment appointment) {
-        associatedAppointments.add(appointment);
+        boolean alreadyIn = false;
+        for (Appointment i : associatedAppointments) {
+            if (i.getAppointmentID() == appointment.getAppointmentID()) {
+                alreadyIn = true;
+            }
+        }
+        if (!alreadyIn) {
+            associatedAppointments.add(appointment);
+        }
     }
 
     public boolean deleteAssociatedAppointments(Appointment appointment) {
+        for (Appointment i : associatedAppointments) {
+            if (i.getAppointmentID() == appointment.getAppointmentID()) {
+                associatedAppointments.remove(i);
+                return true;
+            }
+        }
+        /*
         if (associatedAppointments.contains(appointment)) {
             associatedAppointments.remove(appointment);
             return true;
         }
         else return false;
+         */
+        return false;
     }
 
     public ObservableList<Appointment> getAssociatedAppointments() {

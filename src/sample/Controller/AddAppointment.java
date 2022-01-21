@@ -270,6 +270,14 @@ public class AddAppointment implements Initializable {
                     newAppointment.setAppointmentStartDateTime(AptStartDateTime);
                     newAppointment.setAppointmentEndDateTime(AptEndDateTime);
                     if (Appointment.addAppointmentToDatabase(newAppointment)) {
+                        for (Customer customer : Customer.customerPopulation()) {
+                            if (customer.getCustomerID() == newAppointment.getAppointmentCustomerID()) {
+                                if (!customer.getAssociatedAppointments().contains(newAppointment)) {
+                                    customer.addAssociatedAppointment(newAppointment);
+                                    System.out.println("Added Assoc entry AddAppointment");
+                                }
+                            }
+                        }
                         addedAppointment = true;
                     }
                     else {

@@ -110,6 +110,7 @@ public class MainForm implements Initializable {
             ObservableList<Appointment> emptyCheck = FXCollections.observableArrayList();
             emptyCheck = selectedCustomer.getAssociatedAppointments();
             errorMessageBox.setVisible(true);
+            System.out.println(emptyCheck.toString());
             if (emptyCheck.toString() == "[]") {
                 errorMessageBox.setText("Delete this Customer?");
                 confirmButton.setVisible(true);
@@ -186,8 +187,6 @@ public class MainForm implements Initializable {
                 errorMessageBox.setVisible(true);
                 errorMessageBox.setText("Error connecting to database, check connection");
             }
-            //CustomerTable.setItems(Customer.customerPopulation());
-            //CustomerTable.refresh();
         }
         if (selectedAppointment != null) {
             if (Appointment.deleteAppointmentFromDatabase(selectedAppointment)) {
@@ -202,15 +201,7 @@ public class MainForm implements Initializable {
                 errorMessageBox.setVisible(true);
                 errorMessageBox.setText("Error connecting to database, check connection");
             }
-            //CustomerTable.setItems(Customer.customerPopulation());
-            //CustomerTable.refresh();
         }
-        /*
-        if (selectedAppointment != null) {
-            Appointment.deleteAppointment(selectedAppointment);
-            AppointmentTable.setItems(Appointment.appointmentPopulation());
-        }
-         */
         selectedCustomer = null;
         selectedAppointment = null;
     }

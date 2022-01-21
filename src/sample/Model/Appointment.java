@@ -152,13 +152,6 @@ public class Appointment {
         return allAppointments;
     }
     public static void addAppointment(Appointment newAppointment) {
-        ObservableList<Customer> ListOfCustomers = FXCollections.observableArrayList();
-        ListOfCustomers = Customer.customerPopulation();
-        for (Customer customer : ListOfCustomers) {
-            if (customer.getCustomerID() == newAppointment.getAppointmentCustomerID()) {
-                customer.addAssociatedAppointment(newAppointment);
-            }
-        }
         allAppointments.add(newAppointment);
     }
     public static Appointment lookupAppointment(int appointmentID) {
