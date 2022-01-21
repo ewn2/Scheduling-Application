@@ -2,6 +2,7 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.Controller.loginForm;
 import sample.JDBC;
 import sample.Main;
 
@@ -171,10 +172,40 @@ public class Appointment {
         }
         return matches;
     }
-    public static void updateAppointment(int index, Appointment selectedAppointment) {
-        allAppointments.set(index, selectedAppointment);
+
+    public static boolean modifyAppointmentInDatabase(Appointment givenAppointment) throws SQLException {
+        try {
+            int AppointmentContactID = 0;
+            String logQuery = "SELECT Contact_ID FROM contacts WHERE Contact_Name='" + givenAppointment.getAppointmentContact() + "'";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            Statement checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            ResultSet rs = checkQuery.getResultSet();
+            while (rs.next()) {
+                AppointmentContactID = rs.getInt("Contact_ID");
+            }
+
+            String addAppointmentQuery = "UPDATE appointments JOIN users on appointments.User_ID=users.User_ID join contacts on appointments.Contact_ID=contacts.Contact_ID join customers on appointments.Customer_ID=customers.Customer_ID SET Title='"+givenAppointment.getAppointmentTitle()+"', Location='"+givenAppointment.getAppointmentLocation()+"', Type='"+givenAppointment.getAppointmentType()+"', Start='"+givenAppointment.getAppointmentStartDateTime()+"', End='"+givenAppointment.getAppointmentEndDateTime()+"', appointments.Last_Update=CURRENT_TIMESTAMP, appointments.Last_Updated_By='"+ loginForm.loggedInUser +"', appointments.Customer_ID="+givenAppointment.getAppointmentCustomerID()+", appointments.User_ID="+givenAppointment.getAppointmentUserID()+", appointments.Contact_ID="+AppointmentContactID+" WHERE Appointment_ID=" + givenAppointment.getAppointmentID();
+            JDBC.makePreparedStatement(addAppointmentQuery, JDBC.getConnection());
+            Statement checkQuery2 = JDBC.getPreparedStatement();
+            checkQuery2.execute(addAppointmentQuery);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 
+    public static void updateAppointment(int index, Appointment selectedAppointment) throws SQLException {
+        for (Appointment appointment : allAppointments) {
+            if (appointment.getAppointmentID() == index) {
+                System.out.println(allAppointments.indexOf(appointment));
+                int f = allAppointments.indexOf(appointment);
+                System.out.println(allAppointments.indexOf(appointment));
+                allAppointments.set(f, selectedAppointment);
+            }
+        }
+    }
     public static boolean deleteAppointmentFromDatabase(Appointment givenAppointment) {
         try {
             String deleteAppointmentQuery = "DELETE FROM appointments WHERE Appointment_ID="+givenAppointment.getAppointmentID()+"";
