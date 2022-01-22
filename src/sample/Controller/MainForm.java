@@ -202,6 +202,12 @@ public class MainForm implements Initializable {
                 for (Customer customer : Customer.customerPopulation()) {
                     if (customer.getCustomerID() == selectedAppointment.getAppointmentCustomerID()) {
                         customer.deleteAssociatedAppointments(selectedAppointment);
+                        if (appointmentsWeeklyRadio.isSelected()) {
+                            FilterByWeek();
+                        }
+                        if (appointmentsMonthlyRadio.isSelected()) {
+                            FilterByMonth();
+                        }
                     }
                 }
             }
@@ -230,7 +236,13 @@ public class MainForm implements Initializable {
         stage.show();
     }
 
-    public void onWeekOrMonthSelectAction(ActionEvent actionEvent) {
+    public void onWeekOrMonthSelectAction(ActionEvent actionEvent) throws SQLException {
+        if (appointmentsWeeklyRadio.isSelected()) {
+            FilterByWeek();
+        }
+        if (appointmentsMonthlyRadio.isSelected()) {
+            FilterByMonth();
+        }
     }
 
     public void onAppointmentsNoFilterRadioAction(ActionEvent actionEvent) {
@@ -256,10 +268,12 @@ public class MainForm implements Initializable {
 
 
     public void onAppointmentsWeeklyRadioAction(ActionEvent actionEvent) throws SQLException {
+        FilterByWeek();
+    }
+    public void FilterByWeek() throws SQLException {
         if (WeekOrMonthSelect.getValue() != null) {
             ObservableList<Appointment> weekAppointments = FXCollections.observableArrayList();
             LocalDate wantedWeek = WeekOrMonthSelect.getValue();
-            //wantedWeek = wantedWeek.plusDays(7);
             System.out.println(wantedWeek);
             for (Appointment appointment : Appointment.appointmentPopulation()) {
                 System.out.println(appointment.getAppointmentStartDateTime());
@@ -289,9 +303,39 @@ public class MainForm implements Initializable {
         }
     }
 
-    public void onAppointmentsMonthlyRadioAction(ActionEvent actionEvent) {
+    public void onAppointmentsMonthlyRadioAction(ActionEvent actionEvent) throws SQLException {
+        FilterByMonth();
+    }
+    public void FilterByMonth() throws SQLException {
         if (WeekOrMonthSelect.getValue() != null) {
-            //
+            ObservableList<Appointment> monthAppointments = FXCollections.observableArrayList();
+            LocalDate wantedMonth = WeekOrMonthSelect.getValue();
+            System.out.println(wantedMonth);
+            for (Appointment appointment : Appointment.appointmentPopulation()) {
+                System.out.println(appointment.getAppointmentStartDateTime());
+                String aptStart = appointment.getAppointmentStartDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate handler1 = LocalDate.parse(aptStart.substring(0,10), formatter);
+                if (wantedMonth.getMonth() == handler1.getMonth()) {
+                    System.out.println("Added an Appointment: " + appointment.getAppointmentStartDateTime());
+                    monthAppointments.add(appointment);
+                }
+            }
+
+            AppointmentTable.setItems(monthAppointments);
+            AppointmentTableAppointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
+            AppointmentTableTitleCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentTitle"));
+            AppointmentTableDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentDesc"));
+            AppointmentTableLocationCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentLocation"));
+            AppointmentTableContactCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentContact"));
+            AppointmentTableTypeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentType"));
+            AppointmentTableStartDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentStartDateTime"));
+            AppointmentTableEndDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentEndDateTime"));
+            AppointmentTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustomerID"));
+            AppointmentTableUserIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserID"));
+            AppointmentTableAppointmentIDCol.setSortType(TableColumn.SortType.ASCENDING);
+            AppointmentTable.getSortOrder().add(AppointmentTableAppointmentIDCol);
+            AppointmentTable.sort();
         }
     }
 }
