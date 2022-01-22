@@ -223,9 +223,7 @@ public class AddAppointment implements Initializable {
                     throw new Exception();
                 }
                 LocalDateTime AppointmentStartDateTime = startDate.atTime(LocalTime.from(meetingStart));
-                System.out.println(AppointmentStartDateTime);
                 LocalDateTime AppointmentEndDateTime = endDate.atTime(LocalTime.from(meetingEnd));
-                System.out.println(AppointmentEndDateTime);
                 if (AppointmentStartDateTime.isAfter(AppointmentEndDateTime)) {
                     throw new Exception();
                 }
@@ -277,7 +275,6 @@ public class AddAppointment implements Initializable {
                             if (customer.getCustomerID() == newAppointment.getAppointmentCustomerID()) {
                                 if (!customer.getAssociatedAppointments().contains(newAppointment)) {
                                     customer.addAssociatedAppointment(newAppointment);
-                                    System.out.println(newAppointment.getAppointmentID());
                                 }
                             }
                         }

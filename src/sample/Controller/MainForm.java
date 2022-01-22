@@ -116,7 +116,6 @@ public class MainForm implements Initializable {
             ObservableList<Appointment> emptyCheck = FXCollections.observableArrayList();
             emptyCheck = selectedCustomer.getAssociatedAppointments();
             errorMessageBox.setVisible(true);
-            System.out.println(emptyCheck.toString());
             if (emptyCheck.toString() == "[]") {
                 errorMessageBox.setText("Delete this Customer?");
                 confirmButton.setVisible(true);
