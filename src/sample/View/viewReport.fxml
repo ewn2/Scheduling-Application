@@ -13,7 +13,7 @@
         </Label>
         <TabPane layoutX="17.0" layoutY="85.0" prefHeight="428.0" prefWidth="960.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab text="Customer Appointments Breakdown">
+                <Tab text="Appointment Categories Breakdown">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -37,7 +37,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <ComboBox fx:id="selectContactCombo" layoutX="14.0" layoutY="48.0" onAction="#onSelectContactComboAction" prefWidth="150.0" promptText="Select Contact" />
-                        <Label layoutX="14.0" layoutY="23.0" text="Details of Contact:" />
+                        <Label layoutX="14.0" layoutY="23.0" text="Appointments of Contact:" />
                         <TableView fx:id="ContactAppointmentTable" layoutX="185.0" layoutY="31.0" prefHeight="359.0" prefWidth="747.0">
                           <columns>
                               <TableColumn fx:id="ContactAppointmentTableAppointmentIDCol" prefWidth="74.7" text="Appt. ID" />
@@ -60,7 +60,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
                                 <ComboBox fx:id="selectCustomerCombo" layoutX="14.0" layoutY="48.0" onAction="#onSelectCustomerComboAction" prefWidth="150.0" promptText="Select Customer" />
-                                <Label layoutX="14.0" layoutY="23.0" text="Details of Customer:" />
+                                <Label layoutX="14.0" layoutY="23.0" text="Appointments of Customer:" />
                                 <TableView fx:id="CustomerAppointmentTable" layoutX="185.0" layoutY="31.0" prefHeight="359.0" prefWidth="747.0">
                                     <columns>
                                         <TableColumn fx:id="CustomerAppointmentTableAppointmentIDCol" prefWidth="74.4" text="Appt. ID" />
