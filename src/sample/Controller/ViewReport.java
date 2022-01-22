@@ -44,16 +44,18 @@ public class ViewReport implements Initializable {
     public TableColumn<Appointment, String> ContactAppointmentTableEndDateAndTimeCol;
     public TableColumn<Appointment, Integer> ContactAppointmentTableCustomerIDCol;
     public ComboBox selectCustomerCombo;
-    public TableView<Customer> CustomerAppointmentTable;
-    public TableColumn<Customer, String> CustomerAppointmentTableAppointmentIDCol;
-    public TableColumn<Customer, String> CustomerAppointmentTableTitleCol;
-    public TableColumn<Customer, String> CustomerAppointmentTableDescriptionCol;
-    public TableColumn<Customer, String> CustomerAppointmentTableLocationCol;
-    public TableColumn<Customer, String> CustomerAppointmentTableContactCol;
-    public TableColumn<Customer, String> CustomerAppointmentTableTypeCol;
-    public TableColumn<Customer, String> CustomerAppointmentTableStartDateAndTimeCol;
-    public TableColumn<Customer, String> CustomerAppointmentTableEndDateAndTimeCol;
-    public TableColumn<Customer, Integer> CustomerAppointmentTableCustomerIDCol;
+    public TableView<Appointment> CustomerAppointmentTable;
+    public TableColumn<Appointment, String> CustomerAppointmentTableAppointmentIDCol;
+    public TableColumn<Appointment, String> CustomerAppointmentTableTitleCol;
+    public TableColumn<Appointment, String> CustomerAppointmentTableDescriptionCol;
+    public TableColumn<Appointment, String> CustomerAppointmentTableLocationCol;
+    public TableColumn<Appointment, String> CustomerAppointmentTableContactCol;
+    public TableColumn<Appointment, String> CustomerAppointmentTableTypeCol;
+    public TableColumn<Appointment, String> CustomerAppointmentTableStartDateAndTimeCol;
+    public TableColumn<Appointment, String> CustomerAppointmentTableEndDateAndTimeCol;
+    public TableColumn<Appointment, Integer> CustomerAppointmentTableCustomerIDCol;
+    public TableColumn<Appointment, Integer> ContactAppointmentTableUserIDCol;
+    public TableColumn<Appointment, Integer> CustomerAppointmentTableUserIDCol;
 
     public void onViewReportCancelButtonAction(ActionEvent actionEvent) throws IOException {
         returnToMainScreen(actionEvent);
@@ -109,7 +111,7 @@ public class ViewReport implements Initializable {
         ContactAppointmentTableStartDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentStartDateTime"));
         ContactAppointmentTableEndDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentEndDateTime"));
         ContactAppointmentTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustomerID"));
-        ContactAppointmentTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserID"));
+        ContactAppointmentTableUserIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserID"));
         ContactAppointmentTableAppointmentIDCol.setSortType(TableColumn.SortType.ASCENDING);
         ContactAppointmentTable.getSortOrder().add(ContactAppointmentTableAppointmentIDCol);
         ContactAppointmentTable.sort();
@@ -118,7 +120,7 @@ public class ViewReport implements Initializable {
     public void onSelectCustomerComboAction(ActionEvent actionEvent) {
         int selectedCustomer = Integer.parseInt(selectCustomerCombo.getValue().toString());
         try {
-            ContactAppointmentTable.setItems(Appointment.ContactAppointmentPopulation(selectedCustomer));
+            CustomerAppointmentTable.setItems(Appointment.CustomerAppointmentPopulation(selectedCustomer));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -131,7 +133,7 @@ public class ViewReport implements Initializable {
         CustomerAppointmentTableStartDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentStartDateTime"));
         CustomerAppointmentTableEndDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentEndDateTime"));
         CustomerAppointmentTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustomerID"));
-        CustomerAppointmentTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserID"));
+        CustomerAppointmentTableUserIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserID"));
         CustomerAppointmentTableAppointmentIDCol.setSortType(TableColumn.SortType.ASCENDING);
         CustomerAppointmentTable.getSortOrder().add(CustomerAppointmentTableAppointmentIDCol);
         CustomerAppointmentTable.sort();
