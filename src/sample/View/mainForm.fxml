@@ -80,16 +80,15 @@
                                           <Font name="System Bold" size="18.0" />
                                       </font>
                                   </Label>
-                              <RadioButton fx:id="appointmentsWeeklyRadio" layoutX="178.0" layoutY="26.0" mnemonicParsing="false" onAction="#onAppointmentsWeeklyRadioAction" text="Week">
+                              <RadioButton fx:id="appointmentsWeeklyRadio" layoutX="178.0" layoutY="26.0" mnemonicParsing="false" onAction="#onAppointmentsWeeklyRadioAction" text="Week Following">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="WeekOrMonth" />
                                  </toggleGroup>
                               </RadioButton>
-                              <RadioButton fx:id="appointmentsMonthlyRadio" layoutX="232.0" layoutY="26.0" mnemonicParsing="false" onAction="#onAppointmentsMonthlyRadioAction" text="Month" toggleGroup="$WeekOrMonth" />
-                              <DatePicker fx:id="WeekOrMonthSelect" editable="false" layoutX="291.0" layoutY="22.0" onAction="#onWeekOrMonthSelectAction" prefHeight="25.0" prefWidth="110.0" promptText="Date Filer" showWeekNumbers="true" />
-                              <RadioButton fx:id="appointmentsNoFilterRadio" layoutX="178.0" layoutY="6.0" mnemonicParsing="false" onAction="#onAppointmentsNoFilterRadioAction" selected="true" text="No Filter" toggleGroup="$WeekOrMonth" />
+                              <RadioButton fx:id="appointmentsMonthlyRadio" layoutX="289.0" layoutY="26.0" mnemonicParsing="false" onAction="#onAppointmentsMonthlyRadioAction" text="Month" toggleGroup="$WeekOrMonth" />
+                              <DatePicker fx:id="WeekOrMonthSelect" editable="false" layoutX="352.0" layoutY="22.0" onAction="#onWeekOrMonthSelectAction" prefHeight="25.0" prefWidth="110.0" promptText="Date Filter" showWeekNumbers="true" />
+                              <RadioButton fx:id="appointmentsNoFilterRadio" layoutX="178.0" layoutY="6.0" mnemonicParsing="false" onAction="#onAppointmentsNoFilterRadioAction" selected="true" text="Ignore Date Filter" toggleGroup="$WeekOrMonth" />
                               <Label fx:id="timeZoneLabel" layoutX="686.0" layoutY="26.0" text="TimeZone" />
-                              <Button fx:id="FilterButton" layoutX="412.0" layoutY="22.0" mnemonicParsing="false" onAction="#onFilterButtonAction" text="Filter" />
                               </children>
                           </AnchorPane>
                      </children></AnchorPane>

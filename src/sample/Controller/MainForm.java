@@ -19,9 +19,14 @@ import sample.Model.Customer;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.ResourceBundle;
+import java.time.*;
 
 public class MainForm implements Initializable {
     public Label mainScreenTitleLabel;
@@ -63,7 +68,6 @@ public class MainForm implements Initializable {
     public TableColumn<Customer, String> customerTableCustomerStateCol;
     public TableColumn<Customer, String> customerTableCustomerAddressCol;
     public Label timeZoneLabel;
-    public Button FilterButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -179,12 +183,6 @@ public class MainForm implements Initializable {
         stage.show();
     }
 
-    public void onAppointmentsWeeklyRadioAction(ActionEvent actionEvent) {
-    }
-
-    public void onAppointmentsMonthlyRadioAction(ActionEvent actionEvent) {
-    }
-
     public void onConfirmButtonAction(ActionEvent actionEvent) throws SQLException {
         errorMessageBox.setVisible(false);
         confirmButton.setVisible(false);
@@ -236,8 +234,64 @@ public class MainForm implements Initializable {
     }
 
     public void onAppointmentsNoFilterRadioAction(ActionEvent actionEvent) {
+        try {
+            AppointmentTable.setItems(Appointment.appointmentPopulation());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        AppointmentTableAppointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
+        AppointmentTableTitleCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentTitle"));
+        AppointmentTableDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentDesc"));
+        AppointmentTableLocationCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentLocation"));
+        AppointmentTableContactCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentContact"));
+        AppointmentTableTypeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentType"));
+        AppointmentTableStartDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentStartDateTime"));
+        AppointmentTableEndDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentEndDateTime"));
+        AppointmentTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustomerID"));
+        AppointmentTableUserIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserID"));
+        AppointmentTableAppointmentIDCol.setSortType(TableColumn.SortType.ASCENDING);
+        AppointmentTable.getSortOrder().add(AppointmentTableAppointmentIDCol);
+        AppointmentTable.sort();
     }
 
-    public void onFilterButtonAction(ActionEvent actionEvent) {
+
+    public void onAppointmentsWeeklyRadioAction(ActionEvent actionEvent) throws SQLException {
+        if (WeekOrMonthSelect.getValue() != null) {
+            ObservableList<Appointment> weekAppointments = FXCollections.observableArrayList();
+            LocalDate wantedWeek = WeekOrMonthSelect.getValue();
+            //wantedWeek = wantedWeek.plusDays(7);
+            System.out.println(wantedWeek);
+            for (Appointment appointment : Appointment.appointmentPopulation()) {
+                System.out.println(appointment.getAppointmentStartDateTime());
+                String aptStart = appointment.getAppointmentStartDateTime();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate handler1 = LocalDate.parse(aptStart.substring(0,10), formatter);
+                if ((ChronoUnit.DAYS.between(wantedWeek.atStartOfDay(ZoneId.systemDefault()),handler1.atStartOfDay(ZoneId.systemDefault())) <= 7) && (ChronoUnit.DAYS.between(wantedWeek.atStartOfDay(ZoneId.systemDefault()),handler1.atStartOfDay(ZoneId.systemDefault())) >= 0)) {
+                    System.out.println("Added an Appointment: " + appointment.getAppointmentStartDateTime());
+                    weekAppointments.add(appointment);
+                }
+            }
+
+            AppointmentTable.setItems(weekAppointments);
+            AppointmentTableAppointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
+            AppointmentTableTitleCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentTitle"));
+            AppointmentTableDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentDesc"));
+            AppointmentTableLocationCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentLocation"));
+            AppointmentTableContactCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentContact"));
+            AppointmentTableTypeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentType"));
+            AppointmentTableStartDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentStartDateTime"));
+            AppointmentTableEndDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentEndDateTime"));
+            AppointmentTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustomerID"));
+            AppointmentTableUserIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserID"));
+            AppointmentTableAppointmentIDCol.setSortType(TableColumn.SortType.ASCENDING);
+            AppointmentTable.getSortOrder().add(AppointmentTableAppointmentIDCol);
+            AppointmentTable.sort();
+        }
+    }
+
+    public void onAppointmentsMonthlyRadioAction(ActionEvent actionEvent) {
+        if (WeekOrMonthSelect.getValue() != null) {
+            //
+        }
     }
 }
