@@ -32,7 +32,7 @@
                      </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Contact Appointment Schedules">
+                <Tab onSelectionChanged="#onReportTabSelectionAction" text="Contact Appointment Schedules">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -55,7 +55,7 @@
                      </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Customer Appointment Schedules">
+                <Tab onSelectionChanged="#onReportTabSelectionAction" text="Customer Appointment Schedules">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>

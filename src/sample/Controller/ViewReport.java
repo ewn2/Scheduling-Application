@@ -3,6 +3,7 @@ package sample.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -24,18 +25,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Vector;
 
 public class ViewReport implements Initializable {
     public Button viewReportCancelButton;
     public TableView<theMonth> reportMonthBreakdownTable;
     public TableColumn<theMonth, String> reportMonthBreakdownTableMonthCol;
     public TableColumn<theMonth, Integer> reportMonthBreakdownTableTotalCol;
-    public TableView reportTypeBreakdownTable;
-    public TableColumn reportTypeBreakdownTableTypeCol;
-    public TableColumn reportTypeBreakdownTableTotalCol;
+    public TableView<theType> reportTypeBreakdownTable;
+    public TableColumn<theType, String> reportTypeBreakdownTableTypeCol;
+    public TableColumn<theType, Integer> reportTypeBreakdownTableTotalCol;
     public ComboBox selectContactCombo;
     public TableView<Appointment> ContactAppointmentTable;
     public TableColumn<Appointment, Integer> ContactAppointmentTableAppointmentIDCol;
@@ -65,6 +69,47 @@ public class ViewReport implements Initializable {
         returnToMainScreen(actionEvent);
     }
 
+
+    public static ObservableList<Appointment> emptyAppointmentView = FXCollections.observableArrayList();
+    public void onReportTabSelectionAction(Event event) {
+        ContactAppointmentTable.setVisible(false);
+        CustomerAppointmentTable.setVisible(false);
+        if (emptyAppointmentView.isEmpty()) {
+            Appointment temp = new Appointment(0,"","","","","","","",0,0);
+            emptyAppointmentView.add(temp);
+        }
+        selectCustomerCombo.setValue("");
+        selectContactCombo.setValue("");
+    }
+
+    public static class theType {
+        public String typeName = null;
+        public int TotalApps = 0;
+
+        public theType(String typeName, int TotalApps) {
+            this.typeName = typeName;
+            this.TotalApps = TotalApps;
+        }
+        public String getTypeName() {
+            return typeName;
+        }
+        public void setTypeName(String typeName) {
+            this.typeName = typeName;
+        }
+        public int getTotalApps() {
+            return TotalApps;
+        }
+        public void setTotalApps(int TotalApps) {
+            this.TotalApps = TotalApps;
+        }
+        public void found() {
+            TotalApps++;
+        }
+    }
+    private static ObservableList<theType> allTypes = FXCollections.observableArrayList();
+
+
+
     public static class theMonth {
         public String monthName = null;
         public int TotalApps = 0;
@@ -86,9 +131,23 @@ public class ViewReport implements Initializable {
             this.TotalApps = TotalApps;
         }
     }
-
     private static ObservableList<theMonth> allMonths = FXCollections.observableArrayList();
 
+    public void populateTypes() throws SQLException {
+        String typeName = null;
+        int typeCount = 0;
+        String logQuery = "SELECT type, COUNT(*) AS typeCount FROM appointments GROUP BY type";
+        JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+        Statement checkQuery = JDBC.getPreparedStatement();
+        checkQuery.execute(logQuery);
+        ResultSet rs2 = checkQuery.getResultSet();
+        while (rs2.next()) {
+            typeName = rs2.getString("type");
+            typeCount = rs2.getInt("typeCount");
+            theType fillerType = new theType(typeName, typeCount);
+            allTypes.add(fillerType);
+        }
+    }
     public void populateMonths() throws SQLException {
         int January = 0;
         int February = 0;
@@ -189,58 +248,93 @@ public class ViewReport implements Initializable {
         stage.show();
     }
 
+
     public void onSelectContactComboAction(ActionEvent actionEvent) {
-        int selectedContact = Integer.parseInt(selectContactCombo.getValue().toString());
+        boolean selected;
         try {
-            ContactAppointmentTable.setItems(Appointment.ContactAppointmentPopulation(selectedContact));
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Integer.parseInt(selectContactCombo.getValue().toString());
+            selected = true;
         }
-        ContactAppointmentTableAppointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
-        ContactAppointmentTableTitleCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentTitle"));
-        ContactAppointmentTableDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentDesc"));
-        ContactAppointmentTableLocationCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentLocation"));
-        ContactAppointmentTableContactCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentContact"));
-        ContactAppointmentTableTypeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentType"));
-        ContactAppointmentTableStartDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentStartDateTime"));
-        ContactAppointmentTableEndDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentEndDateTime"));
-        ContactAppointmentTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustomerID"));
-        ContactAppointmentTableUserIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserID"));
-        ContactAppointmentTableAppointmentIDCol.setSortType(TableColumn.SortType.ASCENDING);
-        ContactAppointmentTable.getSortOrder().add(ContactAppointmentTableAppointmentIDCol);
-        ContactAppointmentTable.sort();
+        catch (NumberFormatException e) {
+            selected = false;
+        }
+        if (selected) {
+            int selectedContact = Integer.parseInt(selectContactCombo.getValue().toString());
+            ContactAppointmentTable.setVisible(true);
+            try {
+                ContactAppointmentTable.setItems(Appointment.ContactAppointmentPopulation(selectedContact));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+            ContactAppointmentTableAppointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
+            ContactAppointmentTableTitleCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentTitle"));
+            ContactAppointmentTableDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentDesc"));
+            ContactAppointmentTableLocationCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentLocation"));
+            ContactAppointmentTableContactCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentContact"));
+            ContactAppointmentTableTypeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentType"));
+            ContactAppointmentTableStartDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentStartDateTime"));
+            ContactAppointmentTableEndDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentEndDateTime"));
+            ContactAppointmentTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustomerID"));
+            ContactAppointmentTableUserIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserID"));
+            ContactAppointmentTableAppointmentIDCol.setSortType(TableColumn.SortType.ASCENDING);
+            ContactAppointmentTable.getSortOrder().add(ContactAppointmentTableAppointmentIDCol);
+            ContactAppointmentTable.sort();
+        }
     }
 
     public void onSelectCustomerComboAction(ActionEvent actionEvent) {
-        int selectedCustomer = Integer.parseInt(selectCustomerCombo.getValue().toString());
+        boolean selected;
         try {
-            CustomerAppointmentTable.setItems(Appointment.CustomerAppointmentPopulation(selectedCustomer));
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Integer.parseInt(selectCustomerCombo.getValue().toString());
+            selected = true;
         }
-        CustomerAppointmentTableAppointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
-        CustomerAppointmentTableTitleCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentTitle"));
-        CustomerAppointmentTableDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentDesc"));
-        CustomerAppointmentTableLocationCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentLocation"));
-        CustomerAppointmentTableContactCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentContact"));
-        CustomerAppointmentTableTypeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentType"));
-        CustomerAppointmentTableStartDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentStartDateTime"));
-        CustomerAppointmentTableEndDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentEndDateTime"));
-        CustomerAppointmentTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustomerID"));
-        CustomerAppointmentTableUserIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserID"));
-        CustomerAppointmentTableAppointmentIDCol.setSortType(TableColumn.SortType.ASCENDING);
-        CustomerAppointmentTable.getSortOrder().add(CustomerAppointmentTableAppointmentIDCol);
-        CustomerAppointmentTable.sort();
+        catch (NumberFormatException e) {
+            selected = false;
+        }
+        if (selected) {
+            CustomerAppointmentTable.setVisible(true);
+            int selectedCustomer = Integer.parseInt(selectCustomerCombo.getValue().toString());
+            try {
+                CustomerAppointmentTable.setItems(Appointment.CustomerAppointmentPopulation(selectedCustomer));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            CustomerAppointmentTableAppointmentIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
+            CustomerAppointmentTableTitleCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentTitle"));
+            CustomerAppointmentTableDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentDesc"));
+            CustomerAppointmentTableLocationCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentLocation"));
+            CustomerAppointmentTableContactCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentContact"));
+            CustomerAppointmentTableTypeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentType"));
+            CustomerAppointmentTableStartDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentStartDateTime"));
+            CustomerAppointmentTableEndDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentEndDateTime"));
+            CustomerAppointmentTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustomerID"));
+            CustomerAppointmentTableUserIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserID"));
+            CustomerAppointmentTableAppointmentIDCol.setSortType(TableColumn.SortType.ASCENDING);
+            CustomerAppointmentTable.getSortOrder().add(CustomerAppointmentTableAppointmentIDCol);
+            CustomerAppointmentTable.sort();
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ContactAppointmentTable.setVisible(false);
+        CustomerAppointmentTable.setVisible(false);
         allMonths.clear();
+        allTypes.clear();
+        try {
+            populateTypes();
+        } catch (SQLException throwables) {
+            System.out.println("Error loading Appointments by Type from Database");
+        }
         try {
             populateMonths();
         } catch (SQLException throwables) {
             System.out.println("Error loading Appointments by Month from Database");
         }
+        reportTypeBreakdownTable.setItems(allTypes);
+        reportTypeBreakdownTableTypeCol.setCellValueFactory(new PropertyValueFactory<>("typeName"));
+        reportTypeBreakdownTableTotalCol.setCellValueFactory(new PropertyValueFactory<>("TotalApps"));
         reportMonthBreakdownTable.setItems(allMonths);
         reportMonthBreakdownTableMonthCol.setCellValueFactory(new PropertyValueFactory<>("monthName"));
         reportMonthBreakdownTableTotalCol.setCellValueFactory(new PropertyValueFactory<>("TotalApps"));
@@ -254,5 +348,8 @@ public class ViewReport implements Initializable {
         } catch (SQLException throwables) {
             System.out.println("Error loading Customers from Database");
         }
+
+        selectCustomerCombo.setValue("");
+        selectContactCombo.setValue("");
     }
 }
