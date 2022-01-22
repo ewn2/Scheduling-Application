@@ -1,5 +1,6 @@
 package sample.Controller;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import sample.Model.Appointment;
 import sample.Model.Customer;
 import sample.Model.User;
@@ -73,6 +75,11 @@ public class MainForm implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            UpcomingAppointmentWarning();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         timeZoneLabel.setText("User's Timezone: " + loginForm.usersTimezone);
         CustomerTable.setItems(Customer.customerPopulation());
         customerTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("CustomerID"));
@@ -119,7 +126,7 @@ public class MainForm implements Initializable {
         for (Appointment CheckAppointment : existingUserAppointments) {
             DateTimeFormatter CheckFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
             LocalDateTime existingAppointment = LocalDateTime.parse(CheckAppointment.getAppointmentStartDateTime(), CheckFormatter);
-            if (ChronoUnit.MINUTES.between(LocalDateTime.now(), existingAppointment) <= 15) {
+            if (ChronoUnit.MINUTES.between(LocalDateTime.now(), existingAppointment) <= 15 && ChronoUnit.MINUTES.between(LocalDateTime.now(), existingAppointment) >= 0) {
                 upcomingUserAppointments.add(CheckAppointment);
                 UserHasAppointment = true;
             }
@@ -128,14 +135,12 @@ public class MainForm implements Initializable {
             errorMessageBox.setVisible(true);
             errorMessageBox.setText("Upcoming Appointments!");
             for (Appointment upcoming : upcomingUserAppointments) {
-                errorMessageBox.appendText("\n ID: " + upcoming.getAppointmentUserID() + " at" + upcoming.getAppointmentStartDateTime());
+                errorMessageBox.appendText("\n ID: " + upcoming.getAppointmentID() + " at " + upcoming.getAppointmentStartDateTime());
             }
-        }
-        else {
+        } else {
             errorMessageBox.setVisible(true);
             errorMessageBox.setText("No Appointments Upcoming in next 15 minutes!");
         }
-
     }
 
     public void onExitButtonAction(ActionEvent actionEvent) {
@@ -192,9 +197,9 @@ public class MainForm implements Initializable {
         selectedAppointment = AppointmentTable.getSelectionModel().getSelectedItem();
         if (selectedAppointment != null) {
             errorMessageBox.setVisible(true);
-                errorMessageBox.setText("Delete this Appointment?");
-                confirmButton.setVisible(true);
-                denyButton.setVisible(true);
+            errorMessageBox.setText("Delete this Appointment?");
+            confirmButton.setVisible(true);
+            denyButton.setVisible(true);
         }
     }
 
@@ -225,8 +230,7 @@ public class MainForm implements Initializable {
         if (selectedCustomer != null) {
             if (Customer.deleteCustomerFromDatabase(selectedCustomer)) {
                 Customer.deleteCustomer(selectedCustomer);
-            }
-            else {
+            } else {
                 errorMessageBox.setVisible(true);
                 errorMessageBox.setText("Error connecting to database, check connection");
             }
@@ -245,8 +249,7 @@ public class MainForm implements Initializable {
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 errorMessageBox.setVisible(true);
                 errorMessageBox.setText("Error connecting to database, check connection");
             }
@@ -305,6 +308,7 @@ public class MainForm implements Initializable {
     public void onAppointmentsWeeklyRadioAction(ActionEvent actionEvent) throws SQLException {
         FilterByWeek();
     }
+
     public void FilterByWeek() throws SQLException {
         if (WeekOrMonthSelect.getValue() != null) {
             ObservableList<Appointment> weekAppointments = FXCollections.observableArrayList();
@@ -314,8 +318,8 @@ public class MainForm implements Initializable {
                 System.out.println(appointment.getAppointmentStartDateTime());
                 String aptStart = appointment.getAppointmentStartDateTime();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate handler1 = LocalDate.parse(aptStart.substring(0,10), formatter);
-                if ((ChronoUnit.DAYS.between(wantedWeek.atStartOfDay(ZoneId.systemDefault()),handler1.atStartOfDay(ZoneId.systemDefault())) <= 7) && (ChronoUnit.DAYS.between(wantedWeek.atStartOfDay(ZoneId.systemDefault()),handler1.atStartOfDay(ZoneId.systemDefault())) >= 0)) {
+                LocalDate handler1 = LocalDate.parse(aptStart.substring(0, 10), formatter);
+                if ((ChronoUnit.DAYS.between(wantedWeek.atStartOfDay(ZoneId.systemDefault()), handler1.atStartOfDay(ZoneId.systemDefault())) <= 7) && (ChronoUnit.DAYS.between(wantedWeek.atStartOfDay(ZoneId.systemDefault()), handler1.atStartOfDay(ZoneId.systemDefault())) >= 0)) {
                     System.out.println("Added an Appointment: " + appointment.getAppointmentStartDateTime());
                     weekAppointments.add(appointment);
                 }
@@ -341,6 +345,7 @@ public class MainForm implements Initializable {
     public void onAppointmentsMonthlyRadioAction(ActionEvent actionEvent) throws SQLException {
         FilterByMonth();
     }
+
     public void FilterByMonth() throws SQLException {
         if (WeekOrMonthSelect.getValue() != null) {
             ObservableList<Appointment> monthAppointments = FXCollections.observableArrayList();
@@ -350,7 +355,7 @@ public class MainForm implements Initializable {
                 System.out.println(appointment.getAppointmentStartDateTime());
                 String aptStart = appointment.getAppointmentStartDateTime();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate handler1 = LocalDate.parse(aptStart.substring(0,10), formatter);
+                LocalDate handler1 = LocalDate.parse(aptStart.substring(0, 10), formatter);
                 if (wantedMonth.getMonth() == handler1.getMonth()) {
                     System.out.println("Added an Appointment: " + appointment.getAppointmentStartDateTime());
                     monthAppointments.add(appointment);
