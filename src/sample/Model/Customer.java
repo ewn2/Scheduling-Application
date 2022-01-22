@@ -40,13 +40,6 @@ public class Customer {
                 return true;
             }
         }
-        /*
-        if (associatedAppointments.contains(appointment)) {
-            associatedAppointments.remove(appointment);
-            return true;
-        }
-        else return false;
-         */
         return false;
     }
 

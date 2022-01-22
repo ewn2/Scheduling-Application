@@ -277,6 +277,7 @@ public class AddAppointment implements Initializable {
                             if (customer.getCustomerID() == newAppointment.getAppointmentCustomerID()) {
                                 if (!customer.getAssociatedAppointments().contains(newAppointment)) {
                                     customer.addAssociatedAppointment(newAppointment);
+                                    System.out.println(newAppointment.getAppointmentID());
                                 }
                             }
                         }

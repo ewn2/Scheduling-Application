@@ -52,7 +52,108 @@ public class ModifyAppointment implements Initializable {
     public ComboBox ModifyAppointmentUserIDCombo;
 
     public void onModifyAppointmentSaveButtonAction(ActionEvent actionEvent) throws IOException {
-        returnToMainScreen(actionEvent);
+        boolean validEntries = true;
+        boolean addedAppointment = false;
+        if (StartEndAppointmentCheck()) {
+            try {
+                int id = 0;
+                String AppointmentTitle = ModifyAppointmentTitleBox.getText();
+                if (AppointmentTitle == null || AppointmentTitle.trim().isEmpty() || AppointmentTitle.length() > 50) {
+                    throw new Exception();
+                }
+                String AppointmentDesc = ModifyAppointmentDescriptionBox.getText();
+                if (AppointmentDesc == null || AppointmentDesc.trim().isEmpty() || AppointmentDesc.length() > 50) {
+                    throw new Exception();
+                }
+                String AppointmentLocation = ModifyAppointmentLocationBox.getText();
+                if (AppointmentLocation == null || AppointmentLocation.trim().isEmpty() || AppointmentLocation.length() > 50) {
+                    throw new Exception();
+                }
+                String AppointmentContact = ModifyAppointmentContactCombo.getValue().toString(); //Pull from DB
+                if (AppointmentContact == null || AppointmentContact.trim().isEmpty()) {
+                    throw new Exception();
+                }
+                String AppointmentType = ModifyAppointmentTypeBox.getText();
+                if (AppointmentType == null || AppointmentType.trim().isEmpty() || AppointmentType.length() > 50) {
+                    throw new Exception();
+                }
+                LocalDateTime AppointmentStartDateTime = startDate.atTime(LocalTime.from(meetingStart));
+                System.out.println(AppointmentStartDateTime);
+                LocalDateTime AppointmentEndDateTime = endDate.atTime(LocalTime.from(meetingEnd));
+                System.out.println(AppointmentEndDateTime);
+                if (AppointmentStartDateTime.isAfter(AppointmentEndDateTime)) {
+                    throw new Exception();
+                }
+                String AppointmentCustomerIDString = ModifyAppointmentCustomerIDCombo.getValue().toString(); //Pull from DB
+                if (AppointmentCustomerIDString == null || AppointmentCustomerIDString.trim().isEmpty()) {
+                    throw new Exception();
+                }
+                String AppointmentUserIDString = ModifyAppointmentUserIDCombo.getValue().toString(); //Pull from DB
+                if (AppointmentUserIDString == null || AppointmentUserIDString.trim().isEmpty()) {
+                    throw new Exception();
+                }
+            } catch (Exception e) {
+                errorMessageBox.setVisible(true);
+                errorMessageBox.setText("Error: Please check all boxes are filled and Appointment Start & End are valid");
+                validEntries = false;
+            }
+            int id = appointmentToModify.getAppointmentID();
+            String AppointmentTitle = ModifyAppointmentTitleBox.getText();
+            String AppointmentDesc = ModifyAppointmentDescriptionBox.getText();
+            String AppointmentLocation = ModifyAppointmentLocationBox.getText();
+            String AppointmentContact = ModifyAppointmentContactCombo.getValue().toString(); //Pull from DB
+            String AppointmentType = ModifyAppointmentTypeBox.getText();
+            ZonedDateTime convertStartToUTC = meetingStart.withZoneSameInstant(ZoneId.of("UTC"));
+            ZonedDateTime localStart = meetingStart.withZoneSameInstant(ZoneId.systemDefault());
+            LocalDateTime AppointmentStartDateTime = startDate.atTime(LocalTime.from(convertStartToUTC));
+            LocalDateTime AppointmentStartDateTimeLocal = startDate.atTime(LocalTime.from(localStart));
+            String AptStartDateTime = AppointmentStartDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            String AptStartDateTimeLocal = AppointmentStartDateTimeLocal.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            ZonedDateTime convertEndToUTC = meetingEnd.withZoneSameInstant(ZoneId.of("UTC"));
+            ZonedDateTime localEnd = meetingEnd.withZoneSameInstant(ZoneId.systemDefault());
+            LocalDateTime AppointmentEndDateTime = endDate.atTime(LocalTime.from(convertEndToUTC));
+            LocalDateTime AppointmentEndDateTimeLocal = endDate.atTime(LocalTime.from(localEnd));
+            String AptEndDateTime = AppointmentEndDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            String AptEndDateTimeLocal = AppointmentEndDateTimeLocal.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            String AppointmentCustomerIDString = ModifyAppointmentCustomerIDCombo.getValue().toString(); //Pull from DB
+            String AppointmentUserIDString = ModifyAppointmentUserIDCombo.getValue().toString(); //Pull from DBs
+            int AppointmentContactID = 0;
+            int AppointmentCustomerID = Integer.parseInt(AppointmentCustomerIDString);
+            int AppointmentUserID = Integer.parseInt(AppointmentUserIDString);
+            if (validEntries) {
+                try {
+                    Appointment newAppointment = new Appointment(id, AppointmentTitle,AppointmentDesc,AppointmentLocation,AppointmentContact,AppointmentType,AptStartDateTimeLocal,AptEndDateTimeLocal,AppointmentCustomerID,AppointmentUserID);
+                    //newAppointment.setAppointmentID(Appointment.uniqueAppointmentID());
+                    //Appointment.updateAppointment(id, newAppointment);
+                    newAppointment.setAppointmentStartDateTime(AptStartDateTime);
+                    newAppointment.setAppointmentEndDateTime(AptEndDateTime);
+                    if (Appointment.modifyAppointmentInDatabase(newAppointment)) {
+                        for (Customer customer : Customer.customerPopulation()) {
+                            if (customer.getCustomerID() == newAppointment.getAppointmentCustomerID()) {
+                                if (!customer.getAssociatedAppointments().contains(newAppointment)) {
+                                    customer.addAssociatedAppointment(newAppointment);
+                                    System.out.println(newAppointment.getAppointmentID());
+                                }
+                            }
+                        }
+                        addedAppointment = true;
+                    }
+                    else {
+                        throw new Exception();
+                    }
+                } catch (Exception e) {
+                    errorMessageBox.setVisible(true);
+                    errorMessageBox.setText("Error: Cannot modify Customer in database, check connection");
+                }
+            }
+            if (addedAppointment) {
+                returnToMainScreen(actionEvent);
+            }
+        }
+        else {
+            errorMessageBox.setVisible(true);
+            errorMessageBox.setText("Error: Appointment Start and End times and dates must conform to business hours");
+        }
     }
 
     public void onModifyAppointmentCancelButtonAction(ActionEvent actionEvent) throws IOException {
