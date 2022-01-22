@@ -67,7 +67,6 @@ public class Main extends Application {
         String AppointmentEndDateTime = null;//YYYY-MM-DD hh:mm:ss
         int AppointmentCustomerID = 0;
         int AppointmentUserID = 0;
-        System.out.println(CustomerID);
         String logQuery = "SELECT * FROM appointments join customers on appointments.Customer_ID=customers.Customer_ID join contacts on appointments.Contact_ID=contacts.Contact_ID join users on appointments.User_ID=users.User_ID WHERE customers.Customer_ID=" + CustomerID;
         JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
         Statement checkQuery = JDBC.getPreparedStatement();

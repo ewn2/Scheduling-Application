@@ -1,5 +1,7 @@
 package sample.Controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,14 +23,16 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ViewReport implements Initializable {
     public Button viewReportCancelButton;
-    public TableView reportMonthBreakdownTable;
-    public TableColumn reportMonthBreakdownTableMonthCol;
-    public TableColumn reportMonthBreakdownTableTotalCol;
+    public TableView<theMonth> reportMonthBreakdownTable;
+    public TableColumn<theMonth, String> reportMonthBreakdownTableMonthCol;
+    public TableColumn<theMonth, Integer> reportMonthBreakdownTableTotalCol;
     public TableView reportTypeBreakdownTable;
     public TableColumn reportTypeBreakdownTableTypeCol;
     public TableColumn reportTypeBreakdownTableTotalCol;
@@ -61,6 +65,96 @@ public class ViewReport implements Initializable {
         returnToMainScreen(actionEvent);
     }
 
+    public static class theMonth {
+        public String monthName = null;
+        public int TotalApps = 0;
+
+        public theMonth(String monthName, int TotalApps) {
+            this.monthName = monthName;
+            this.TotalApps = TotalApps;
+        }
+        public String getMonthName() {
+            return monthName;
+        }
+        public void setMonthName(String monthName) {
+            this.monthName = monthName;
+        }
+        public int getTotalApps() {
+            return TotalApps;
+        }
+        public void setTotalApps(int TotalApps) {
+            this.TotalApps = TotalApps;
+        }
+    }
+
+    private static ObservableList<theMonth> allMonths = FXCollections.observableArrayList();
+
+    public void populateMonths() throws SQLException {
+        int January = 0;
+        int February = 0;
+        int March = 0;
+        int April = 0;
+        int May = 0;
+        int June = 0;
+        int July = 0;
+        int August = 0;
+        int September = 0;
+        int October = 0;
+        int November = 0;
+        int December = 0;
+        for (Appointment appointment : Appointment.appointmentPopulation()) {
+            String aptStart = appointment.getAppointmentStartDateTime();
+            String handler1 = aptStart.substring(5, 7);
+            if (handler1.equals("01")) {
+                January++;
+            }
+            if (handler1.equals("02")) {
+                February++;
+            }
+            if (handler1.equals("03")) {
+                March++;
+            }
+            if (handler1.equals("04")) {
+                April++;
+            }
+            if (handler1.equals("05")) {
+                May++;
+            }
+            if (handler1.equals("06")) {
+                June++;
+            }
+            if (handler1.equals("07")) {
+                July++;
+            }
+            if (handler1.equals("08")) {
+                August++;
+            }
+            if (handler1.equals("09")) {
+                September++;
+            }
+            if (handler1.equals("10")) {
+                October++;
+            }
+            if (handler1.equals("11")) {
+                November++;
+            }
+            if (handler1.equals("12")) {
+                December++;
+            }
+        }
+        allMonths.add(new theMonth("January", January));
+        allMonths.add(new theMonth("February", February));
+        allMonths.add(new theMonth("March", March));
+        allMonths.add(new theMonth("April", April));
+        allMonths.add(new theMonth("May", May));
+        allMonths.add(new theMonth("June", June));
+        allMonths.add(new theMonth("July", July));
+        allMonths.add(new theMonth("August", August));
+        allMonths.add(new theMonth("September", September));
+        allMonths.add(new theMonth("October", October));
+        allMonths.add(new theMonth("November", November));
+        allMonths.add(new theMonth("December", December));
+    }
 
     public void populateContacts() throws SQLException {
         String logQuery = "SELECT * FROM contacts";
@@ -141,6 +235,15 @@ public class ViewReport implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        allMonths.clear();
+        try {
+            populateMonths();
+        } catch (SQLException throwables) {
+            System.out.println("Error loading Appointments by Month from Database");
+        }
+        reportMonthBreakdownTable.setItems(allMonths);
+        reportMonthBreakdownTableMonthCol.setCellValueFactory(new PropertyValueFactory<>("monthName"));
+        reportMonthBreakdownTableTotalCol.setCellValueFactory(new PropertyValueFactory<>("TotalApps"));
         try {
             populateContacts();
         } catch (SQLException throwables) {
