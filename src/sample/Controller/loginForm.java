@@ -91,6 +91,6 @@ public class loginForm implements Initializable {
         mainScreenTitleLabel.setText(resourceBundle.getString("mainScreenTitleLabel"));
         String localeLabel = (String.valueOf(usersTimezone));
         String languageLabel = (String.valueOf(Locale.getDefault()));
-        ZoneIDLabel.setText(languageLabel + ", " + localeLabel);
+        ZoneIDLabel.setText(resourceBundle.getString("LanguageLabel") +": "+ languageLabel + ",\n" + resourceBundle.getString("LocationLabel") +": "+ localeLabel);
     }
 }

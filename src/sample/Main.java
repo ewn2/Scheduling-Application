@@ -21,7 +21,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("loginForm.fxml"));
-        primaryStage.setTitle("Meeting Scheduling System");
+        //primaryStage.setTitle("Meeting Scheduling System");
         primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.show();
     }

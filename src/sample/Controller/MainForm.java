@@ -133,13 +133,13 @@ public class MainForm implements Initializable {
         }
         if (UserHasAppointment) {
             errorMessageBox.setVisible(true);
-            errorMessageBox.setText("Upcoming Appointments!");
+            errorMessageBox.setText("Upcoming Appointments within 15 minutes of Login!");
             for (Appointment upcoming : upcomingUserAppointments) {
                 errorMessageBox.appendText("\n ID: " + upcoming.getAppointmentID() + " at " + upcoming.getAppointmentStartDateTime());
             }
         } else {
             errorMessageBox.setVisible(true);
-            errorMessageBox.setText("No Appointments Upcoming in next 15 minutes!");
+            errorMessageBox.setText("No appointments upcoming within 15 minutes of Login");
         }
     }
 
