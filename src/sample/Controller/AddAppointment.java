@@ -266,6 +266,24 @@ public class AddAppointment implements Initializable {
             if (validEntries) {
                 try {
                     Appointment newAppointment = new Appointment(id, AppointmentTitle,AppointmentDesc,AppointmentLocation,AppointmentContact,AppointmentType,AptStartDateTimeLocal,AptEndDateTimeLocal,AppointmentCustomerID,AppointmentUserID);
+
+                    ObservableList<Appointment> existingCustomerAppointments = FXCollections.observableArrayList();
+                    for (Appointment CheckAppointment : Appointment.appointmentPopulation()) {
+                        if (CheckAppointment.getAppointmentCustomerID() == Integer.parseInt(AppointmentCustomerIDString)) {
+                            existingCustomerAppointments.add(CheckAppointment);
+                        }
+                    }
+                    for (Appointment CheckAppointment : existingCustomerAppointments) {
+                        DateTimeFormatter CheckFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+                        LocalDateTime existingStart = LocalDateTime.parse(CheckAppointment.getAppointmentStartDateTime(), CheckFormatter);
+                        LocalDateTime existingEnd = LocalDateTime.parse(CheckAppointment.getAppointmentEndDateTime(), CheckFormatter);
+                        LocalDateTime newStart = LocalDateTime.parse(newAppointment.getAppointmentStartDateTime(), CheckFormatter);
+                        LocalDateTime newEnd = LocalDateTime.parse(newAppointment.getAppointmentEndDateTime(), CheckFormatter);
+                        if ((newStart.isAfter(existingStart) && newEnd.isBefore(existingEnd)) || (newStart.isBefore(existingStart) && newEnd.isAfter(existingStart)) || (newStart.isBefore(existingEnd) && newEnd.isAfter(existingStart)) || (newStart.isBefore(existingStart) && newEnd.isAfter(existingEnd))) {
+                            throw new Exception();
+                        }
+                    }
+
                     newAppointment.setAppointmentID(Appointment.uniqueAppointmentID());
                     Appointment.addAppointment(newAppointment);
                     newAppointment.setAppointmentStartDateTime(AptStartDateTime);
