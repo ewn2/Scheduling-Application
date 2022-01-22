@@ -152,6 +152,17 @@ public class Appointment {
         Main.appointmentData();
         return allAppointments;
     }
+    public static ObservableList<Appointment> ContactAppointmentPopulation(int ContactID) throws SQLException {
+        allAppointments.clear();
+        Main.ContactAppointmentData(ContactID);
+        return allAppointments;
+    }
+    public static ObservableList<Appointment> CustomerAppointmentPopulation(int CustomerID) throws SQLException {
+        allAppointments.clear();
+        Main.CustomerAppointmentData(CustomerID);
+        return allAppointments;
+    }
+
     public static void addAppointment(Appointment newAppointment) {
         allAppointments.add(newAppointment);
     }

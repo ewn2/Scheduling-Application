@@ -123,8 +123,6 @@ public class ModifyAppointment implements Initializable {
             if (validEntries) {
                 try {
                     Appointment newAppointment = new Appointment(id, AppointmentTitle,AppointmentDesc,AppointmentLocation,AppointmentContact,AppointmentType,AptStartDateTimeLocal,AptEndDateTimeLocal,AppointmentCustomerID,AppointmentUserID);
-                    //newAppointment.setAppointmentID(Appointment.uniqueAppointmentID());
-                    //Appointment.updateAppointment(id, newAppointment);
                     newAppointment.setAppointmentStartDateTime(AptStartDateTime);
                     newAppointment.setAppointmentEndDateTime(AptEndDateTime);
                     if (Appointment.modifyAppointmentInDatabase(newAppointment)) {

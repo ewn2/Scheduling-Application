@@ -56,6 +56,93 @@ public class Main extends Application {
         }
     }
 
+    public static void CustomerAppointmentData(int CustomerID) throws SQLException {
+        int AppointmentID = 0;
+        String AppointmentTitle = null;
+        String AppointmentDesc = null;
+        String AppointmentLocation = null;
+        String AppointmentContact = null;
+        String AppointmentType = null;
+        String AppointmentStartDateTime = null;//YYYY-MM-DD hh:mm:ss
+        String AppointmentEndDateTime = null;//YYYY-MM-DD hh:mm:ss
+        int AppointmentCustomerID = 0;
+        int AppointmentUserID = 0;
+        String logQuery = "SELECT * FROM appointments join customers on appointments.Customer_ID=customers.Customer_ID join contacts on appointments.Contact_ID=contacts.Contact_ID join users on appointments.User_ID=users.User_ID WHERE customers.Customer_ID=" + CustomerID;
+        JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+        Statement checkQuery = JDBC.getPreparedStatement();
+        checkQuery.execute(logQuery);
+        ResultSet rs2 = checkQuery.getResultSet();
+        while (rs2.next()) {
+            AppointmentID = rs2.getInt("Appointment_ID");
+            AppointmentTitle = rs2.getString("Title");
+            AppointmentDesc = rs2.getString("Description");
+            AppointmentLocation = rs2.getString("Location");
+            AppointmentContact = rs2.getString("Contact_Name");
+            AppointmentType = rs2.getString("Type");
+            ZonedDateTime loadStart = rs2.getTimestamp("Start").toInstant().atZone(ZoneId.systemDefault());
+            AppointmentStartDateTime = loadStart.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            AppointmentEndDateTime = rs2.getTimestamp("End").toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            AppointmentCustomerID = rs2.getInt("Customer_ID");
+            AppointmentUserID = rs2.getInt("User_ID");
+            Appointment fillerAppointment = new Appointment(AppointmentID, AppointmentTitle, AppointmentDesc, AppointmentLocation, AppointmentContact, AppointmentType, AppointmentStartDateTime, AppointmentEndDateTime, AppointmentCustomerID, AppointmentUserID);
+            Appointment.addAppointment(fillerAppointment);
+            Appointment.usedAppointmentIDs.add(AppointmentID);
+            for (Customer customer : Customer.customerPopulation()) {
+                if (customer.getCustomerID() == fillerAppointment.getAppointmentCustomerID()) {
+                    if (!customer.getAssociatedAppointments().equals(fillerAppointment)) {
+                        customer.addAssociatedAppointment(fillerAppointment);
+                    }
+                }
+            }
+        }
+        if (!Appointment.usedAppointmentIDs.contains(0)) {
+            Appointment.usedAppointmentIDs.add(0);
+        }
+    }
+    public static void ContactAppointmentData(int ContactID) throws SQLException {
+        int AppointmentID = 0;
+        String AppointmentTitle = null;
+        String AppointmentDesc = null;
+        String AppointmentLocation = null;
+        String AppointmentContact = null;
+        String AppointmentType = null;
+        String AppointmentStartDateTime = null;//YYYY-MM-DD hh:mm:ss
+        String AppointmentEndDateTime = null;//YYYY-MM-DD hh:mm:ss
+        int AppointmentCustomerID = 0;
+        int AppointmentUserID = 0;
+        String logQuery = "SELECT * FROM appointments join customers on appointments.Customer_ID=customers.Customer_ID join contacts on appointments.Contact_ID=contacts.Contact_ID join users on appointments.User_ID=users.User_ID WHERE contacts.Contact_ID=" + ContactID;
+        JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+        Statement checkQuery = JDBC.getPreparedStatement();
+        checkQuery.execute(logQuery);
+        ResultSet rs2 = checkQuery.getResultSet();
+        while (rs2.next()) {
+            AppointmentID = rs2.getInt("Appointment_ID");
+            AppointmentTitle = rs2.getString("Title");
+            AppointmentDesc = rs2.getString("Description");
+            AppointmentLocation = rs2.getString("Location");
+            AppointmentContact = rs2.getString("Contact_Name");
+            AppointmentType = rs2.getString("Type");
+            ZonedDateTime loadStart = rs2.getTimestamp("Start").toInstant().atZone(ZoneId.systemDefault());
+            AppointmentStartDateTime = loadStart.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            AppointmentEndDateTime = rs2.getTimestamp("End").toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            AppointmentCustomerID = rs2.getInt("Customer_ID");
+            AppointmentUserID = rs2.getInt("User_ID");
+            Appointment fillerAppointment = new Appointment(AppointmentID, AppointmentTitle, AppointmentDesc, AppointmentLocation, AppointmentContact, AppointmentType, AppointmentStartDateTime, AppointmentEndDateTime, AppointmentCustomerID, AppointmentUserID);
+            Appointment.addAppointment(fillerAppointment);
+            Appointment.usedAppointmentIDs.add(AppointmentID);
+            for (Customer customer : Customer.customerPopulation()) {
+                if (customer.getCustomerID() == fillerAppointment.getAppointmentCustomerID()) {
+                    if (!customer.getAssociatedAppointments().equals(fillerAppointment)) {
+                        customer.addAssociatedAppointment(fillerAppointment);
+                    }
+                }
+            }
+        }
+        if (!Appointment.usedAppointmentIDs.contains(0)) {
+            Appointment.usedAppointmentIDs.add(0);
+        }
+    }
+
     public static void appointmentData() throws SQLException {
         int AppointmentID = 0;
         String AppointmentTitle = null;

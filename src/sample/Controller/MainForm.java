@@ -75,6 +75,9 @@ public class MainForm implements Initializable {
         customerTableCustomerPostalCol.setCellValueFactory(new PropertyValueFactory<>("CustomerPostal"));
         customerTableCustomerStateCol.setCellValueFactory(new PropertyValueFactory<>("CustomerState"));
         customerTableCustomerAddressCol.setCellValueFactory(new PropertyValueFactory<>("CustomerAddress"));
+        customerTableCustomerIDCol.setSortType(TableColumn.SortType.ASCENDING);
+        CustomerTable.getSortOrder().add(customerTableCustomerIDCol);
+        CustomerTable.sort();
         try {
             AppointmentTable.setItems(Appointment.appointmentPopulation());
         } catch (SQLException throwables) {
@@ -90,6 +93,9 @@ public class MainForm implements Initializable {
         AppointmentTableEndDateAndTimeCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentEndDateTime"));
         AppointmentTableCustomerIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustomerID"));
         AppointmentTableUserIDCol.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserID"));
+        AppointmentTableAppointmentIDCol.setSortType(TableColumn.SortType.ASCENDING);
+        AppointmentTable.getSortOrder().add(AppointmentTableAppointmentIDCol);
+        AppointmentTable.sort();
     }
 
     public void onExitButtonAction(ActionEvent actionEvent) {
