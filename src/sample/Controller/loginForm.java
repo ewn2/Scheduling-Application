@@ -59,13 +59,11 @@ public class loginForm implements Initializable {
         String username = usernameTextbox.getText();
         String password = passwordTextbox.getText();
         if (User.validUser(username,password)) {
-            //User.setUsername(username);
             loggedInUser = username;
             returnToMainScreen(actionEvent);
         }
         else {
             errorMessageBox.setVisible(true);
-            //errorMessageBox.setText("Incorrect Username or Password");
         }
     }
 

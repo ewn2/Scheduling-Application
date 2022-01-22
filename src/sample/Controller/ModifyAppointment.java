@@ -59,40 +59,62 @@ public class ModifyAppointment implements Initializable {
                 int id = 0;
                 String AppointmentTitle = ModifyAppointmentTitleBox.getText();
                 if (AppointmentTitle == null || AppointmentTitle.trim().isEmpty() || AppointmentTitle.length() > 50) {
-                    throw new Exception();
+                    throw new Exception("Invalid Title Entry, must not be empty and must be less than 50 characters");
                 }
                 String AppointmentDesc = ModifyAppointmentDescriptionBox.getText();
                 if (AppointmentDesc == null || AppointmentDesc.trim().isEmpty() || AppointmentDesc.length() > 50) {
-                    throw new Exception();
+                    throw new Exception("Invalid Description Entry, must not be empty and must be less than 50 characters");
                 }
                 String AppointmentLocation = ModifyAppointmentLocationBox.getText();
                 if (AppointmentLocation == null || AppointmentLocation.trim().isEmpty() || AppointmentLocation.length() > 50) {
-                    throw new Exception();
+                    throw new Exception("Invalid Location Entry, must not be empty and must be less than 50 characters");
+                }
+                try {
+                    String AppointmentContact = ModifyAppointmentContactCombo.getValue().toString();
+                } catch (Exception e) {
+                    throw new Exception("Invalid Contact Entry, must not be empty");
                 }
                 String AppointmentContact = ModifyAppointmentContactCombo.getValue().toString(); //Pull from DB
                 if (AppointmentContact == null || AppointmentContact.trim().isEmpty()) {
-                    throw new Exception();
+                    throw new Exception("Invalid Contact Entry, must not be empty");
                 }
                 String AppointmentType = ModifyAppointmentTypeBox.getText();
                 if (AppointmentType == null || AppointmentType.trim().isEmpty() || AppointmentType.length() > 50) {
-                    throw new Exception();
+                    throw new Exception("Invalid Type Entry, must not be empty and must be less than 50 characters");
                 }
                 LocalDateTime AppointmentStartDateTime = startDate.atTime(LocalTime.from(meetingStart));
                 LocalDateTime AppointmentEndDateTime = endDate.atTime(LocalTime.from(meetingEnd));
                 if (AppointmentStartDateTime.isAfter(AppointmentEndDateTime)) {
-                    throw new Exception();
+                    throw new Exception("Invalid Appointment Times, Start cannot be after End");
+                }
+                try {
+                    String AppointmentCustomerIDString = ModifyAppointmentCustomerIDCombo.getValue().toString();
+                } catch (Exception e) {
+                    throw new Exception("Invalid Customer Entry, must not be empty");
                 }
                 String AppointmentCustomerIDString = ModifyAppointmentCustomerIDCombo.getValue().toString(); //Pull from DB
                 if (AppointmentCustomerIDString == null || AppointmentCustomerIDString.trim().isEmpty()) {
-                    throw new Exception();
+                    throw new Exception("Invalid Customer Entry, must not be empty");
+                }
+                try {
+                    String AppointmentUserIDString = ModifyAppointmentUserIDCombo.getValue().toString();
+                } catch (Exception e) {
+                    throw new Exception("Invalid User Entry, must not be empty");
                 }
                 String AppointmentUserIDString = ModifyAppointmentUserIDCombo.getValue().toString(); //Pull from DB
                 if (AppointmentUserIDString == null || AppointmentUserIDString.trim().isEmpty()) {
-                    throw new Exception();
+                    throw new Exception("Invalid User Entry, must not be empty");
                 }
             } catch (Exception e) {
                 errorMessageBox.setVisible(true);
-                errorMessageBox.setText("Error: Please check all boxes are filled and Appointment Start & End are valid");
+                errorMessageBox.setText("Error: ");
+                if (e.getMessage() != null) {
+                    errorMessageBox.appendText(e.getMessage());
+                }
+                else {
+                    System.out.println(e.getCause());
+                    errorMessageBox.appendText("Invalid Data Entries!");
+                }
                 validEntries = false;
             }
             int id = appointmentToModify.getAppointmentID();
@@ -156,7 +178,7 @@ public class ModifyAppointment implements Initializable {
                     }
                 } catch (Exception e) {
                     errorMessageBox.setVisible(true);
-                    errorMessageBox.setText("Error: Cannot modify Customer in database, check connection");
+                    errorMessageBox.setText("Error: Appointment cannot overlap with existing Appointments for Customer");
                 }
             }
             if (addedAppointment) {
