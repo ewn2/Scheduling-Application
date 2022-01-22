@@ -63,6 +63,7 @@ public class MainForm implements Initializable {
     public TableColumn<Customer, String> customerTableCustomerStateCol;
     public TableColumn<Customer, String> customerTableCustomerAddressCol;
     public Label timeZoneLabel;
+    public Button FilterButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -235,5 +236,8 @@ public class MainForm implements Initializable {
     }
 
     public void onAppointmentsNoFilterRadioAction(ActionEvent actionEvent) {
+    }
+
+    public void onFilterButtonAction(ActionEvent actionEvent) {
     }
 }
