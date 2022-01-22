@@ -15,10 +15,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sample.Model.Appointment;
 import sample.Model.Customer;
+import sample.Model.User;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -101,6 +103,39 @@ public class MainForm implements Initializable {
         AppointmentTableAppointmentIDCol.setSortType(TableColumn.SortType.ASCENDING);
         AppointmentTable.getSortOrder().add(AppointmentTableAppointmentIDCol);
         AppointmentTable.sort();
+    }
+
+    public void UpcomingAppointmentWarning() throws SQLException {
+        boolean UserHasAppointment = false;
+        int loggedInUser = User.getUser_ID();
+
+        ObservableList<Appointment> existingUserAppointments = FXCollections.observableArrayList();
+        for (Appointment CheckAppointment : Appointment.appointmentPopulation()) {
+            if (CheckAppointment.getAppointmentUserID() == loggedInUser) {
+                existingUserAppointments.add(CheckAppointment);
+            }
+        }
+        ObservableList<Appointment> upcomingUserAppointments = FXCollections.observableArrayList();
+        for (Appointment CheckAppointment : existingUserAppointments) {
+            DateTimeFormatter CheckFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+            LocalDateTime existingAppointment = LocalDateTime.parse(CheckAppointment.getAppointmentStartDateTime(), CheckFormatter);
+            if (ChronoUnit.MINUTES.between(LocalDateTime.now(), existingAppointment) <= 15) {
+                upcomingUserAppointments.add(CheckAppointment);
+                UserHasAppointment = true;
+            }
+        }
+        if (UserHasAppointment) {
+            errorMessageBox.setVisible(true);
+            errorMessageBox.setText("Upcoming Appointments!");
+            for (Appointment upcoming : upcomingUserAppointments) {
+                errorMessageBox.appendText("\n ID: " + upcoming.getAppointmentUserID() + " at" + upcoming.getAppointmentStartDateTime());
+            }
+        }
+        else {
+            errorMessageBox.setVisible(true);
+            errorMessageBox.setText("No Appointments Upcoming in next 15 minutes!");
+        }
+
     }
 
     public void onExitButtonAction(ActionEvent actionEvent) {

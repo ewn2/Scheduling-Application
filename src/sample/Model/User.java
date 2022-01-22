@@ -20,7 +20,7 @@ public class User {
     public String getUsername() {
         return loggedInUser;
     }
-    public int getUser_ID(){
+    public static int getUser_ID(){
         return loggedInUser_ID;
     }
 
