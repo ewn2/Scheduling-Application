@@ -118,31 +118,47 @@ public class ModifyCustomer implements Initializable {
             int id = customerToModify.getCustomerID();
             String CustomerName = ModifyCustomerNameBox.getText();
             if (CustomerName == null || CustomerName.trim().isEmpty() || CustomerName.length() > 50) {
-                throw new Exception();
+                throw new Exception("Invalid Name Entry, must not be empty and must be less than 50 characters");
             }
             String CustomerPhone = ModifyCustomerPhoneBox.getText();
             if (CustomerPhone == null || CustomerPhone.trim().isEmpty() || CustomerPhone.length() > 50) {
-                throw new Exception();
+                throw new Exception("Invalid Phone Entry, must not be empty and must be less than 50 characters");
+            }
+            try {
+                String CustomerCountryComboString = ModifyCustomerCountryCombo.getValue().toString();
+            } catch (Exception e) {
+                throw new Exception("Invalid Country Entry, must not be empty");
             }
             String CustomerCountry = ModifyCustomerCountryCombo.getValue().toString();
             if (CustomerCountry == null || CustomerCountry.trim().isEmpty()) {
-                throw new Exception();
+                throw new Exception("Invalid Country Entry, must not be empty");
             }
             String CustomerPostal = ModifyCustomerPostalBox.getText();
             if (CustomerPostal == null || CustomerPostal.trim().isEmpty() || CustomerPostal.length() > 50) {
-                throw new Exception();
+                throw new Exception("Invalid Postal/Zip Code Entry, must not be empty and must be less than 50 characters");
+            }
+            try {
+                String CustomerCountryComboString = ModifyCustomerStateCombo.getValue().toString();
+            } catch (Exception e) {
+                throw new Exception("Invalid State/Province Entry, must not be empty");
             }
             String CustomerState = ModifyCustomerStateCombo.getValue().toString();
             if (CustomerState == null || CustomerState.trim().isEmpty()) {
-                throw new Exception();
+                throw new Exception("Invalid State/Province Entry, must not be empty");
             }
             String CustomerAddress = ModifyCustomerAddressBox.getText();
             if (CustomerAddress == null || CustomerAddress.trim().isEmpty() || CustomerAddress.length() > 100) {
-                throw new Exception();
+                throw new Exception("Invalid Address Entry, must not be empty and must be less than 100 characters");
             }
         } catch (Exception e) {
             errorMessageBox.setVisible(true);
-            errorMessageBox.setText("Error: Please check all boxes are filled and within the 50 Character limit per Box, 100 for Address");
+            errorMessageBox.setText("Error: ");
+            if (e.getMessage() != null) {
+                errorMessageBox.appendText(e.getMessage());
+            }
+            else {
+                errorMessageBox.appendText("Invalid Data Entries!");
+            }
             validEntries = false;
         }
         int id = customerToModify.getCustomerID();

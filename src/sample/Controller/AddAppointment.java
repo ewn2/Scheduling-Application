@@ -257,7 +257,6 @@ public class AddAppointment implements Initializable {
                     errorMessageBox.appendText(e.getMessage());
                 }
                 else {
-                    System.out.println(e.getCause());
                     errorMessageBox.appendText("Invalid Data Entries!");
                 }
                 validEntries = false;

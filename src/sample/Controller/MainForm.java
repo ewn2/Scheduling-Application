@@ -313,14 +313,11 @@ public class MainForm implements Initializable {
         if (WeekOrMonthSelect.getValue() != null) {
             ObservableList<Appointment> weekAppointments = FXCollections.observableArrayList();
             LocalDate wantedWeek = WeekOrMonthSelect.getValue();
-            System.out.println(wantedWeek);
             for (Appointment appointment : Appointment.appointmentPopulation()) {
-                System.out.println(appointment.getAppointmentStartDateTime());
                 String aptStart = appointment.getAppointmentStartDateTime();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDate handler1 = LocalDate.parse(aptStart.substring(0, 10), formatter);
                 if ((ChronoUnit.DAYS.between(wantedWeek.atStartOfDay(ZoneId.systemDefault()), handler1.atStartOfDay(ZoneId.systemDefault())) <= 7) && (ChronoUnit.DAYS.between(wantedWeek.atStartOfDay(ZoneId.systemDefault()), handler1.atStartOfDay(ZoneId.systemDefault())) >= 0)) {
-                    System.out.println("Added an Appointment: " + appointment.getAppointmentStartDateTime());
                     weekAppointments.add(appointment);
                 }
             }
@@ -350,14 +347,11 @@ public class MainForm implements Initializable {
         if (WeekOrMonthSelect.getValue() != null) {
             ObservableList<Appointment> monthAppointments = FXCollections.observableArrayList();
             LocalDate wantedMonth = WeekOrMonthSelect.getValue();
-            System.out.println(wantedMonth);
             for (Appointment appointment : Appointment.appointmentPopulation()) {
-                System.out.println(appointment.getAppointmentStartDateTime());
                 String aptStart = appointment.getAppointmentStartDateTime();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDate handler1 = LocalDate.parse(aptStart.substring(0, 10), formatter);
                 if (wantedMonth.getMonth() == handler1.getMonth()) {
-                    System.out.println("Added an Appointment: " + appointment.getAppointmentStartDateTime());
                     monthAppointments.add(appointment);
                 }
             }
