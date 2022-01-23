@@ -27,6 +27,11 @@ public class Customer {
     private String CustomerState;
     private String CustomerAddress;
 
+    /**
+     * Adds the passed instance of Appointment into an ObservableList of appointments associated with a specific instance
+     * of Customer
+     * @param appointment the Appointment to be added to the ObservableList
+     */
     public void addAssociatedAppointment(Appointment appointment) {
         boolean alreadyIn = false;
         for (Appointment i : associatedAppointments) {
@@ -39,6 +44,12 @@ public class Customer {
         }
     }
 
+    /**
+     * Removes the passed instance of Appointment from an ObservableList of appointments associated with a specific instance
+     * of Customer and returns a boolean value of true if it has successfully been removed
+     * @param appointment the Appointment to be removed from the ObservableList
+     * @return boolean indication if the removal operation has successfully been carried out
+     */
     public boolean deleteAssociatedAppointments(Appointment appointment) {
         for (Appointment i : associatedAppointments) {
             if (i.getAppointmentID() == appointment.getAppointmentID()) {
@@ -49,6 +60,11 @@ public class Customer {
         return false;
     }
 
+    /**
+     * Returns the private ObservableList associatedAppointments which contains all appointments associated with a specific
+     * instance of Customer
+     * @return the private ObservableList associatedAppointments
+     */
     public ObservableList<Appointment> getAssociatedAppointments() {
         return associatedAppointments;
     }
@@ -57,6 +73,11 @@ public class Customer {
 
     public static Vector<Integer> usedIDs = new Vector<>(0);
 
+    /**
+     * Manages the list of integer values already in-use with an instance of Customer and returns an as yet unused integer
+     * and adds that provided integer to the Vector of ID integers in use
+     * @return an integer that has not already been used with any other instance of Customer
+     */
     public static int uniqueCustomerID() {
         customerIDGenerated++;
         while (usedIDs.contains(customerIDGenerated)) {
@@ -66,6 +87,16 @@ public class Customer {
         return customerIDGenerated;
     }
 
+    /**
+     * Customer data structure
+     * @param CustomerID The Customer's ID, unique as used to reference to specific instances of Customer
+     * @param CustomerName The Customer's name string
+     * @param CustomerPhone The Customer's phone string
+     * @param CustomerCountry The Customer's country string
+     * @param CustomerPostal The Customer's postal or zip code string
+     * @param CustomerState The Customer's first-level division, i.e. State or Province, string
+     * @param CustomerAddress The Customer's address string
+     */
     public Customer(int CustomerID, String CustomerName, String CustomerPhone, String CustomerCountry, String CustomerPostal, String CustomerState, String CustomerAddress) {
         this.CustomerID = CustomerID;
         this.CustomerName = CustomerName;
@@ -76,6 +107,14 @@ public class Customer {
         this.CustomerAddress = CustomerAddress;
     }
 
+    /**
+     * Constructs and executes a prepared Insert sql query as a middle-man translator between instances
+     * of the Customer data structure and the SQL database being added to
+     *
+     * @param givenCustomer the provided instance of Customer whose values are to be entered into the SQL database
+     * @return a boolean value indicating a successful sql insertion
+     * @throws SQLException thrown in case of SQL database issues
+     */
     public static boolean addCustomerToDatabase(Customer givenCustomer) throws SQLException {
         try {
             int division = 0;
@@ -97,6 +136,12 @@ public class Customer {
         }
     }
 
+    /**
+     * Makes changes to the SQL database entry that matches the passed Customer
+     * @param givenCustomer The changed Customer to overwrite the existing entry within the SQL database
+     * @return a boolean indication if the SQL database entry was successfully updated
+     * @throws SQLException thrown in case of SQL database issues
+     */
     public static boolean modifyCustomerInDatabase(Customer givenCustomer) throws SQLException {
         try {
             int division = 0;
@@ -119,6 +164,12 @@ public class Customer {
         }
     }
 
+    /**
+     * Deletes the row entry in the SQL database customers table that matches the passed Customer
+     *
+     * @param givenCustomer The selected Customer to have its existing entry within the SQL database be deleted
+     * @return a boolean indication if the SQL database entry was successfully deleted
+     */
     public static boolean deleteCustomerFromDatabase(Customer givenCustomer) {
         try {
             String deleteCustomerQuery = "DELETE FROM customers WHERE Customer_ID=" + givenCustomer.getCustomerID() + "";
@@ -131,73 +182,142 @@ public class Customer {
         }
     }
 
-
+    /**
+     *
+     * @return
+     */
     public int getCustomerID() {
         return CustomerID;
     }
 
+    /**
+     *
+     * @param CustomerID
+     */
     public void setCustomerID(int CustomerID) {
         this.CustomerID = CustomerID;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCustomerName() {
         return CustomerName;
     }
 
+    /**
+     *
+     * @param CustomerName
+     */
     public void setCustomerName(String CustomerName) {
         this.CustomerName = CustomerName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCustomerPhone() {
         return CustomerPhone;
     }
 
+    /**
+     *
+     * @param CustomerPhone
+     */
     public void setCustomerPhone(String CustomerPhone) {
         this.CustomerPhone = CustomerPhone;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCustomerCountry() {
         return CustomerCountry;
     }
 
+    /**
+     *
+     * @param CustomerCountry
+     */
     public void setCustomerCountry(String CustomerCountry) {
         this.CustomerCountry = CustomerCountry;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCustomerPostal() {
         return CustomerPostal;
     }
 
+    /**
+     *
+     * @param CustomerPostal
+     */
     public void setCustomerPostal(String CustomerPostal) {
         this.CustomerPostal = CustomerPostal;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCustomerState() {
         return CustomerState;
     }
 
+    /**
+     *
+     * @param CustomerState
+     */
     public void setCustomerState(String CustomerState) {
         this.CustomerState = CustomerState;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCustomerAddress() {
         return CustomerAddress;
     }
 
+    /**
+     *
+     * @param CustomerAddress
+     */
     public void setCustomerAddress(String CustomerAddress) {
         this.CustomerAddress = CustomerAddress;
     }
 
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
+    /**
+     *
+     * @return
+     */
     public static ObservableList<Customer> customerPopulation() {
         return allCustomers;
     }
 
+    /**
+     *
+     * @param newCustomer
+     */
     public static void addCustomer(Customer newCustomer) {
         allCustomers.add(newCustomer);
     }
 
+    /**
+     *
+     * @param index
+     * @param selectedCustomer
+     * @throws SQLException thrown in case of SQL database issues
+     */
     public static void updateCustomer(int index, Customer selectedCustomer) throws SQLException {
         for (Customer customer : allCustomers) {
             if (customer.getCustomerID() == index) {
@@ -209,6 +329,12 @@ public class Customer {
         }
     }
 
+    /**
+     *
+     * @param selectedCustomer
+     * @return
+     * @throws SQLException thrown in case of SQL database issues
+     */
     public static boolean deleteCustomer(Customer selectedCustomer) throws SQLException {
         if (allCustomers.contains(selectedCustomer)) {
             if (usedIDs.contains(selectedCustomer.getCustomerID())) {

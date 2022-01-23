@@ -58,7 +58,7 @@ public class User {
      *                 password String
      * @param password the User's entered password String to be checked within the users SQL table in tandem with the entered
      *                 username String
-     * @return
+     * @return the boolean result of if the provided username and password String combination exist together within the SQL database
      * @throws SQLException thrown in case of SQL database issues
      * @throws IOException thrown in case of log file creation/appending issues
      */
