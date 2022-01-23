@@ -1,4 +1,12 @@
 package sample;
+/**
+ * JavaDoc Export Location:
+ * Meeting Scheduling System program is designed to manage Customers and
+ * Appointments for a theoretical international business headquartered on
+ * the East coast of the United States.
+ *
+ * @author Erwin Uppal
+ */
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +25,13 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
-
+    /**
+     * start method loads in the loginForm.fxml file that acts as the first
+     * User-facing screen.
+     *
+     * @param primaryStage the User-View
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("loginForm.fxml"));
@@ -26,6 +40,10 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Method used to pull Customer data from SQL database
+     * @throws SQLException thrown in case of SQL database issues
+     */
     public static void customerData() throws SQLException {
         int CustomerID = 0;
         String CustomerName = null;
@@ -56,6 +74,11 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Method used to pull Appointments for a specific customer from SQL database
+     * @param CustomerID
+     * @throws SQLException thrown in case of SQL database issues
+     */
     public static void CustomerAppointmentData(int CustomerID) throws SQLException {
         int AppointmentID = 0;
         String AppointmentTitle = null;
@@ -99,6 +122,12 @@ public class Main extends Application {
             Appointment.usedAppointmentIDs.add(0);
         }
     }
+
+    /**
+     * Method used to pull Appointments for a specific contact from SQL database
+     * @param ContactID
+     * @throws SQLException thrown in case of SQL database issues
+     */
     public static void ContactAppointmentData(int ContactID) throws SQLException {
         int AppointmentID = 0;
         String AppointmentTitle = null;
@@ -143,6 +172,10 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Method used to pull Appointments from SQL database
+     * @throws SQLException thrown in case of SQL database issues
+     */
     public static void appointmentData() throws SQLException {
         int AppointmentID = 0;
         String AppointmentTitle = null;
@@ -187,7 +220,12 @@ public class Main extends Application {
         }
     }
 
-
+    /**
+     * Main method that launches the application, but first establishes a connection to the SQL database.
+     * After the application is closed, closes the connection.
+     * @param args launches Java App
+     * @throws SQLException thrown in case of SQL database issues
+     */
     public static void main(String[] args) throws SQLException {
         JDBC.makeConnection();
         ZoneId systemZone = ZoneId.systemDefault();

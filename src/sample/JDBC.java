@@ -1,4 +1,10 @@
 package sample;
+/**
+ * Class focused on connecting and managing query statements with
+ * SQL database
+ *
+ * @author Precreated in WGU JDK 11 Virtual Lab
+ */
 
 import java.sql.*;
 
@@ -14,6 +20,9 @@ public class JDBC {
     private static Connection connection = null;  // Connection Interface
     private static PreparedStatement preparedStatement;
 
+    /**
+     * Logs in to the SQL database host
+     */
     public static void makeConnection() {
 
         try {
@@ -28,10 +37,17 @@ public class JDBC {
         }
     }
 
+    /**
+     *
+     * @return the connection interface for the database
+     */
     public static Connection getConnection() {
         return connection;
     }
 
+    /**
+     * Terminates the connection to the database host
+     */
     public static void closeConnection() {
         try {
             connection.close();
@@ -41,6 +57,13 @@ public class JDBC {
         }
     }
 
+    /**
+     * Takes in a string and SQL database connection target and has the string readied to be sent as
+     * a SQL query to the target connection.
+     * @param sqlStatement string to be treated as a SQL query
+     * @param conn connection interface to use
+     * @throws SQLException thrown in case of SQL database issues
+     */
     public static void makePreparedStatement(String sqlStatement, Connection conn) throws SQLException {
         if (conn != null)
             preparedStatement = conn.prepareStatement(sqlStatement);
@@ -48,6 +71,11 @@ public class JDBC {
             System.out.println("Prepared Statement Creation Failed!");
     }
 
+    /**
+     * returns an already prepared statement with Query String and Connection target loaded
+     * @return the prepared statement
+     * @throws SQLException thrown in case of SQL database issues
+     */
     public static PreparedStatement getPreparedStatement() throws SQLException {
         if (preparedStatement != null)
             return preparedStatement;
