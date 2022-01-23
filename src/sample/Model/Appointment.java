@@ -370,7 +370,7 @@ public class Appointment {
     }
 
     /**
-     * Makes changes to the ObservableList entry that matches the passed Appointment
+     * Makes changes to the ObservableList entry that matches the passed Appointment's index location
      *
      * @param index               the location within the ObservableList that is to have its value overwritten
      * @param selectedAppointment the new Appointment value that will overwrite the existing ObservableList value

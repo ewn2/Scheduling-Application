@@ -1,6 +1,6 @@
 package sample.Model;
 /**
- *  Customer class data structures and methods
+ * Customer class data structures and methods
  *
  * @author Erwin Uppal
  */
@@ -183,112 +183,112 @@ public class Customer {
     }
 
     /**
-     *
-     * @return
+     * Gets the CustomerID integer for an instance of Customer
+     * @return The integer value stored within private CustomerID
      */
     public int getCustomerID() {
         return CustomerID;
     }
 
     /**
-     *
-     * @param CustomerID
+     * Sets the CustomerID integer for an instance of Customer
+     * @param CustomerID The passed integer to be set as the value of private CustomerID
      */
     public void setCustomerID(int CustomerID) {
         this.CustomerID = CustomerID;
     }
 
     /**
-     *
-     * @return
+     * Gets the CustomerName String for an instance of Customer
+     * @return The String value stored within private CustomerName
      */
     public String getCustomerName() {
         return CustomerName;
     }
 
     /**
-     *
-     * @param CustomerName
+     * Sets the CustomerName String for an instance of Customer
+     * @param CustomerName The passed String to be set as the value of private CustomerName
      */
     public void setCustomerName(String CustomerName) {
         this.CustomerName = CustomerName;
     }
 
     /**
-     *
-     * @return
+     * Gets the CustomerPhone String for an instance of Customer
+     * @return The String value stored within private CustomerPhone
      */
     public String getCustomerPhone() {
         return CustomerPhone;
     }
 
     /**
-     *
-     * @param CustomerPhone
+     * Sets the CustomerPhone String for an instance of Customer
+     * @param CustomerPhone The passed String to be set as the value of private CustomerPhone
      */
     public void setCustomerPhone(String CustomerPhone) {
         this.CustomerPhone = CustomerPhone;
     }
 
     /**
-     *
-     * @return
+     * Gets the CustomerCountry String for an instance of Customer
+     * @return The String value stored within private CustomerCountry
      */
     public String getCustomerCountry() {
         return CustomerCountry;
     }
 
     /**
-     *
-     * @param CustomerCountry
+     * Sets the CustomerCountry String for an instance of Customer
+     * @param CustomerCountry The passed String to be set as the value of private CustomerCountry
      */
     public void setCustomerCountry(String CustomerCountry) {
         this.CustomerCountry = CustomerCountry;
     }
 
     /**
-     *
-     * @return
+     * Gets the CustomerPostal String for an instance of Customer
+     * @return The String value stored within private CustomerPostal
      */
     public String getCustomerPostal() {
         return CustomerPostal;
     }
 
     /**
-     *
-     * @param CustomerPostal
+     * Sets the CustomerPostal String for an instance of Customer
+     * @param CustomerPostal The passed String to be set as the value of private CustomerPostal
      */
     public void setCustomerPostal(String CustomerPostal) {
         this.CustomerPostal = CustomerPostal;
     }
 
     /**
-     *
-     * @return
+     * Gets the CustomerState String for an instance of Customer
+     * @return The String value stored within private CustomerState
      */
     public String getCustomerState() {
         return CustomerState;
     }
 
     /**
-     *
-     * @param CustomerState
+     * Sets the CustomerState String for an instance of Customer
+     * @param CustomerState The passed String to be set as the value of private CustomerState
      */
     public void setCustomerState(String CustomerState) {
         this.CustomerState = CustomerState;
     }
 
     /**
-     *
-     * @return
+     * Gets the CustomerAddress String for an instance of Customer
+     * @return The String value stored within private CustomerAddress
      */
     public String getCustomerAddress() {
         return CustomerAddress;
     }
 
     /**
-     *
-     * @param CustomerAddress
+     * Sets the CustomerAddress String for an instance of Customer
+     * @param CustomerAddress The passed String to be set as the value of private CustomerAddress
      */
     public void setCustomerAddress(String CustomerAddress) {
         this.CustomerAddress = CustomerAddress;
@@ -297,25 +297,25 @@ public class Customer {
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
     /**
-     *
-     * @return
+     * Returns the ObservableList containing all existing instances of Customer
+     * @return the private ObservableList allCustomers
      */
     public static ObservableList<Customer> customerPopulation() {
         return allCustomers;
     }
 
     /**
-     *
-     * @param newCustomer
+     * Adds the passed instance of Customer to the ObservableList allCustomers
+     * @param newCustomer the Customer to be added to the ObservableList
      */
     public static void addCustomer(Customer newCustomer) {
         allCustomers.add(newCustomer);
     }
 
     /**
-     *
-     * @param index
-     * @param selectedCustomer
+     * Makes changes to the ObservableList entry that matches the passed Customer's index location
+     * @param index the location within the ObservableList that is to have its value overwritten
+     * @param selectedCustomer the new Customer value that will overwrite the existing ObservableList value
      * @throws SQLException thrown in case of SQL database issues
      */
     public static void updateCustomer(int index, Customer selectedCustomer) throws SQLException {
@@ -329,10 +329,13 @@ public class Customer {
         }
     }
 
+
     /**
-     *
-     * @param selectedCustomer
-     * @return
+     * Removes the selectedCustomer value from the ObservableList of existing values and removes its CustomerID
+     * integer value from the pool of CustomerID values in-use so that it may be freely reassigned if need be,
+     * maintaining parity with the SQL database's Primary Key column.
+     * @param selectedCustomer the Customer value that will be removed from the ObservableList
+     * @return a boolean indication if the Appointment was successfully removed
      * @throws SQLException thrown in case of SQL database issues
      */
     public static boolean deleteCustomer(Customer selectedCustomer) throws SQLException {
