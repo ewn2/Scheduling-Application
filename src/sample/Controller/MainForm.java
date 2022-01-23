@@ -229,6 +229,8 @@ public class MainForm implements Initializable {
         denyButton.setVisible(false);
         if (selectedCustomer != null) {
             if (Customer.deleteCustomerFromDatabase(selectedCustomer)) {
+                errorMessageBox.setVisible(true);
+                errorMessageBox.setText("Deleted Customer with ID: " + selectedCustomer.getCustomerID());
                 Customer.deleteCustomer(selectedCustomer);
             } else {
                 errorMessageBox.setVisible(true);
@@ -240,6 +242,8 @@ public class MainForm implements Initializable {
                 Appointment.deleteAppointment(selectedAppointment);
                 for (Customer customer : Customer.customerPopulation()) {
                     if (customer.getCustomerID() == selectedAppointment.getAppointmentCustomerID()) {
+                        errorMessageBox.setVisible(true);
+                        errorMessageBox.setText("Deleted Appointment with ID: " + selectedAppointment.getAppointmentID() + " and type: " + selectedAppointment.getAppointmentType());
                         customer.deleteAssociatedAppointments(selectedAppointment);
                         if (appointmentsWeeklyRadio.isSelected()) {
                             FilterByWeek();

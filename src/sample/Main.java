@@ -30,12 +30,11 @@ public class Main extends Application {
      * User-facing screen.
      *
      * @param primaryStage the User-View
-     * @throws Exception
+     * @throws Exception thrown in case of fxml file loading issues
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("loginForm.fxml"));
-        //primaryStage.setTitle("Meeting Scheduling System");
         primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.show();
     }
@@ -76,7 +75,7 @@ public class Main extends Application {
 
     /**
      * Method used to pull Appointments for a specific customer from SQL database
-     * @param CustomerID
+     * @param CustomerID the id of the specific customer whose database entries are to be selected
      * @throws SQLException thrown in case of SQL database issues
      */
     public static void CustomerAppointmentData(int CustomerID) throws SQLException {
@@ -125,7 +124,7 @@ public class Main extends Application {
 
     /**
      * Method used to pull Appointments for a specific contact from SQL database
-     * @param ContactID
+     * @param ContactID the id of the specific contact whose database entries are to be selected
      * @throws SQLException thrown in case of SQL database issues
      */
     public static void ContactAppointmentData(int ContactID) throws SQLException {
@@ -173,7 +172,8 @@ public class Main extends Application {
     }
 
     /**
-     * Method used to pull Appointments from SQL database
+     * Method used to pull all Appointments from SQL database and store them within instances of the Appointment data
+     * structure found within the Appointment class
      * @throws SQLException thrown in case of SQL database issues
      */
     public static void appointmentData() throws SQLException {

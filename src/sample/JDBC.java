@@ -21,7 +21,7 @@ public class JDBC {
     private static PreparedStatement preparedStatement;
 
     /**
-     * Logs in to the SQL database host
+     * Logs in to the SQL database host making use of the pre-populated login information private Strings
      */
     public static void makeConnection() {
 
@@ -38,7 +38,7 @@ public class JDBC {
     }
 
     /**
-     *
+     * Accessor for the private Connection connection
      * @return the connection interface for the database
      */
     public static Connection getConnection() {

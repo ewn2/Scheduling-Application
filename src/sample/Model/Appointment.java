@@ -1,4 +1,7 @@
 package sample.Model;
+/**
+ * Appointment data structures and methods
+ */
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,14 +22,28 @@ public class Appointment {
     private String AppointmentLocation;
     private String AppointmentContact;
     private String AppointmentType;
-    private String AppointmentStartDateTime;//YYYY-MM-DD hh:mm:ss
-    private String AppointmentEndDateTime;//YYYY-MM-DD hh:mm:ss
+    private String AppointmentStartDateTime;
+    private String AppointmentEndDateTime;
     private int AppointmentCustomerID;
     private int AppointmentUserID;
-    //SQL DATETIME format that database will expect: "YYYY-MM-DD hh:mm:ss"
-    //minus quotation marks.
 
-
+    /**
+     * Appointment data structure
+     * @param AppointmentID The Appointment's ID, unique as used to reference to specific instances of Appointment
+     * @param AppointmentTitle The Appointment's title string
+     * @param AppointmentDesc The Appointment's description string
+     * @param AppointmentLocation The Appointment's location string
+     * @param AppointmentContact The Appointment's designated Contact that exists within the database
+     * @param AppointmentType The Appointment's type description string
+     * @param AppointmentStartDateTime The Appointment's Start Date and Time, stored as a String but treated as
+     *                                 a DateTime in most instances and converted as needed whenever accessing
+     *                                 or assigning value
+     * @param AppointmentEndDateTime The Appointment's End Date and Time, stored as a String but treated as
+     *                               a DateTime in most instances and converted as needed whenever accessing
+     *                               or assigning value
+     * @param AppointmentCustomerID The Appointment's designated Customer that exists within the database
+     * @param AppointmentUserID The Appointment's designated User that exists within the database
+     */
     public Appointment(int AppointmentID, String AppointmentTitle, String AppointmentDesc, String AppointmentLocation, String AppointmentContact, String AppointmentType, String AppointmentStartDateTime, String AppointmentEndDateTime, int AppointmentCustomerID, int AppointmentUserID) {
         this.AppointmentID = AppointmentID;
         this.AppointmentTitle = AppointmentTitle;
@@ -40,6 +57,13 @@ public class Appointment {
         this.AppointmentUserID = AppointmentUserID;
     }
 
+    /**
+     * Constructs and executes a prepared Insert sql query as a middle-man translator between instances
+     * of the Appointment data structure and the SQL database being added to
+     * @param givenAppointment the provided instance of Appointment whose values are to be entered into the SQL database
+     * @return a boolean value indicating a successful sql insertion
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public static boolean addAppointmentToDatabase(Appointment givenAppointment) throws SQLException {
         try {
             int AppointmentContactID = 0;
@@ -62,73 +86,162 @@ public class Appointment {
         }
     }
 
-
+    /**
+     * Returns the AppointmentID integer for an instance of Appointment
+     * @return The integer value stored within private AppointmentID
+     */
     public int getAppointmentID() {
         return AppointmentID;
     }
+
+    /**
+     * Sets the AppointmentID integer for an instance of Appointment
+     * @param AppointmentID The passed integer to be set as the value of private AppointmentID
+     */
     public void setAppointmentID(int AppointmentID) {
         this.AppointmentID = AppointmentID;
     }
 
+    /**
+     * Returns the AppointmentTitle String for an instance of Appointment
+     * @return The String value stored within private AppointmentTitle
+     */
     public String getAppointmentTitle() {
         return AppointmentTitle;
     }
+
+    /**
+     * Sets the AppointmentTitle String for an instance of Appointment
+     * @param AppointmentTitle
+     */
     public void setAppointmentTitle(String AppointmentTitle) {
         this.AppointmentTitle = AppointmentTitle;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAppointmentDesc() {
         return AppointmentDesc;
     }
+
+    /**
+     *
+     * @param AppointmentDesc
+     */
     public void setAppointmentDesc(String AppointmentDesc) {
         this.AppointmentDesc = AppointmentDesc;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAppointmentLocation() {
         return AppointmentLocation;
     }
+
+    /**
+     *
+     * @param AppointmentLocation
+     */
     public void setAppointmentLocation(String AppointmentLocation) {
         this.AppointmentLocation = AppointmentLocation;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAppointmentContact() {
         return AppointmentContact;
     }
+
+    /**
+     *
+     * @param AppointmentContact
+     */
     public void setAppointmentContact(String AppointmentContact) {
         this.AppointmentContact = AppointmentContact;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAppointmentType() {
         return AppointmentType;
     }
+
+    /**
+     *
+     * @param AppointmentType
+     */
     public void setAppointmentType(String AppointmentType) {
         this.AppointmentType = AppointmentType;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAppointmentStartDateTime() {
         return AppointmentStartDateTime;
     }
+
+    /**
+     *
+     * @param AppointmentStartDateTime
+     */
     public void setAppointmentStartDateTime(String AppointmentStartDateTime) {
         this.AppointmentStartDateTime = AppointmentStartDateTime;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAppointmentEndDateTime() {
         return AppointmentEndDateTime;
     }
+
+    /**
+     *
+     * @param AppointmentEndDateTime
+     */
     public void setAppointmentEndDateTime(String AppointmentEndDateTime) {
         this.AppointmentEndDateTime = AppointmentEndDateTime;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAppointmentCustomerID() {
         return AppointmentCustomerID;
     }
+
+    /**
+     *
+     * @param AppointmentCustomerID
+     */
     public void setAppointmentCustomerID(int AppointmentCustomerID) {
         this.AppointmentCustomerID = AppointmentCustomerID;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAppointmentUserID() {
         return AppointmentUserID;
     }
+
+    /**
+     *
+     * @param AppointmentUserID
+     */
     public void setAppointmentUserID(int AppointmentUserID) {
         this.AppointmentUserID = AppointmentUserID;
     }
@@ -137,6 +250,10 @@ public class Appointment {
 
     public static Vector<Integer> usedAppointmentIDs = new Vector<>(0);
 
+    /**
+     *
+     * @return
+     */
     public static int uniqueAppointmentID() {
         appointmentIDGenerated++;
         while (usedAppointmentIDs.contains(appointmentIDGenerated)) {
@@ -147,25 +264,55 @@ public class Appointment {
     }
 
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> appointmentPopulation() throws SQLException {
         allAppointments.clear();
         Main.appointmentData();
         return allAppointments;
     }
+
+    /**
+     *
+     * @param ContactID
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> ContactAppointmentPopulation(int ContactID) throws SQLException {
         allAppointments.clear();
         Main.ContactAppointmentData(ContactID);
         return allAppointments;
     }
+
+    /**
+     *
+     * @param CustomerID
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> CustomerAppointmentPopulation(int CustomerID) throws SQLException {
         allAppointments.clear();
         Main.CustomerAppointmentData(CustomerID);
         return allAppointments;
     }
 
+    /**
+     *
+     * @param newAppointment
+     */
     public static void addAppointment(Appointment newAppointment) {
         allAppointments.add(newAppointment);
     }
+
+    /**
+     *
+     * @param appointmentID
+     * @return
+     */
     public static Appointment lookupAppointment(int appointmentID) {
         for (Appointment appointment : allAppointments) {
             if (appointment.getAppointmentID() == appointmentID) {
@@ -174,6 +321,12 @@ public class Appointment {
         }
         return null;
     }
+
+    /**
+     *
+     * @param appointmentTitle
+     * @return
+     */
     public static ObservableList<Appointment> lookupAppointment(String appointmentTitle) {
         ObservableList<Appointment> matches = FXCollections.observableArrayList();
         for (Appointment appointment : allAppointments) {
@@ -184,6 +337,12 @@ public class Appointment {
         return matches;
     }
 
+    /**
+     *
+     * @param givenAppointment
+     * @return
+     * @throws SQLException
+     */
     public static boolean modifyAppointmentInDatabase(Appointment givenAppointment) throws SQLException {
         try {
             int AppointmentContactID = 0;
@@ -206,6 +365,12 @@ public class Appointment {
         }
     }
 
+    /**
+     *
+     * @param index
+     * @param selectedAppointment
+     * @throws SQLException
+     */
     public static void updateAppointment(int index, Appointment selectedAppointment) throws SQLException {
         for (Appointment appointment : allAppointments) {
             if (appointment.getAppointmentID() == index) {
@@ -214,6 +379,12 @@ public class Appointment {
             }
         }
     }
+
+    /**
+     *
+     * @param givenAppointment
+     * @return
+     */
     public static boolean deleteAppointmentFromDatabase(Appointment givenAppointment) {
         try {
             String deleteAppointmentQuery = "DELETE FROM appointments WHERE Appointment_ID="+givenAppointment.getAppointmentID()+"";
@@ -226,6 +397,13 @@ public class Appointment {
             return false;
         }
     }
+
+    /**
+     *
+     * @param selectedAppointment
+     * @return
+     * @throws SQLException
+     */
     public static boolean deleteAppointment(Appointment selectedAppointment) throws SQLException {
         if (allAppointments.contains(selectedAppointment)) {
             if (usedAppointmentIDs.contains(selectedAppointment.getAppointmentID())) {

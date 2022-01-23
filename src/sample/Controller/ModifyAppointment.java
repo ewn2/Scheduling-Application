@@ -164,8 +164,10 @@ public class ModifyAppointment implements Initializable {
                         LocalDateTime existingEnd = LocalDateTime.parse(CheckAppointment.getAppointmentEndDateTime(), CheckFormatter);
                         LocalDateTime newStart = LocalDateTime.parse(newAppointment.getAppointmentStartDateTime(), CheckFormatter);
                         LocalDateTime newEnd = LocalDateTime.parse(newAppointment.getAppointmentEndDateTime(), CheckFormatter);
-                        if ((newStart.isAfter(existingStart) && newEnd.isBefore(existingEnd)) || (newStart.isBefore(existingStart) && newEnd.isAfter(existingStart)) || (newStart.isBefore(existingEnd) && newEnd.isAfter(existingStart)) || (newStart.isBefore(existingStart) && newEnd.isAfter(existingEnd))) {
-                            throw new Exception();
+                        if (CheckAppointment.getAppointmentID() != appointmentToModify.getAppointmentID()) {
+                            if ((newStart.isAfter(existingStart) && newEnd.isBefore(existingEnd)) || (newStart.isBefore(existingStart) && newEnd.isAfter(existingStart)) || (newStart.isBefore(existingEnd) && newEnd.isAfter(existingStart)) || (newStart.isBefore(existingStart) && newEnd.isAfter(existingEnd))) {
+                                throw new Exception();
+                            }
                         }
                     }
 
