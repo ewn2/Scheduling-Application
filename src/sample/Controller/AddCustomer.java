@@ -75,6 +75,10 @@ public class AddCustomer implements Initializable {
         }
     }
 
+    interface exceptionLambda {
+        void apple();
+    }
+
     public void populateStates(String Country_ID) throws SQLException {
         addCustomerStateCombo.getItems().clear();
         String logQuery = "SELECT * FROM first_level_divisions WHERE Country_ID='" + Country_ID + "'";
@@ -128,14 +132,14 @@ public class AddCustomer implements Initializable {
                 throw new Exception("Invalid Address Entry, must not be empty and must be less than 100 characters");
             }
         } catch (Exception e) {
-            errorMessageBox.setVisible(true);
-            errorMessageBox.setText("Error: ");
+            AddAppointment.exceptionLambda errorMaker = () -> {
+                errorMessageBox.setVisible(true);
+                errorMessageBox.setText("Unknown error has occurred! Possible issues with database connectivity");
+            };
             if (e.getMessage() != null) {
-                errorMessageBox.appendText(e.getMessage());
+                errorMaker = () -> errorMessageBox.setText("Error: " + e.getMessage());
             }
-            else {
-                errorMessageBox.appendText("Invalid Data Entries!");
-            }
+            errorMaker.apple();
             validEntries = false;
         }
         int id = 0;

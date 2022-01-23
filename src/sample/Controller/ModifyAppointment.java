@@ -51,6 +51,15 @@ public class ModifyAppointment implements Initializable {
     public ComboBox ModifyAppointmentCustomerIDCombo;
     public ComboBox ModifyAppointmentUserIDCombo;
 
+
+    interface exceptionLambda {
+        void apple();
+    }
+
+    interface convertorLambda {
+        String pear(LocalDateTime toConvert);
+    }
+
     public void onModifyAppointmentSaveButtonAction(ActionEvent actionEvent) throws IOException {
         boolean validEntries = true;
         boolean addedAppointment = false;
@@ -106,14 +115,14 @@ public class ModifyAppointment implements Initializable {
                     throw new Exception("Invalid User Entry, must not be empty");
                 }
             } catch (Exception e) {
-                errorMessageBox.setVisible(true);
-                errorMessageBox.setText("Error: ");
+                AddAppointment.exceptionLambda errorMaker = () -> {
+                    errorMessageBox.setVisible(true);
+                    errorMessageBox.setText("Unknown error has occurred! Possible issues with database connectivity");
+                };
                 if (e.getMessage() != null) {
-                    errorMessageBox.appendText(e.getMessage());
+                    errorMaker = () -> errorMessageBox.setText("Error: " + e.getMessage());
                 }
-                else {
-                    errorMessageBox.appendText("Invalid Data Entries!");
-                }
+                errorMaker.apple();
                 validEntries = false;
             }
             int id = appointmentToModify.getAppointmentID();
