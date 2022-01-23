@@ -259,8 +259,8 @@ public class AddAppointment implements Initializable {
                     throw new Exception("Invalid User Entry, must not be empty");
                 }
             } catch (Exception e) {
+                errorMessageBox.setVisible(true);
                 AddAppointment.exceptionLambda errorMaker = () -> {
-                    errorMessageBox.setVisible(true);
                     errorMessageBox.setText("Unknown error has occurred! Possible issues with database connectivity");
                 };
                 if (e.getMessage() != null) {

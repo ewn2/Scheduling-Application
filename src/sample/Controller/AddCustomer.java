@@ -132,8 +132,8 @@ public class AddCustomer implements Initializable {
                 throw new Exception("Invalid Address Entry, must not be empty and must be less than 100 characters");
             }
         } catch (Exception e) {
+            errorMessageBox.setVisible(true);
             AddAppointment.exceptionLambda errorMaker = () -> {
-                errorMessageBox.setVisible(true);
                 errorMessageBox.setText("Unknown error has occurred! Possible issues with database connectivity");
             };
             if (e.getMessage() != null) {
