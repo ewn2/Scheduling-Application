@@ -196,6 +196,14 @@ public class AddAppointment implements Initializable {
         return false;
     }
 
+    interface exceptionLambda {
+        void apple();
+    }
+
+    interface convertorLambda {
+        String pear(LocalDateTime toConvert);
+    }
+
     public void onAddAppointmentSaveButtonAction(ActionEvent actionEvent) throws IOException, SQLException {
         boolean validEntries = true;
         boolean addedAppointment = false;
@@ -252,13 +260,11 @@ public class AddAppointment implements Initializable {
                 }
             } catch (Exception e) {
                 errorMessageBox.setVisible(true);
-                errorMessageBox.setText("Error: ");
+                exceptionLambda errorMaker = () -> errorMessageBox.setText("Unknown error has occurred! Possible issues with database connectivity");
                 if (e.getMessage() != null) {
-                    errorMessageBox.appendText(e.getMessage());
+                    errorMaker = () -> errorMessageBox.setText("Error: " + e.getMessage());
                 }
-                else {
-                    errorMessageBox.appendText("Invalid Data Entries!");
-                }
+                errorMaker.apple();
                 validEntries = false;
             }
             int id = 0;
@@ -271,14 +277,27 @@ public class AddAppointment implements Initializable {
             ZonedDateTime localStart = meetingStart.withZoneSameInstant(ZoneId.systemDefault());
             LocalDateTime AppointmentStartDateTime = startDate.atTime(LocalTime.from(convertStartToUTC));
             LocalDateTime AppointmentStartDateTimeLocal = startDate.atTime(LocalTime.from(localStart));
-            String AptStartDateTime = AppointmentStartDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
-            String AptStartDateTimeLocal = AppointmentStartDateTimeLocal.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+
+            convertorLambda convertDT = (LocalDateTime localDateTime) -> {
+                DateTimeFormatter readable = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+                String convertedDT = localDateTime.format(readable);
+                return convertedDT;
+            };
+
+            String AptStartDateTime = convertDT.pear(AppointmentStartDateTime);
+            String AptStartDateTimeLocal = convertDT.pear(AppointmentStartDateTimeLocal);
+            //String AptStartDateTime = AppointmentStartDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            //String AptStartDateTimeLocal = AppointmentStartDateTimeLocal.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+
             ZonedDateTime convertEndToUTC = meetingEnd.withZoneSameInstant(ZoneId.of("UTC"));
             ZonedDateTime localEnd = meetingEnd.withZoneSameInstant(ZoneId.systemDefault());
             LocalDateTime AppointmentEndDateTime = endDate.atTime(LocalTime.from(convertEndToUTC));
             LocalDateTime AppointmentEndDateTimeLocal = endDate.atTime(LocalTime.from(localEnd));
-            String AptEndDateTime = AppointmentEndDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
-            String AptEndDateTimeLocal = AppointmentEndDateTimeLocal.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+
+            String AptEndDateTime = convertDT.pear(AppointmentEndDateTime);
+            //String AptEndDateTime = AppointmentEndDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+            String AptEndDateTimeLocal = convertDT.pear(AppointmentEndDateTimeLocal);
+            //String AptEndDateTimeLocal = AppointmentEndDateTimeLocal.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
             String AppointmentCustomerIDString = addAppointmentCustomerIDCombo.getValue().toString(); //Pull from DB
             String AppointmentUserIDString = addAppointmentUserIDCombo.getValue().toString(); //Pull from DBs
             int AppointmentContactID = 0;
