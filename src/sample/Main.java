@@ -41,6 +41,7 @@ public class Main extends Application {
 
     /**
      * Method used to pull Customer data from SQL database
+     *
      * @throws SQLException thrown in case of SQL database issues
      */
     public static void customerData() throws SQLException {
@@ -75,6 +76,7 @@ public class Main extends Application {
 
     /**
      * Method used to pull Appointments for a specific customer from SQL database
+     *
      * @param CustomerID the id of the specific customer whose database entries are to be selected
      * @throws SQLException thrown in case of SQL database issues
      */
@@ -124,6 +126,7 @@ public class Main extends Application {
 
     /**
      * Method used to pull Appointments for a specific contact from SQL database
+     *
      * @param ContactID the id of the specific contact whose database entries are to be selected
      * @throws SQLException thrown in case of SQL database issues
      */
@@ -174,6 +177,7 @@ public class Main extends Application {
     /**
      * Method used to pull all Appointments from SQL database and store them within instances of the Appointment data
      * structure found within the Appointment class
+     *
      * @throws SQLException thrown in case of SQL database issues
      */
     public static void appointmentData() throws SQLException {
@@ -223,6 +227,7 @@ public class Main extends Application {
     /**
      * Main method that launches the application, but first establishes a connection to the SQL database.
      * After the application is closed, closes the connection.
+     *
      * @param args launches Java App
      * @throws SQLException thrown in case of SQL database issues
      */

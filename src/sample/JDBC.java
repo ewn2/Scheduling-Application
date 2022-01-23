@@ -39,6 +39,7 @@ public class JDBC {
 
     /**
      * Accessor for the private Connection connection
+     *
      * @return the connection interface for the database
      */
     public static Connection getConnection() {
@@ -60,8 +61,9 @@ public class JDBC {
     /**
      * Takes in a string and SQL database connection target and has the string readied to be sent as
      * a SQL query to the target connection.
+     *
      * @param sqlStatement string to be treated as a SQL query
-     * @param conn connection interface to use
+     * @param conn         connection interface to use
      * @throws SQLException thrown in case of SQL database issues
      */
     public static void makePreparedStatement(String sqlStatement, Connection conn) throws SQLException {
@@ -73,6 +75,7 @@ public class JDBC {
 
     /**
      * returns an already prepared statement with Query String and Connection target loaded
+     *
      * @return the prepared statement
      * @throws SQLException thrown in case of SQL database issues
      */
