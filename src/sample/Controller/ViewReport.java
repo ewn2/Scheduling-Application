@@ -1,4 +1,9 @@
 package sample.Controller;
+/**
+ * viewReport.fxml related Controller
+ *
+ * @author Erwin Uppal
+ */
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -65,17 +70,29 @@ public class ViewReport implements Initializable {
     public TableColumn<Appointment, Integer> ContactAppointmentTableUserIDCol;
     public TableColumn<Appointment, Integer> CustomerAppointmentTableUserIDCol;
 
+    /**
+     * Closes the View Reports view and calls a method to return to the MainForm view
+     *
+     * @param actionEvent User initiating button press
+     * @throws IOException thrown in case of FXML file interaction issues
+     */
     public void onViewReportCancelButtonAction(ActionEvent actionEvent) throws IOException {
         returnToMainScreen(actionEvent);
     }
 
 
     public static ObservableList<Appointment> emptyAppointmentView = FXCollections.observableArrayList();
+
+    /**
+     * Clears report tables so that the User's selected Contact or Customer may have their associated Appointments shown
+     *
+     * @param event tab selection action by User
+     */
     public void onReportTabSelectionAction(Event event) {
         ContactAppointmentTable.setVisible(false);
         CustomerAppointmentTable.setVisible(false);
         if (emptyAppointmentView.isEmpty()) {
-            Appointment temp = new Appointment(0,"","","","","","","",0,0);
+            Appointment temp = new Appointment(0, "", "", "", "", "", "", "", 0, 0);
             emptyAppointmentView.add(temp);
         }
         selectCustomerCombo.setValue("");
@@ -86,53 +103,125 @@ public class ViewReport implements Initializable {
         public String typeName = null;
         public int TotalApps = 0;
 
+        /**
+         * Data structure used for compiling the breakdown of Appointments by Appointment type
+         *
+         * @param typeName  The Type String existing associated with an Appointment
+         * @param TotalApps The count of instances of the Type String
+         */
         public theType(String typeName, int TotalApps) {
             this.typeName = typeName;
             this.TotalApps = TotalApps;
         }
+
+        /**
+         * Gets the typeName String for an instance of theType
+         *
+         * @return The String value stored within typeName
+         */
         public String getTypeName() {
             return typeName;
         }
+
+        /**
+         * Sets the typeName String for an instance of theType
+         *
+         * @param typeName the String value to be set in an instance of theType
+         */
         public void setTypeName(String typeName) {
             this.typeName = typeName;
         }
+
+        /**
+         * gets the TotalApps integer for an instance of theType
+         *
+         * @return The integer value stored within TotalApps
+         */
         public int getTotalApps() {
             return TotalApps;
         }
+
+        /**
+         * Sets the TotalApps integer value for an instance of theType
+         *
+         * @param TotalApps the integer value to be set in an instance of theType
+         */
         public void setTotalApps(int TotalApps) {
             this.TotalApps = TotalApps;
         }
+
+        /**
+         * Iterates the value of found instances of a Type by one each time it is called
+         */
         public void found() {
             TotalApps++;
         }
     }
-    private static ObservableList<theType> allTypes = FXCollections.observableArrayList();
 
+    private static ObservableList<theType> allTypes = FXCollections.observableArrayList();
 
 
     public static class theMonth {
         public String monthName = null;
         public int TotalApps = 0;
 
+        /**
+         * Creates an instance of data structure theMonth that includes a String signifying the Month and an integer
+         * signifying the amount of Appointments associated with that month name
+         *
+         * @param monthName The String representing the Month's Name
+         * @param TotalApps The integer representing the amount of Appointments associated with the Month
+         */
         public theMonth(String monthName, int TotalApps) {
             this.monthName = monthName;
             this.TotalApps = TotalApps;
         }
+
+        /**
+         * Gets the String value within monthName in the instance of theMonth
+         *
+         * @return the String monthName
+         */
         public String getMonthName() {
             return monthName;
         }
+
+        /**
+         * Sets the String value within monthName
+         *
+         * @param monthName the String to be placed within the instance of theMonth
+         */
         public void setMonthName(String monthName) {
             this.monthName = monthName;
         }
+
+        /**
+         * gets the TotalApps integer for an instance of theMonth
+         *
+         * @return The integer value stored within TotalApps
+         */
         public int getTotalApps() {
             return TotalApps;
         }
+
+        /**
+         * Sets the TotalApps integer value for an instance of theMonth
+         *
+         * @param TotalApps the integer value to be set in an instance of theMonth
+         */
         public void setTotalApps(int TotalApps) {
             this.TotalApps = TotalApps;
         }
     }
+
     private static ObservableList<theMonth> allMonths = FXCollections.observableArrayList();
 
+    /**
+     * Populates the allTypes ObservableList with Distinct Type String instances and their Count from the SQL database
+     * of existing appointments
+     *
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void populateTypes() throws SQLException {
         String typeName = null;
         int typeCount = 0;
@@ -148,6 +237,13 @@ public class ViewReport implements Initializable {
             allTypes.add(fillerType);
         }
     }
+
+    /**
+     * Populates the allMonths ObservableList with String values of all of the month names and counts through the
+     * month values of all existing Appointments associated with those month names
+     *
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void populateMonths() throws SQLException {
         int January = 0;
         int February = 0;
@@ -215,6 +311,11 @@ public class ViewReport implements Initializable {
         allMonths.add(new theMonth("December", December));
     }
 
+    /**
+     * Populates the Contacts ComboBox with all Contacts existing within the contacts table in the SQL database
+     *
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void populateContacts() throws SQLException {
         String logQuery = "SELECT * FROM contacts";
         JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
@@ -227,7 +328,11 @@ public class ViewReport implements Initializable {
         }
     }
 
-
+    /**
+     * Populates the Customers ComboBox with all Customers existing within the customers table in the SQL database
+     *
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void populateCustomers() throws SQLException {
         String logQuery = "SELECT * FROM customers";
         JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
@@ -240,6 +345,12 @@ public class ViewReport implements Initializable {
         }
     }
 
+    /**
+     * When called, loads in MainForm.fxml as the current User-facing scene
+     *
+     * @param event Initiating call from other method
+     * @throws IOException thrown in case of FXML file interaction issues
+     */
     private void returnToMainScreen(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/sample/View/MainForm.fxml")));
         Scene scene = new Scene(parent);
@@ -248,14 +359,18 @@ public class ViewReport implements Initializable {
         stage.show();
     }
 
-
+    /**
+     * Populates and displays a table view of all appointments and their details associated with the Contact
+     * selected by the User
+     *
+     * @param actionEvent Contact ComboBox selection action by User
+     */
     public void onSelectContactComboAction(ActionEvent actionEvent) {
         boolean selected;
         try {
             Integer.parseInt(selectContactCombo.getValue().toString());
             selected = true;
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             selected = false;
         }
         if (selected) {
@@ -283,13 +398,18 @@ public class ViewReport implements Initializable {
         }
     }
 
+    /**
+     * Populates and displays a table view of all appointments and their details associated with the Customer
+     * selected by the User
+     *
+     * @param actionEvent Customer ComboBox selection action by User
+     */
     public void onSelectCustomerComboAction(ActionEvent actionEvent) {
         boolean selected;
         try {
             Integer.parseInt(selectCustomerCombo.getValue().toString());
             selected = true;
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             selected = false;
         }
         if (selected) {
@@ -316,6 +436,13 @@ public class ViewReport implements Initializable {
         }
     }
 
+    /**
+     * Initializer for View Reports screen, loads in Combo Boxes with existing values from database and
+     * populates Summary tables with breakdown of Appointments by month and by type
+     *
+     * @param url            resource location pointer
+     * @param resourceBundle target ResourceBundle to select key values from
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ContactAppointmentTable.setVisible(false);
