@@ -69,6 +69,10 @@ public class ViewReport implements Initializable {
     public TableColumn<Appointment, Integer> CustomerAppointmentTableCustomerIDCol;
     public TableColumn<Appointment, Integer> ContactAppointmentTableUserIDCol;
     public TableColumn<Appointment, Integer> CustomerAppointmentTableUserIDCol;
+    public TableView<theSet> AsOneBreakdownTable;
+    public TableColumn<theSet, String> AsOneBreakdownTableMonthCol;
+    public TableColumn<theSet, String> AsOneBreakdownTableTypeCol;
+    public TableColumn<theSet, Integer> AsOneBreakdownTableTotalCol;
 
     /**
      * Closes the View Reports view and calls a method to return to the MainForm view
@@ -436,6 +440,237 @@ public class ViewReport implements Initializable {
         }
     }
 
+    private static ObservableList<theSet> allSets = FXCollections.observableArrayList();
+
+    public static class theSet {
+        public String monthName = null;
+        public String typeName = null;
+        public int TotalApps = 0;
+
+        /**
+         * Creates an instance of data structure theSet that includes a String signifying the Month, a String signifying
+         * the Appointment type and an integer signifying the amount of Appointments associated with that month name
+         *
+         * @param monthName The String representing the Month's Name
+         * @param TotalApps The integer representing the amount of Appointments associated with the Month
+         */
+        public theSet(String monthName, String typeName, int TotalApps) {
+            this.monthName = monthName;
+            this.TotalApps = TotalApps;
+        }
+
+        /**
+         * Gets the String value within monthName in the instance of theSet
+         *
+         * @return the String monthName
+         */
+        public String getMonthName() {
+            return monthName;
+        }
+
+        /**
+         * Sets the String value within monthName
+         *
+         * @param monthName the String to be placed within the instance of theSet
+         */
+        public void setMonthName(String monthName) {
+            this.monthName = monthName;
+        }
+
+        /**
+         * Gets the String value within monthName in the instance of theSet
+         *
+         * @return the String typeName
+         */
+        public String getTypeName() {
+            return typeName;
+        }
+
+        /**
+         * Sets the String value within monthName
+         *
+         * @param typeName the String to be placed within the instance of theSet
+         */
+        public void setTypeName(String typeName) {
+            this.typeName = typeName;
+        }
+
+        /**
+         * gets the TotalApps integer for an instance of theSet
+         *
+         * @return The integer value stored within TotalApps
+         */
+        public int getTotalApps() {
+            return TotalApps;
+        }
+
+        /**
+         * Sets the TotalApps integer value for an instance of theSet
+         *
+         * @param TotalApps the integer value to be set in an instance of theSet
+         */
+        public void setTotalApps(int TotalApps) {
+            this.TotalApps = TotalApps;
+        }
+    }
+
+    /**
+     * Populates the ObservableList allSets with instances of theSet based upon the returned value of a SQL query of
+     * all entries in the appointments table broken down by month and then type of Appointment
+     * @throws SQLException
+     */
+    public void asOnePopulation() throws SQLException {
+        {
+            String monthName = null;
+            String typeName = null;
+            int typeCount = 0;
+            String logQuery = "SELECT type, COUNT(*) AS typeCount FROM appointments where extract(month from Start)=1 GROUP BY type";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            Statement checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            ResultSet rs2 = checkQuery.getResultSet();
+            while (rs2.next()) {
+                monthName = "January";
+                typeName = rs2.getString("type");
+                typeCount = rs2.getInt("typeCount");
+                theSet fillerSet = new theSet(monthName, typeName, typeCount);
+                allSets.add(fillerSet);
+            }
+            logQuery = "SELECT type, COUNT(*) AS typeCount FROM appointments where extract(month from Start)=2 GROUP BY type";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            rs2 = checkQuery.getResultSet();
+            while (rs2.next()) {
+                monthName = "February";
+                typeName = rs2.getString("type");
+                typeCount = rs2.getInt("typeCount");
+                theSet fillerSet = new theSet(monthName, typeName, typeCount);
+                allSets.add(fillerSet);
+            }
+            logQuery = "SELECT type, COUNT(*) AS typeCount FROM appointments where extract(month from Start)=3 GROUP BY type";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            rs2 = checkQuery.getResultSet();
+            while (rs2.next()) {
+                monthName = "March";
+                typeName = rs2.getString("type");
+                typeCount = rs2.getInt("typeCount");
+                theSet fillerSet = new theSet(monthName, typeName, typeCount);
+                allSets.add(fillerSet);
+            }
+            logQuery = "SELECT type, COUNT(*) AS typeCount FROM appointments where extract(month from Start)=4 GROUP BY type";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            rs2 = checkQuery.getResultSet();
+            while (rs2.next()) {
+                monthName = "April";
+                typeName = rs2.getString("type");
+                typeCount = rs2.getInt("typeCount");
+                theSet fillerSet = new theSet(monthName, typeName, typeCount);
+                allSets.add(fillerSet);
+            }
+            logQuery = "SELECT type, COUNT(*) AS typeCount FROM appointments where extract(month from Start)=5 GROUP BY type";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            rs2 = checkQuery.getResultSet();
+            while (rs2.next()) {
+                monthName = "May";
+                typeName = rs2.getString("type");
+                typeCount = rs2.getInt("typeCount");
+                theSet fillerSet = new theSet(monthName, typeName, typeCount);
+                allSets.add(fillerSet);
+            }
+            logQuery = "SELECT type, COUNT(*) AS typeCount FROM appointments where extract(month from Start)=6 GROUP BY type";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            rs2 = checkQuery.getResultSet();
+            while (rs2.next()) {
+                monthName = "June";
+                typeName = rs2.getString("type");
+                typeCount = rs2.getInt("typeCount");
+                theSet fillerSet = new theSet(monthName, typeName, typeCount);
+                allSets.add(fillerSet);
+            }
+            logQuery = "SELECT type, COUNT(*) AS typeCount FROM appointments where extract(month from Start)=7 GROUP BY type";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            rs2 = checkQuery.getResultSet();
+            while (rs2.next()) {
+                monthName = "July";
+                typeName = rs2.getString("type");
+                typeCount = rs2.getInt("typeCount");
+                theSet fillerSet = new theSet(monthName, typeName, typeCount);
+                allSets.add(fillerSet);
+            }
+            logQuery = "SELECT type, COUNT(*) AS typeCount FROM appointments where extract(month from Start)=8 GROUP BY type";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            rs2 = checkQuery.getResultSet();
+            while (rs2.next()) {
+                monthName = "August";
+                typeName = rs2.getString("type");
+                typeCount = rs2.getInt("typeCount");
+                theSet fillerSet = new theSet(monthName, typeName, typeCount);
+                allSets.add(fillerSet);
+            }
+            logQuery = "SELECT type, COUNT(*) AS typeCount FROM appointments where extract(month from Start)=9 GROUP BY type";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            rs2 = checkQuery.getResultSet();
+            while (rs2.next()) {
+                monthName = "September";
+                typeName = rs2.getString("type");
+                typeCount = rs2.getInt("typeCount");
+                theSet fillerSet = new theSet(monthName, typeName, typeCount);
+                allSets.add(fillerSet);
+            }
+            logQuery = "SELECT type, COUNT(*) AS typeCount FROM appointments where extract(month from Start)=10 GROUP BY type";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            rs2 = checkQuery.getResultSet();
+            while (rs2.next()) {
+                monthName = "October";
+                typeName = rs2.getString("type");
+                typeCount = rs2.getInt("typeCount");
+                theSet fillerSet = new theSet(monthName, typeName, typeCount);
+                allSets.add(fillerSet);
+            }
+            logQuery = "SELECT type, COUNT(*) AS typeCount FROM appointments where extract(month from Start)=11 GROUP BY type";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            rs2 = checkQuery.getResultSet();
+            while (rs2.next()) {
+                monthName = "November";
+                typeName = rs2.getString("type");
+                typeCount = rs2.getInt("typeCount");
+                theSet fillerSet = new theSet(monthName, typeName, typeCount);
+                allSets.add(fillerSet);
+            }
+            logQuery = "SELECT type, COUNT(*) AS typeCount FROM appointments where extract(month from Start)=12 GROUP BY type";
+            JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
+            checkQuery = JDBC.getPreparedStatement();
+            checkQuery.execute(logQuery);
+            rs2 = checkQuery.getResultSet();
+            while (rs2.next()) {
+                monthName = "December";
+                typeName = rs2.getString("type");
+                typeCount = rs2.getInt("typeCount");
+                theSet fillerSet = new theSet(monthName, typeName, typeCount);
+                allSets.add(fillerSet);
+            }
+        }
+    }
+
     /**
      * Initializer for View Reports screen, loads in Combo Boxes with existing values from database and
      * populates Summary tables with breakdown of Appointments by month and by type
@@ -449,6 +684,7 @@ public class ViewReport implements Initializable {
         CustomerAppointmentTable.setVisible(false);
         allMonths.clear();
         allTypes.clear();
+        allSets.clear();
         try {
             populateTypes();
         } catch (SQLException throwables) {
@@ -459,12 +695,21 @@ public class ViewReport implements Initializable {
         } catch (SQLException throwables) {
             System.out.println("Error loading Appointments by Month from Database");
         }
+        try {
+            asOnePopulation();
+        } catch (SQLException throwables) {
+            System.out.println("Error loading Appointments by Month and Type from Database");
+        }
         reportTypeBreakdownTable.setItems(allTypes);
         reportTypeBreakdownTableTypeCol.setCellValueFactory(new PropertyValueFactory<>("typeName"));
         reportTypeBreakdownTableTotalCol.setCellValueFactory(new PropertyValueFactory<>("TotalApps"));
         reportMonthBreakdownTable.setItems(allMonths);
         reportMonthBreakdownTableMonthCol.setCellValueFactory(new PropertyValueFactory<>("monthName"));
         reportMonthBreakdownTableTotalCol.setCellValueFactory(new PropertyValueFactory<>("TotalApps"));
+        AsOneBreakdownTable.setItems(allSets);;
+        AsOneBreakdownTableMonthCol.setCellValueFactory(new PropertyValueFactory<>("monthName"));;
+        AsOneBreakdownTableTypeCol.setCellValueFactory(new PropertyValueFactory<>("typeName"));
+        AsOneBreakdownTableTotalCol.setCellValueFactory(new PropertyValueFactory<>("TotalApps"));
         try {
             populateContacts();
         } catch (SQLException throwables) {

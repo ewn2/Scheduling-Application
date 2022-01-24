@@ -16,6 +16,20 @@
                 <Tab text="Appointment Categories Breakdown">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="AsOneBreakdownTable" layoutX="73.0" layoutY="71.0" prefHeight="350.0" prefWidth="789.0">
+                                    <columns>
+                                        <TableColumn fx:id="AsOneBreakdownTableMonthCol" prefWidth="263.0" text="Month" />
+                                        <TableColumn fx:id="AsOneBreakdownTableTypeCol" prefWidth="263.0" text="Appointment Type" />
+                                        <TableColumn fx:id="AsOneBreakdownTableTotalCol" prefWidth="263.0" text="Total Appointments" />
+                                    </columns>
+                                </TableView>
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Appointment Categories Breakdown Separated">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TableView fx:id="reportMonthBreakdownTable" layoutX="73.0" layoutY="71.0" prefHeight="350.0" prefWidth="350.0">
                           <columns>
