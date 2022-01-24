@@ -1,5 +1,9 @@
 package sample.Controller;
-
+/**
+ * MainForm.fxml related Controller
+ *
+ * @author Erwin Uppal
+ */
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -73,6 +77,12 @@ public class MainForm implements Initializable {
     public TableColumn<Customer, String> customerTableCustomerAddressCol;
     public Label timeZoneLabel;
 
+    /**
+     * Initializer for Main form screen, checks User's system information on timezone and populates TableViews of all
+     * Appointments and Customers with start and end times adjusted to be shown at the User's local time
+     * @param url resource location pointer
+     * @param resourceBundle target ResourceBundle to select key values from
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -112,6 +122,11 @@ public class MainForm implements Initializable {
         AppointmentTable.sort();
     }
 
+    /**
+     * Shows a detailed message to the User in case of any Appointments upcoming for that User within 15 minutes of
+     * that User logging into the application, otherwise informs them there are no upcoming Appointments
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void UpcomingAppointmentWarning() throws SQLException {
         boolean UserHasAppointment = false;
         int loggedInUser = User.getUser_ID();
@@ -143,6 +158,10 @@ public class MainForm implements Initializable {
         }
     }
 
+    /**
+     * Reaction to User clicking Exit button, closes the application
+     * @param actionEvent User initiating button press
+     */
     public void onExitButtonAction(ActionEvent actionEvent) {
         Platform.exit();
     }
@@ -153,6 +172,12 @@ public class MainForm implements Initializable {
     public static Customer customerPasser = null;
     public static Appointment appointmentPasser = null;
 
+    /**
+     * Passes the currently selected Customer from the Customer TableView to be deleted from the database, but
+     * first proffers a deletion confirmation to the User. Will not allow the deletion of a Customer with existing
+     * Appointments within the database and informs the User of that restriction if attempted.
+     * @param actionEvent User initiating button press
+     */
     public void onCustomerDeleteButtonAction(ActionEvent actionEvent) {
         selectedAppointment = null;
         selectedCustomer = null;
@@ -171,6 +196,11 @@ public class MainForm implements Initializable {
         }
     }
 
+    /**
+     * Passes the User's currently selected Customer instance from the TableView to the ModifyCustomer View screen
+     * @param actionEvent User initiating button press
+     * @throws IOException thrown in case of fxml file interaction issues
+     */
     public void onCustomerModifyButtonAction(ActionEvent actionEvent) throws IOException {
         customerPasser = null;
         customerPasser = CustomerTable.getSelectionModel().getSelectedItem();
@@ -183,6 +213,12 @@ public class MainForm implements Initializable {
         }
     }
 
+    /**
+     * Opens the AddCustomer screen where the User may populate the details of a new Customer to be added to the
+     * list of all Customers
+     * @param actionEvent User initiating button press
+     * @throws IOException thrown in case of fxml file interaction issues
+     */
     public void onCustomerAddButtonAction(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/sample/View/AddCustomer.fxml"));
         Scene scene = new Scene(parent);
@@ -191,6 +227,11 @@ public class MainForm implements Initializable {
         stage.show();
     }
 
+    /**
+     * Passes the currently selected Appointment from the Appointment TableView to be deleted from the database, but
+     * first proffers a deletion confirmation to the User.
+     * @param actionEvent User initiating button press
+     */
     public void onAppointmentDeleteButtonAction(ActionEvent actionEvent) {
         selectedAppointment = null;
         selectedCustomer = null;
@@ -203,6 +244,11 @@ public class MainForm implements Initializable {
         }
     }
 
+    /**
+     * Passes the User's currently selected Appointment instance from the TableView to the ModifyAppointment View screen
+     * @param actionEvent User initiating button press
+     * @throws IOException thrown in case of fxml file interaction issues
+     */
     public void onAppointmentModifyButtonAction(ActionEvent actionEvent) throws IOException {
         appointmentPasser = null;
         appointmentPasser = AppointmentTable.getSelectionModel().getSelectedItem();
@@ -215,6 +261,12 @@ public class MainForm implements Initializable {
         }
     }
 
+    /**
+     * Opens the AddAppointment screen where the User may populate the details of a new Appointment to be added to the
+     * list of all Appointments
+     * @param actionEvent User initiating button press
+     * @throws IOException thrown in case of fxml file interaction issues
+     */
     public void onAppointmentAddButtonAction(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/sample/View/AddAppointment.fxml"));
         Scene scene = new Scene(parent);
@@ -223,6 +275,12 @@ public class MainForm implements Initializable {
         stage.show();
     }
 
+    /**
+     * Confirms a deletion operation of a selected Customer or Appointment, and shows a confirmation message to the User
+     * confirming the deletion along with details of the deleted Customer/Appointment
+     * @param actionEvent User initiating button press
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void onConfirmButtonAction(ActionEvent actionEvent) throws SQLException {
         errorMessageBox.setVisible(false);
         confirmButton.setVisible(false);
@@ -262,6 +320,10 @@ public class MainForm implements Initializable {
         selectedAppointment = null;
     }
 
+    /**
+     * Ends the deletion routine of a Customer or Appointment without performing any deletions
+     * @param actionEvent User initiating button press
+     */
     public void onDenyButtonAction(ActionEvent actionEvent) {
         errorMessageBox.setVisible(false);
         confirmButton.setVisible(false);
@@ -270,6 +332,11 @@ public class MainForm implements Initializable {
         selectedAppointment = null;
     }
 
+    /**
+     * When called, loads in viewReport.fxml as the current User-facing scene
+     * @param actionEvent User initiating button press
+     * @throws IOException thrown in case of fxml file interaction issues
+     */
     public void onReportsButtonAction(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/sample/View/ViewReport.fxml"));
         Scene scene = new Scene(parent);
@@ -278,6 +345,11 @@ public class MainForm implements Initializable {
         stage.show();
     }
 
+    /**
+     * Reacts to User selecting the Weekly or Monthly filter Radio Buttons and calls their respective filter methods
+     * @param actionEvent User initiating radio button selection
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void onWeekOrMonthSelectAction(ActionEvent actionEvent) throws SQLException {
         if (appointmentsWeeklyRadio.isSelected()) {
             FilterByWeek();
@@ -287,6 +359,10 @@ public class MainForm implements Initializable {
         }
     }
 
+    /**
+     * Repopulates the Appointment TableView with all Appointments, no filter applied
+     * @param actionEvent User initiating radio button selection
+     */
     public void onAppointmentsNoFilterRadioAction(ActionEvent actionEvent) {
         try {
             AppointmentTable.setItems(Appointment.appointmentPopulation());
@@ -308,11 +384,20 @@ public class MainForm implements Initializable {
         AppointmentTable.sort();
     }
 
-
+    /**
+     * Upon selection of the Weekly Radio Button filter, calls the FilterByWeek() method
+     * @param actionEvent User initiating radio button selection
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void onAppointmentsWeeklyRadioAction(ActionEvent actionEvent) throws SQLException {
         FilterByWeek();
     }
 
+    /**
+     * Checks the value of the WeekOrMonthSelect DatePicker and repopulates the Appointment TableView with all Appointments
+     * in the week following that date, inclusive to the date
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void FilterByWeek() throws SQLException {
         if (WeekOrMonthSelect.getValue() != null) {
             ObservableList<Appointment> weekAppointments = FXCollections.observableArrayList();
@@ -343,10 +428,20 @@ public class MainForm implements Initializable {
         }
     }
 
+    /**
+     * Upon selection of the Monthly Radio Button filter, calls the FilterByMonth() method
+     * @param actionEvent User initiating radio button selection
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void onAppointmentsMonthlyRadioAction(ActionEvent actionEvent) throws SQLException {
         FilterByMonth();
     }
 
+    /**
+     * Checks the value of the WeekOrMonthSelect DatePicker and repopulates the Appointment TableView with all Appointments
+     * occurring in the month of the same name as the value selected
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void FilterByMonth() throws SQLException {
         if (WeekOrMonthSelect.getValue() != null) {
             ObservableList<Appointment> monthAppointments = FXCollections.observableArrayList();

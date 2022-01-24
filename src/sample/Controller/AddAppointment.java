@@ -289,7 +289,7 @@ public class AddAppointment implements Initializable {
      * convertorLambda: Lines 370 through 376, 383, 385
      *
      * @param actionEvent User initiating button press
-     * @throws IOException  thrown in case of fxml file interaction issues
+     * @throws IOException thrown in case of fxml file interaction issues
      * @throws SQLException thrown in case of SQL database interaction issues
      */
     public void onAddAppointmentSaveButtonAction(ActionEvent actionEvent) throws IOException, SQLException {
