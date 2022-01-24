@@ -456,6 +456,7 @@ public class ViewReport implements Initializable {
          */
         public theSet(String monthName, String typeName, int TotalApps) {
             this.monthName = monthName;
+            this.typeName = typeName;
             this.TotalApps = TotalApps;
         }
 
