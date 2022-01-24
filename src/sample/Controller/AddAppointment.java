@@ -263,6 +263,20 @@ public class AddAppointment implements Initializable {
     }
 
     /**
+     * Reaction to User pressing Save button, attempts to validate all User input Appointment detail values and save them
+     * into both the current ObservableList of all Appointments and into the connected SQL database. Makes use of two
+     * separate Lambda functions.
+     *
+     * Lambda exceptionLambda improved code by removing the need to incorporate individual try and catch blocks for every
+     * single User entered String, ComboBox, or Date and Time value. Instead, every value may be placed into an all
+     * encompassing try block and the Lambda function can handle every validity check and error message display at once
+     * exceptionLambda: Lines 341 through 347
+     *
+     * Lambda convertorLambda improved code by reducing the need to individually handle the formatting of every single
+     * LocalDateTime and ZonedDateTime instance and its String parsing and conversion as had been done in a multi-step
+     * process in my original implementation, instead reducing it down to a quick pass when assigning the value for
+     * the final String to be stored within the Instance of Appointment
+     * convertorLambda: Lines 360 through 366, 373, 375
      *
      * @param actionEvent User initiating button press
      * @throws IOException thrown in case of fxml file interaction issues
@@ -343,23 +357,19 @@ public class AddAppointment implements Initializable {
             ZonedDateTime localStart = meetingStart.withZoneSameInstant(ZoneId.systemDefault());
             LocalDateTime AppointmentStartDateTime = startDate.atTime(LocalTime.from(convertStartToUTC));
             LocalDateTime AppointmentStartDateTimeLocal = startDate.atTime(LocalTime.from(localStart));
-
             convertorLambda convertDT = (LocalDateTime localDateTime) -> {
                 DateTimeFormatter readable = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
                 String convertedDT = localDateTime.format(readable);
                 return convertedDT;
             };
-
             String AptStartDateTime = convertDT.pear(AppointmentStartDateTime);
             String AptStartDateTimeLocal = convertDT.pear(AppointmentStartDateTimeLocal);
             //String AptStartDateTime = AppointmentStartDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
             //String AptStartDateTimeLocal = AppointmentStartDateTimeLocal.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
-
             ZonedDateTime convertEndToUTC = meetingEnd.withZoneSameInstant(ZoneId.of("UTC"));
             ZonedDateTime localEnd = meetingEnd.withZoneSameInstant(ZoneId.systemDefault());
             LocalDateTime AppointmentEndDateTime = endDate.atTime(LocalTime.from(convertEndToUTC));
             LocalDateTime AppointmentEndDateTimeLocal = endDate.atTime(LocalTime.from(localEnd));
-
             String AptEndDateTime = convertDT.pear(AppointmentEndDateTime);
             //String AptEndDateTime = AppointmentEndDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
             String AptEndDateTimeLocal = convertDT.pear(AppointmentEndDateTimeLocal);
