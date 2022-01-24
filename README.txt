@@ -37,12 +37,13 @@ a combination which exists within the connected database users Table such as use
 If successfully logged in, the User may review all Customers or Appointments with their times adjusted to be shown
 in the local System's equivalent timezone values of the appointments, as well as add, modify, and remove them.
 A Reports page may also be brought up by the User which showcases a breakdown of all Appointments by month of occurrence,
-Type descriptor value, all appointments for an individually selected Contact, and all appointments for an individually
-selected Customer.
+Type descriptor value, both Month and Type description, all appointments for an individually selected Contact, and all
+appointments for an individually selected Customer.
 
 •  a description of the additional report of your choice you ran in part A3f
 My additional report allows the User to select a specific Customer and be shown a TableView breakdown of all of their
 associated appointments, if any exist.
+There is also an extraneous breakdown of all Appointments by month and type as two separate tables.
 
 •  the MySQL Connector driver version number, including the update number (e.g., mysql-connector-java-8.1.23)
 mysql-connector-java-8.0.25
