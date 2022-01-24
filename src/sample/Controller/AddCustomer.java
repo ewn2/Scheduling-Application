@@ -4,6 +4,7 @@ package sample.Controller;
  *
  * @author Erwin Uppal
  */
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -46,7 +47,8 @@ public class AddCustomer implements Initializable {
 
     /**
      * Initializer for add Customer screen, loads in Combo Boxes with existing values from database
-     * @param url resource location pointer
+     *
+     * @param url            resource location pointer
      * @param resourceBundle target ResourceBundle to select key values from
      */
     @Override
@@ -61,6 +63,7 @@ public class AddCustomer implements Initializable {
 
     /**
      * Populates the Country ComboBox from SQL database for User selection
+     *
      * @throws SQLException thrown in case of SQL database interaction issues
      */
     public void populateCountry() throws SQLException {
@@ -78,6 +81,7 @@ public class AddCustomer implements Initializable {
     /**
      * Upon the User updating the Country selection ComboBox, will retrieve the ID value of that Country from the
      * SQL database
+     *
      * @param actionEvent User making a selection with the Country ComboBox
      * @throws SQLException thrown in case of SQL database interaction issues
      */
@@ -101,6 +105,7 @@ public class AddCustomer implements Initializable {
     /**
      * Populates the first division State/Province ComboBox from SQL database for User selection based upon all
      * divisions associated with the selected Country_ID value of the option selected in the Country ComboBox
+     *
      * @param Country_ID the integer matching the selected Country ComboBox option's Country_ID within the SQL Database
      * @throws SQLException thrown in case of SQL database interaction issues
      */
@@ -120,6 +125,7 @@ public class AddCustomer implements Initializable {
     /**
      * Reaction to User pressing Save button, attempts to validate all User input Customer detail values and save them
      * into both the current ObservableList of all Customers and into the connected SQL database
+     *
      * @param actionEvent User initiating button press
      * @throws IOException thrown in case of SQL database interaction issues
      */
@@ -182,13 +188,12 @@ public class AddCustomer implements Initializable {
         String CustomerAddress = addCustomerAddressBox.getText();
         if (validEntries) {
             try {
-                Customer newCustomer = new Customer(id, CustomerName,CustomerPhone,CustomerCountry,CustomerPostal,CustomerState,CustomerAddress);
+                Customer newCustomer = new Customer(id, CustomerName, CustomerPhone, CustomerCountry, CustomerPostal, CustomerState, CustomerAddress);
                 newCustomer.setCustomerID(Customer.uniqueCustomerID());
                 Customer.addCustomer(newCustomer);
                 if (Customer.addCustomerToDatabase(newCustomer)) {
                     addedCustomer = true;
-                }
-                else {
+                } else {
                     throw new Exception();
                 }
             } catch (Exception e) {
@@ -204,6 +209,7 @@ public class AddCustomer implements Initializable {
 
     /**
      * Closes the Add Customer view and calls a method to return to the MainForm view
+     *
      * @param actionEvent User initiating button press
      * @throws IOException thrown in case of FXML file interaction issues
      */
@@ -213,6 +219,7 @@ public class AddCustomer implements Initializable {
 
     /**
      * When called, loads in MainForm.fxml as the current User-facing scene
+     *
      * @param event Initiating call from other method
      * @throws IOException thrown in case of FXML file interaction issues
      */

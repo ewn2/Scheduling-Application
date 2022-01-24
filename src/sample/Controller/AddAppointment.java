@@ -4,6 +4,7 @@ package sample.Controller;
  *
  * @author Erwin Uppal
  */
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -60,7 +61,8 @@ public class AddAppointment implements Initializable {
     /**
      * Initializer for add Appointment screen, loads in Combo Boxes with existing values from database and
      * initializes start and end time selectors
-     * @param url resource location pointer
+     *
+     * @param url            resource location pointer
      * @param resourceBundle target ResourceBundle to select key values from
      */
     @Override
@@ -97,7 +99,7 @@ public class AddAppointment implements Initializable {
     /**
      * Populates the Appointment Time start and end time ComboBoxes for User selection
      */
-    public void populateTimeCombos(){
+    public void populateTimeCombos() {
         int i = 0;
         ObservableList<String> hourBoxes = FXCollections.observableArrayList();
         ObservableList<String> minuteBoxes = FXCollections.observableArrayList();
@@ -126,11 +128,12 @@ public class AddAppointment implements Initializable {
         addAppointmentEndDatePicker.setValue(endDate);
     }
 
-    private ZonedDateTime startTime = LocalDate.now().atTime(8,0).atZone(ZoneId.of("US/Eastern"));
-    private ZonedDateTime endTime = LocalDate.now().atTime(22,0).atZone(ZoneId.of("US/Eastern"));
+    private ZonedDateTime startTime = LocalDate.now().atTime(8, 0).atZone(ZoneId.of("US/Eastern"));
+    private ZonedDateTime endTime = LocalDate.now().atTime(22, 0).atZone(ZoneId.of("US/Eastern"));
 
     /**
      * Adjusts the displayed business hour labels of 8:00 to 22:00 US/Eastern to the User's local timezone equivalent
+     *
      * @throws ParseException thrown in case of User time String parsing issues
      */
     public void businessHoursDisplayAdjustment() throws ParseException {
@@ -145,16 +148,17 @@ public class AddAppointment implements Initializable {
 
     /**
      * Checks if User selected Appointment start and end times conform with Business hours
+     *
      * @return boolean value of true if User selected Appointment Start and End times conform with Business hours and false if they do not
      */
     public boolean StartEndAppointmentCheck() {
         int hourValue = Integer.parseInt(addAppointmentStartTimeHourCombo.getValue().toString());
-        int minuteValue = Integer.parseInt((addAppointmentStartTimeMinuteCombo.getValue().toString()+addAppointmentStartTimeMinuteCombo1.getValue().toString()));
-        ZonedDateTime startToCheck = LocalDate.now().atTime(hourValue,minuteValue).atZone(ZoneId.systemDefault());
+        int minuteValue = Integer.parseInt((addAppointmentStartTimeMinuteCombo.getValue().toString() + addAppointmentStartTimeMinuteCombo1.getValue().toString()));
+        ZonedDateTime startToCheck = LocalDate.now().atTime(hourValue, minuteValue).atZone(ZoneId.systemDefault());
         int hourValueEnd = Integer.parseInt(addAppointmentEndTimeHourCombo.getValue().toString());
-        int minuteValueEnd = Integer.parseInt((addAppointmentEndTimeMinuteCombo.getValue().toString()+addAppointmentEndTimeMinuteCombo1.getValue().toString()));
-        ZonedDateTime endToCheck = LocalDate.now().atTime(hourValueEnd,minuteValueEnd).atZone(ZoneId.systemDefault());
-        if (startToCheck.compareTo(startTime.withZoneSameInstant(ZoneId.systemDefault())) >= 0 && endToCheck.compareTo(startTime.withZoneSameInstant(ZoneId.systemDefault())) >= 0 ) {
+        int minuteValueEnd = Integer.parseInt((addAppointmentEndTimeMinuteCombo.getValue().toString() + addAppointmentEndTimeMinuteCombo1.getValue().toString()));
+        ZonedDateTime endToCheck = LocalDate.now().atTime(hourValueEnd, minuteValueEnd).atZone(ZoneId.systemDefault());
+        if (startToCheck.compareTo(startTime.withZoneSameInstant(ZoneId.systemDefault())) >= 0 && endToCheck.compareTo(startTime.withZoneSameInstant(ZoneId.systemDefault())) >= 0) {
             if (endToCheck.compareTo(endTime.withZoneSameInstant(ZoneId.systemDefault())) <= 0 && startToCheck.compareTo(endTime.withZoneSameInstant(ZoneId.systemDefault())) <= 0) {
                 if (checkDates()) {
                     meetingStart = startToCheck;
@@ -168,6 +172,7 @@ public class AddAppointment implements Initializable {
 
     /**
      * Populates the Contacts ComboBox with Contacts existing within the SQL database
+     *
      * @throws SQLException thrown in case of SQL database interaction issues
      */
     public void populateContacts() throws SQLException {
@@ -184,6 +189,7 @@ public class AddAppointment implements Initializable {
 
     /**
      * Populates the Customer ComboBox with Customers existing within the SQL database
+     *
      * @throws SQLException thrown in case of SQL database interaction issues
      */
     public void populateCustomers() throws SQLException {
@@ -200,6 +206,7 @@ public class AddAppointment implements Initializable {
 
     /**
      * Populates the Users ComboBox with Users existing within the SQL database
+     *
      * @throws SQLException thrown in case of SQL database interaction issues
      */
     public void populateUsers() throws SQLException {
@@ -219,6 +226,7 @@ public class AddAppointment implements Initializable {
 
     /**
      * Captures the User's selected Start Date value
+     *
      * @param actionEvent User interaction with DatePicker
      */
     public void onAddAppointmentStartDatePickerAction(ActionEvent actionEvent) {
@@ -227,6 +235,7 @@ public class AddAppointment implements Initializable {
 
     /**
      * Captures the User's selected End Date value
+     *
      * @param actionEvent User interaction with DatePicker
      */
     public void onAddAppointmentEndDatePickerAction(ActionEvent actionEvent) {
@@ -236,6 +245,7 @@ public class AddAppointment implements Initializable {
     /**
      * Boolean that checks if the selected Start and End Dates is realistic to account for Users whose local equivalent
      * of Eastern Business Hours crosses into more than one day
+     *
      * @return boolean value of true if the selected Start and End times are valid
      */
     public boolean checkDates() {
@@ -266,20 +276,20 @@ public class AddAppointment implements Initializable {
      * Reaction to User pressing Save button, attempts to validate all User input Appointment detail values and save them
      * into both the current ObservableList of all Appointments and into the connected SQL database. Makes use of two
      * separate Lambda functions.
-     *
+     * <p>
      * Lambda exceptionLambda improved code by removing the need to incorporate individual try and catch blocks for every
      * single User entered String, ComboBox, or Date and Time value. Instead, every value may be placed into an all
      * encompassing try block and the Lambda function can handle every validity check and error message display at once
-     * exceptionLambda: Lines 341 through 347
-     *
+     * exceptionLambda: Lines 351 through 357
+     * <p>
      * Lambda convertorLambda improved code by reducing the need to individually handle the formatting of every single
      * LocalDateTime and ZonedDateTime instance and its String parsing and conversion as had been done in a multi-step
      * process in my original implementation, instead reducing it down to a quick pass when assigning the value for
      * the final String to be stored within the Instance of Appointment
-     * convertorLambda: Lines 360 through 366, 373, 375
+     * convertorLambda: Lines 370 through 376, 383, 385
      *
      * @param actionEvent User initiating button press
-     * @throws IOException thrown in case of fxml file interaction issues
+     * @throws IOException  thrown in case of fxml file interaction issues
      * @throws SQLException thrown in case of SQL database interaction issues
      */
     public void onAddAppointmentSaveButtonAction(ActionEvent actionEvent) throws IOException, SQLException {
@@ -381,7 +391,7 @@ public class AddAppointment implements Initializable {
             int AppointmentUserID = Integer.parseInt(AppointmentUserIDString);
             if (validEntries) {
                 try {
-                    Appointment newAppointment = new Appointment(id, AppointmentTitle,AppointmentDesc,AppointmentLocation,AppointmentContact,AppointmentType,AptStartDateTimeLocal,AptEndDateTimeLocal,AppointmentCustomerID,AppointmentUserID);
+                    Appointment newAppointment = new Appointment(id, AppointmentTitle, AppointmentDesc, AppointmentLocation, AppointmentContact, AppointmentType, AptStartDateTimeLocal, AptEndDateTimeLocal, AppointmentCustomerID, AppointmentUserID);
 
                     ObservableList<Appointment> existingCustomerAppointments = FXCollections.observableArrayList();
                     for (Appointment CheckAppointment : Appointment.appointmentPopulation()) {
@@ -413,8 +423,7 @@ public class AddAppointment implements Initializable {
                             }
                         }
                         addedAppointment = true;
-                    }
-                    else {
+                    } else {
                         throw new Exception();
                     }
                 } catch (Exception e) {
@@ -425,8 +434,7 @@ public class AddAppointment implements Initializable {
             if (addedAppointment) {
                 returnToMainScreen(actionEvent);
             }
-        }
-        else {
+        } else {
             errorMessageBox.setVisible(true);
             errorMessageBox.setText("Error: Appointment Start and End times and dates must conform to business hours");
         }
@@ -434,6 +442,7 @@ public class AddAppointment implements Initializable {
 
     /**
      * Closes the Add Appointment view and calls a method to return to the MainForm view
+     *
      * @param actionEvent User initiating button press
      * @throws IOException thrown in case of FXML file interaction issues
      */
@@ -443,6 +452,7 @@ public class AddAppointment implements Initializable {
 
     /**
      * When called, loads in MainForm.fxml as the current User-facing scene
+     *
      * @param event Initiating call from other method
      * @throws IOException thrown in case of FXML file interaction issues
      */
@@ -456,6 +466,7 @@ public class AddAppointment implements Initializable {
 
     /**
      * On User adjustment to any Start Time ComboBox, reflects the selected values in a User-facing label
+     *
      * @param actionEvent User initiating ComboBox selection
      */
     public void onStartTimeAdjustedAction(ActionEvent actionEvent) {
@@ -464,6 +475,7 @@ public class AddAppointment implements Initializable {
 
     /**
      * On User adjustment to any Start Time ComboBox, reflects the selected values in a User-facing label
+     *
      * @param actionEvent User initiating ComboBox selection
      */
     public void onEndTimeAdjustedAction(ActionEvent actionEvent) {
