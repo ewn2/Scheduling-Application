@@ -260,6 +260,10 @@ public class AddAppointment implements Initializable {
 
     /**
      * Interface for error message handling Lambda
+     * Lambda exceptionLambda improved code by removing the need to incorporate individual try and catch blocks for every
+     * single User entered String, ComboBox, or Date and Time value. Instead, every value may be placed into an all
+     * encompassing try block and the Lambda function can handle every validity check and error message display at once
+     * exceptionLambda: Lines 360 through 366
      */
     interface exceptionLambda {
         void apple();
@@ -267,6 +271,11 @@ public class AddAppointment implements Initializable {
 
     /**
      * Interface for DateTime formatting Lambda
+     * Lambda convertorLambda improved code by reducing the need to individually handle the formatting of every single
+     * LocalDateTime and ZonedDateTime instance and its String parsing and conversion as had been done in a multi-step
+     * process in my original implementation, instead reducing it down to a quick pass when assigning the value for
+     * the final String to be stored within the Instance of Appointment
+     * convertorLambda: Lines 379 through 385, 392, 394
      */
     interface convertorLambda {
         String pear(LocalDateTime toConvert);
@@ -280,16 +289,16 @@ public class AddAppointment implements Initializable {
      * Lambda exceptionLambda improved code by removing the need to incorporate individual try and catch blocks for every
      * single User entered String, ComboBox, or Date and Time value. Instead, every value may be placed into an all
      * encompassing try block and the Lambda function can handle every validity check and error message display at once
-     * exceptionLambda: Lines 351 through 357
+     * exceptionLambda: Lines 360 through 366
      * <p>
      * Lambda convertorLambda improved code by reducing the need to individually handle the formatting of every single
      * LocalDateTime and ZonedDateTime instance and its String parsing and conversion as had been done in a multi-step
      * process in my original implementation, instead reducing it down to a quick pass when assigning the value for
      * the final String to be stored within the Instance of Appointment
-     * convertorLambda: Lines 370 through 376, 383, 385
+     * convertorLambda: Lines 379 through 385, 392, 394
      *
      * @param actionEvent User initiating button press
-     * @throws IOException thrown in case of fxml file interaction issues
+     * @throws IOException  thrown in case of fxml file interaction issues
      * @throws SQLException thrown in case of SQL database interaction issues
      */
     public void onAddAppointmentSaveButtonAction(ActionEvent actionEvent) throws IOException, SQLException {

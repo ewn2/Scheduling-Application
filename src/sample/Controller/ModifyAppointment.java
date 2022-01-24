@@ -58,6 +58,10 @@ public class ModifyAppointment implements Initializable {
 
     /**
      * Interface for error message handling Lambda
+     * Lambda exceptionLambda improved code by removing the need to incorporate individual try and catch blocks for every
+     * single User entered String, ComboBox, or Date and Time value. Instead, every value may be placed into an all
+     * encompassing try block and the Lambda function can handle every validity check and error message display at once
+     * exceptionLambda: Lines 139 through 145
      */
     interface exceptionLambda {
         void apple();
@@ -71,7 +75,7 @@ public class ModifyAppointment implements Initializable {
      * Lambda exceptionLambda improved code by removing the need to incorporate individual try and catch blocks for every
      * single User entered String, ComboBox, or Date and Time value. Instead, every value may be placed into an all
      * encompassing try block and the Lambda function can handle every validity check and error message display at once
-     * exceptionLambda: Lines 135 through 141
+     * exceptionLambda: Lines 139 through 145
      *
      * @param actionEvent User initiating button press
      * @throws IOException thrown in case of fxml file interaction issues

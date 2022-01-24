@@ -150,6 +150,13 @@ public class ModifyCustomer implements Initializable {
         }
     }
 
+    /**
+     * Interface for error message handling Lambda
+     * Lambda exceptionLambda improved code by removing the need to incorporate individual try and catch blocks for every
+     * single User entered String, ComboBox, or Date and Time value. Instead, every value may be placed into an all
+     * encompassing try block and the Lambda function can handle every validity check and error message display at once
+     * exceptionLambda: Lines 218 through 224
+     */
     interface exceptionLambda {
         void apple();
     }
@@ -162,7 +169,7 @@ public class ModifyCustomer implements Initializable {
      * Lambda exceptionLambda improved code by removing the need to incorporate individual try and catch blocks for every
      * single User entered String, ComboBox, or Date and Time value. Instead, every value may be placed into an all
      * encompassing try block and the Lambda function can handle every validity check and error message display at once
-     * exceptionLambda: Lines 211 through 217
+     * exceptionLambda: Lines 218 through 224
      *
      * @param actionEvent User initiating button press
      * @throws IOException thrown in case of SQL database interaction issues
