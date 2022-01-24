@@ -125,6 +125,11 @@ public class AddCustomer implements Initializable {
     /**
      * Reaction to User pressing Save button, attempts to validate all User input Customer detail values and save them
      * into both the current ObservableList of all Customers and into the connected SQL database
+     * <p>
+     * Lambda exceptionLambda improved code by removing the need to incorporate individual try and catch blocks for every
+     * single User entered String, ComboBox, or Date and Time value. Instead, every value may be placed into an all
+     * encompassing try block and the Lambda function can handle every validity check and error message display at once
+     * exceptionLambda: Lines 178 through 184
      *
      * @param actionEvent User initiating button press
      * @throws IOException thrown in case of SQL database interaction issues
