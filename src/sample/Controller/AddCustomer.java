@@ -1,5 +1,9 @@
 package sample.Controller;
-
+/**
+ * addCustomer.fxml related Controller
+ *
+ * @author Erwin Uppal
+ */
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,6 +44,11 @@ public class AddCustomer implements Initializable {
     public TextArea errorMessageBox;
     public TextField addCustomerIDBox;
 
+    /**
+     * Initializer for add Customer screen, loads in Combo Boxes with existing values from database
+     * @param url resource location pointer
+     * @param resourceBundle target ResourceBundle to select key values from
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -50,6 +59,10 @@ public class AddCustomer implements Initializable {
         }
     }
 
+    /**
+     * Populates the Country ComboBox from SQL database for User selection
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void populateCountry() throws SQLException {
         String logQuery = "SELECT * FROM countries";
         JDBC.makePreparedStatement(logQuery, JDBC.getConnection());
@@ -62,6 +75,12 @@ public class AddCustomer implements Initializable {
         }
     }
 
+    /**
+     * Upon the User updating the Country selection ComboBox, will retrieve the ID value of that Country from the
+     * SQL database
+     * @param actionEvent User making a selection with the Country ComboBox
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void onAddCustomerCountryComboAction(ActionEvent actionEvent) throws SQLException {
         String chosenCountry = (String) addCustomerCountryCombo.getValue();
         String logQuery = "SELECT * FROM countries WHERE Country='" + chosenCountry + "'";
@@ -79,6 +98,12 @@ public class AddCustomer implements Initializable {
         void apple();
     }
 
+    /**
+     * Populates the first division State/Province ComboBox from SQL database for User selection based upon all
+     * divisions associated with the selected Country_ID value of the option selected in the Country ComboBox
+     * @param Country_ID the integer matching the selected Country ComboBox option's Country_ID within the SQL Database
+     * @throws SQLException thrown in case of SQL database interaction issues
+     */
     public void populateStates(String Country_ID) throws SQLException {
         addCustomerStateCombo.getItems().clear();
         String logQuery = "SELECT * FROM first_level_divisions WHERE Country_ID='" + Country_ID + "'";
@@ -92,6 +117,12 @@ public class AddCustomer implements Initializable {
         }
     }
 
+    /**
+     * Reaction to User pressing Save button, attempts to validate all User input Customer detail values and save them
+     * into both the current ObservableList of all Customers and into the connected SQL database
+     * @param actionEvent User initiating button press
+     * @throws IOException thrown in case of SQL database interaction issues
+     */
     public void onAddCustomerSaveButtonAction(ActionEvent actionEvent) throws IOException {
         boolean validEntries = true;
         boolean addedCustomer = false;
@@ -171,10 +202,20 @@ public class AddCustomer implements Initializable {
         }
     }
 
+    /**
+     * Closes the Add Customer view and calls a method to return to the MainForm view
+     * @param actionEvent User initiating button press
+     * @throws IOException thrown in case of FXML file interaction issues
+     */
     public void onAddCustomerCancelButtonAction(ActionEvent actionEvent) throws IOException {
         returnToMainScreen(actionEvent);
     }
 
+    /**
+     * When called, loads in MainForm.fxml as the current User-facing scene
+     * @param event Initiating call from other method
+     * @throws IOException thrown in case of FXML file interaction issues
+     */
     private void returnToMainScreen(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/sample/View/MainForm.fxml")));
         Scene scene = new Scene(parent);
