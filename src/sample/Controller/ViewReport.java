@@ -452,6 +452,7 @@ public class ViewReport implements Initializable {
          * the Appointment type and an integer signifying the amount of Appointments associated with that month name
          *
          * @param monthName The String representing the Month's Name
+         * @param typeName The String representing the Type descriptor
          * @param TotalApps The integer representing the amount of Appointments associated with the Month
          */
         public theSet(String monthName, String typeName, int TotalApps) {
@@ -518,7 +519,7 @@ public class ViewReport implements Initializable {
     /**
      * Populates the ObservableList allSets with instances of theSet based upon the returned value of a SQL query of
      * all entries in the appointments table broken down by month and then type of Appointment
-     * @throws SQLException
+     * @throws SQLException in case of Database interaction issues
      */
     public void asOnePopulation() throws SQLException {
         {
