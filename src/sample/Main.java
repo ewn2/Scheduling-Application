@@ -1,6 +1,7 @@
 package sample;
 /**
- * JavaDoc Export Location:
+ * JavaDoc Export Location: ScheduleSystemJFX.zip/HelloWorldJFX/JavaDoc
+ * and also as a separate zip file for ease of viewing
  * Meeting Scheduling System program is designed to manage Customers and
  * Appointments for a theoretical international business headquartered on
  * the East coast of the United States.

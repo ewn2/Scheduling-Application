@@ -31,8 +31,9 @@ connection to an already structured and populated MySQL database through a mysql
 Once all of these necessary libraries and tools are accounted for (and are actually loaded, the virtual machine during
 development held the CLI arguments "--module-path ${PATH_TO_FX} --add-modules javafx.fxml,javafx.controls,javafx.graphics"
 sans quotations prepopulated for operational testing) the application may be compiled and launched with a call to
-method main in Main.Java, within the project at location "src/sample/Main.java"
-One run, the User will be faced with a login screen where they must provide a valid Username and Password to continue,
+method main in Main.Java, within the project at location "ScheduleSystemJFX.zip/HelloWorldJFX/src/sample/Main.java"
+
+Once run, the User will be faced with a login screen where they must provide a valid Username and Password to continue,
 a combination which exists within the connected database users Table such as username:"test" and password:"test".
 If successfully logged in, the User may review all Customers or Appointments with their times adjusted to be shown
 in the local System's equivalent timezone values of the appointments, as well as add, modify, and remove them.
