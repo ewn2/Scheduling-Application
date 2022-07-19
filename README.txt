@@ -1,5 +1,7 @@
 Meeting Scheduling System
 
+![Existing Customers Table Screenshot](https://github.com/ewn2/Scheduling-Application/blob/master/Screenshots/Homescreen.png?raw=true)
+
 Application acts as an appointment scheduling system for an internationally operating business that
 conforms to American Eastern business hours of 8:00 to 22:00. Users possessing valid login credentials may
 add new, modify, or delete Customers and Appointments within the connected SQL database whose structure and
