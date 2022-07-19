@@ -8,8 +8,12 @@ Users will only be presented with their local System time and at no point will h
 and the login form specifically will load French translations for all labels if the User's primary system language
 is set to French.
 
+JDK 11.0.11
+JavaFX SDK 11.0.2
+mysql-connector-java-8.0.25
+
 Making use of the operation is dependent on the inclusion of the proper Java SDK and JavaFx versions as seen above and a
-connection to an already structured and populated MySQL database through a mysql Java connector as seen below.
+connection to an already structured and populated MySQL database through a mysql Java connector.
 Once all of these necessary libraries and tools are accounted for (and are actually loaded, the virtual machine during
 development held the CLI arguments "--module-path ${PATH_TO_FX} --add-modules javafx.fxml,javafx.controls,javafx.graphics"
 sans quotations prepopulated for operational testing) the application may be compiled and launched with a call to
