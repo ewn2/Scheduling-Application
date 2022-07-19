@@ -11,7 +11,9 @@ and the login form specifically will load French translations for all labels if 
 is set to French.
 
 JDK 11.0.11
+
 JavaFX SDK 11.0.2
+
 mysql-connector-java-8.0.25
 
 Making use of the operation is dependent on the inclusion of the proper Java SDK and JavaFx versions as seen above and a
@@ -28,3 +30,10 @@ in the local System's equivalent timezone values of the appointments, as well as
 A Reports page may also be brought up by the User which showcases a breakdown of all Appointments by month of occurrence,
 Type descriptor value, both Month and Type description, all appointments for an individually selected Contact, and all
 appointments for an individually selected Customer.
+
+
+![Existing Appointments Table Screenshot](https://github.com/ewn2/Scheduling-Application/blob/master/Screenshots/Appointments.png?raw=true)
+
+![Add Customers Screenshot](https://github.com/ewn2/Scheduling-Application/blob/master/Screenshots/Customer.png?raw=true)
+
+![Modify Appointment Screenshot](https://github.com/ewn2/Scheduling-Application/blob/master/Screenshots/Appointment.png?raw=true)
